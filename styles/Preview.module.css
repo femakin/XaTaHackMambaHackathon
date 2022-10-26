@@ -1,0 +1,44 @@
+.previewcontainer {
+    /* background: lawngreen; */
+    margin: 0 auto;
+    width: 100%;
+    max-width: 70%;
+}
+
+.preview {
+    /* color: yellow; */
+    cursor: pointer;
+}
+
+
+.top_summary {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+.contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+.mobile,
+.email,
+.address {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.full_nameandrole {
+    margin-bottom: 5px;
+}
+
+.fullname {
+    margin-bottom: 5px;
+}

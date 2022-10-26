@@ -1,6 +1,14 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import React from 'react'
+import { useState } from 'react'
+import { GlobalContextProvider } from '../context/globalContext'
+import { SignupContextProvider } from '../context/signupContext'
 import '../styles/root.css'
+
+
+
+
 
 const metas = {
   title: 'Next.js with-xata',
@@ -12,51 +20,62 @@ const metas = {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [basic, setbasic] = useState<string>('')
+
   return (
+
     <>
-      <Head>
-        <title>{metas.title}</title>
-        <meta property="og:title" content={metas.title} key="og:title" />
-        <meta property="og:image" content={metas.image} key="og:image" />
-        <meta
-          property="description"
-          content={metas.description}
-          key="description"
-        />
-        <meta
-          property="og:description"
-          content={metas.description}
-          key="og:description"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:title"
-          content={metas.title}
-          key="twitter:title"
-        />
-        <meta
-          property="twitter:description"
-          content={metas.description}
-          key="twitter:description"
-        />
-        <meta
-          property="twitter:image"
-          content={metas.image}
-          key="twitter:image"
-        />
-        <meta
-          name="theme-color"
-          content="#000"
-          media="(prefers-color-scheme: dark)"
-        />
-        <meta
-          name="theme-color"
-          content="#fff"
-          media="(prefers-color-scheme: light)"
-        />
-      </Head>
-      <Component {...pageProps} />
+      <SignupContextProvider>
+        <GlobalContextProvider>
+
+          <Head>
+            <title>{metas.title}</title>
+            <meta property="og:title" content={metas.title} key="og:title" />
+            <meta property="og:image" content={metas.image} key="og:image" />
+            <meta
+              property="description"
+              content={metas.description}
+              key="description"
+            />
+            <meta
+              property="og:description"
+              content={metas.description}
+              key="og:description"
+            />
+            <meta property="og:type" content="website" />
+            <meta property="twitter:card" content="summary_large_image" />
+            <meta
+              property="twitter:title"
+              content={metas.title}
+              key="twitter:title"
+            />
+            <meta
+              property="twitter:description"
+              content={metas.description}
+              key="twitter:description"
+            />
+            <meta
+              property="twitter:image"
+              content={metas.image}
+              key="twitter:image"
+            />
+            <meta
+              name="theme-color"
+              content="#000"
+              media="(prefers-color-scheme: dark)"
+            />
+            <meta
+              name="theme-color"
+              content="#fff"
+              media="(prefers-color-scheme: light)"
+            />
+
+          </Head>
+
+
+          <Component {...pageProps} />
+        </GlobalContextProvider>
+      </SignupContextProvider>
     </>
   )
 }
