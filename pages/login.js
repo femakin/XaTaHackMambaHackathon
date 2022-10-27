@@ -68,7 +68,7 @@ function Signup() {
                         })
 
                     router.push({
-                        pathname: '/preview',
+                        pathname: '/stepone',
                     })
                 } else {
                     router.push({
@@ -117,12 +117,27 @@ function Signup() {
                         </div>
 
                         <button
+                            style={{
+                                marginBottom: '20px'
+                            }}
+
                             type="submit"
                             className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
                         >
                             Login
                         </button>
+
+
+
                     </form>
+
+                    <span
+
+
+                    >Don't have an account yet?  <span style={{ color: 'red' }}
+
+                        onClick={() => router.push('/signup')}
+                    >Signup</span>  </span>
                 </div>
             </div>
         </div>

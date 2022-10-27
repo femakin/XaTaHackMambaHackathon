@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { GlobalContextProvider } from '../context/globalContext'
 import { SignupContextProvider } from '../context/signupContext'
 import '../styles/root.css'
+import 'react-quill/dist/quill.snow.css'
 
 
 

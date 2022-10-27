@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Header from '../components/Header'
@@ -15,14 +15,17 @@ import { useReducer } from 'react'
 import { GlobalContext } from '../context/globalContext'
 import Nav from '../components/Nav'
 import { signupContext } from '../context/signupContext'
+import { BsTypeH1 } from 'react-icons/bs'
 
 function Stepone() {
   const schema = yup.object().shape({
     email: yup.string().email().required('Email is required'),
   })
 
-  const { user, setUser } = useContext(GlobalContext)
+  const { user, setUser, loggedinuser, setLoggedinuser } = useContext(GlobalContext)
   const { signupid, setsignupid } = useContext(signupContext)
+  const [signnedin, setSigneedIn] = useState(false)
+
 
   const router = useRouter()
   //   const navigate = useNavigate()
@@ -78,249 +81,314 @@ function Stepone() {
       data.phonenumber !== ' ' &&
       data.role !== ' '
     ) {
-      const fileName = generateRandom(4)
-      var formdata = new FormData()
-      formdata.append('file', data.MyImage[0], '[PROXY]')
-      formdata.append('upload_preset', 'ml_default')
-      formdata.append('public_id', `${fileName}`)
-      formdata.append('api_key', '992692999288596')
+      router.push('/steptwo')
+      // const fileName = generateRandom(4)
+      // var formdata = new FormData()
+      // formdata.append('file', data.MyImage[0], '[PROXY]')
+      // formdata.append('upload_preset', 'ml_default')
+      // formdata.append('public_id', `${fileName}`)
+      // formdata.append('api_key', '992692999288596')
 
-      var requestOptions = {
-        method: 'POST',
-        body: formdata,
-        redirect: 'follow',
-      }
+      // var requestOptions = {
+      //   method: 'POST',
+      //   body: formdata,
+      //   redirect: 'follow',
+      // }
 
-      fetch(
-        'https://api.cloudinary.com/v1_1/femakin/image/upload',
-        requestOptions,
-      )
-        .then(async (response) => {
-          return await response.json()
-        })
-        .then(async (result) => {
-          console.log(result, 'result')
-
-          if (data.secure_url !== ' ') {
-            setUser(() => {
-              return {
-                Full_name: `${data.full_name}`,
-                Email: `${data.email}`,
-                Role: `${data.role}`,
-                Phone_number: `${data.phonenumber}`,
-                Address: `${data.address}`,
-                Profile_Photo_Url: `${result.secure_url}`,
-                Public_id: `${result.public_id}`,
-                unique_id: `${signupid.unique_id}`,
-              }
-            })
-
-            localStorage.setItem('user_details',
-
-              JSON.stringify({
-                Full_name: `${data.full_name}`,
-                Email: `${data.email}`,
-                Role: `${data.role}`,
-                Phone_number: `${data.phonenumber}`,
-                Address: `${data.address}`,
-                Profile_Photo_Url: `${result.secure_url}`,
-                Public_id: `${result.public_id}`,
-                unique_id: `${signupid.unique_id}`,
-              })
-            )
-
-            localStorage.setItem('user_id',
-
-              JSON.stringify({
-                unique_id: signupid.unique_id
-              })
-            )
+      // fetch(
+      //   'https://api.cloudinary.com/v1_1/femakin/image/upload',
+      //   requestOptions,
+      // )
+      //   .then(async (response) => {
+      //     return await response.json()
+      //   })
+      //   .then(async (result) => {
+      //     console.log(result, 'result')
 
 
-            console.log(
-              JSON.stringify({
-                Full_name: `${data.full_name}`,
-                Email: `${data.email}`,
-                Role: `${data.role}`,
-                Phone_number: `${data.phonenumber}`,
-                Address: `${data.address}`,
-                Profile_Photo_Url: `${result.secure_url}`,
-                Public_id: `${result.public_id}`,
-                unique_id: `${signupid.unique_id}`,
-              }),
-            )
 
-            fetch('/api/upload', {
-              headers: { 'Content-Type': 'application/json' },
-              method: 'POST',
-              body: JSON.stringify({
-                Full_name: `${data.full_name}`,
-                Email: `${data.email}`,
-                Role: `${data.role}`,
-                Phone_number: `${data.phonenumber}`,
-                Address: `${data.address}`,
-                Profile_Photo_Url: `${result.secure_url}`,
-                Public_id: `${result.public_id}`,
-                unique_id: `${signupid.unique_id}`,
-              }),
-            })
-              .then((response) => response.json())
-              .then(async (response) => {
-                return (
-                  console.log(response),
-                  await router.push({
-                    pathname: '/preview',
-                    query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
-                  })
-                )
-              })
-              .catch((err) => console.error(err))
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+
+
+      //     if (data?.secure_url !== ' ') {
+      //       setUser(() => {
+      //         return {
+      //           Full_name: `${data.full_name}`,
+      //           Email: `${data.email}`,
+      //           Role: `${data.role}`,
+      //           Phone_number: `${data.phonenumber}`,
+      //           Address: `${data.address}`,
+      //           Profile_Photo_Url: `${result.secure_url}`,
+      //           Public_id: `${result.public_id}`,
+      //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+      //         }
+      //       })
+
+      //       localStorage.setItem('user_details',
+
+      //         JSON.stringify({
+      //           Full_name: `${data.full_name}`,
+      //           Email: `${data.email}`,
+      //           Role: `${data.role}`,
+      //           Phone_number: `${data.phonenumber}`,
+      //           Address: `${data.address}`,
+      //           Profile_Photo_Url: `${result.secure_url}`,
+      //           Public_id: `${result.public_id}`,
+      //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+      //         })
+      //       )
+
+      //       localStorage.setItem('user_id',
+
+      //         JSON.stringify({
+      //           unique_id: signupid.unique_id
+      //         })
+      //       )
+
+
+      //       console.log(
+      //         JSON.stringify({
+      //           Full_name: `${data.full_name}`,
+      //           Email: `${data.email}`,
+      //           Role: `${data.role}`,
+      //           Phone_number: `${data.phonenumber}`,
+      //           Address: `${data.address}`,
+      //           Profile_Photo_Url: `${result.secure_url}`,
+      //           Public_id: `${result.public_id}`,
+      //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+      //         }),
+      //       )
+
+      //       fetch('/api/upload', {
+      //         headers: { 'Content-Type': 'application/json' },
+      //         method: 'POST',
+      //         body: JSON.stringify({
+      //           Full_name: `${data.full_name}`,
+      //           Email: `${data.email}`,
+      //           Role: `${data.role}`,
+      //           Phone_number: `${data.phonenumber}`,
+      //           Address: `${data.address}`,
+      //           Profile_Photo_Url: `${result.secure_url}`,
+      //           Public_id: `${result.public_id}`,
+      //           unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+      //         }),
+      //       })
+      //         .then((response) => response.json())
+      //         .then(async (response) => {
+      //           return (
+      //             console.log(response),
+      //             await router.push({
+      //               pathname: '/preview',
+      //               query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
+      //             })
+      //           )
+      //         })
+      //         .catch((err) => console.error(err))
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
     }
   }
 
+  //const Redirect = () => window.location.href = '/'
+  const [id, setid] = useState();
 
   useEffect(() => {
-    console.log(signupid, 'signupid')
-    // console.log(router, 'router query-signup')
+
+    // console.log(JSON.parse(localStorage?.getItem('user_id').unique_id), 'JSON.parse(localStorage?.getItem(user_id)')
+    // console.log(loggedinuser.data.id, ' loggedinuser')
+
+
     router.replace('/stepone', undefined, { shallow: true })
+    let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+    newObjectuser?.unique_id !== ' ' ? setSigneedIn(true) : setSigneedIn(false)
 
 
-  }, []);
+    console.log(JSON.parse(localStorage?.getItem('user_id')), 'JSON.parse(localStorage?.getItem))')
+
+
+    if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
+      console.log('undefined')
+      router.push('/')
+    } else {
+      console.log('What should I do')
+      router.push('/stepone')
+    }
+
+
+
+
+    // if (signnedin.email === undefined) {
+    //   setid(JSON.parse(localStorage?.getItem('user_id')))
+    // } else {
+    //   setid(signupid.unique_id)
+    //   // setsignupid(() => {
+    //   //   return {
+    //   //     username: `${data.name}`,
+    //   //     email: `${data.email}`,
+    //   //     password: `${data.password}`,
+    //   //     unique_id: `${response.id}`
+    //   //   }
+    //   // })
+    //   console.log(
+    //     signupid['email'] = 'ase@gmail.com'
+    //   )
+    // }
+
+
+
+
+  }, [])
 
 
 
 
   return (
     <div>
-      <div className={Home.resume_body}>
-        <div className="top_nav">
-          <Nav />
-        </div>
 
-        <div className={Home.resume_main}>
-          <div className={Home.left_image}>
-            <h1 className={Home.formtitle}>
-              In just minutes, create a job-ready resume
-            </h1>
+
+
+      <>
+        <div className={Home.resume_body}>
+          <div className="top_nav">
+            <Nav />
           </div>
 
-          <div className={Home.right_form}>
-            <h1 className={Home.form_title}>Create my CV</h1>
+          <div className={Home.resume_main}>
+            <div className={Home.left_image}>
+              <h1 className={Home.formtitle}>
+                In just minutes, create a job-ready resume
+              </h1>
+            </div>
 
-            <p className={Home.sub_title}>
-              With quick CV, you can build the right resume & CV today.
-            </p>
+            <div className={Home.right_form}>
+              <h1 className={Home.form_title}>Create my CV</h1>
 
-            <div className={Home.resume_form}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className={Home.resumelinkinfo}>
-                  <label className={Home.getstartedlabel} htmlFor="">
-                    Full Name
-                  </label>
+              <p className={Home.sub_title}>
+                With quick CV, you can build the right resume & CV today.
+              </p>
 
-                  <input
-                    defaultValue=""
-                    required
-                    className={Home.getstartedinput}
-                    {...register('full_name')}
-                    placeholder="FullName"
-                    type="text"
-                  />
-                </div>
+              <div className={Home.resume_form}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className={Home.resumelinkinfo}>
+                    <label className={Home.getstartedlabel} htmlFor="">
+                      Full Name
+                    </label>
 
-                <div className={Home.resumelinkinfo}>
-                  <label className={Home.getstartedlabel} htmlFor="">
-                    Role
-                  </label>
+                    <input
+                      defaultValue=""
+                      required
+                      className={Home.getstartedinput}
+                      {...register('full_name')}
+                      placeholder="FullName"
+                      type="text"
+                    />
+                  </div>
 
-                  <input
-                    defaultValue=""
-                    required
-                    className={Home.getstartedinput}
-                    {...register('role')}
-                    placeholder="e.g. Software Engineer"
-                    type="text"
-                  />
-                </div>
+                  <div className={Home.resumelinkinfo}>
+                    <label className={Home.getstartedlabel} htmlFor="">
+                      Role
+                    </label>
 
-                <div className={Home.resumelinkinfo}>
-                  <label className={Home.getstartedlabel} htmlFor="">
-                    Phone number
-                  </label>
+                    <input
+                      defaultValue=""
+                      required
+                      className={Home.getstartedinput}
+                      {...register('role')}
+                      placeholder="e.g. Software Engineer"
+                      type="text"
+                    />
+                  </div>
 
-                  <input
-                    defaultValue=""
-                    required
-                    className={Home.getstartedinput}
-                    {...register('phonenumber')}
-                    placeholder="+23470..."
-                    type="text"
-                  />
-                </div>
+                  <div className={Home.resumelinkinfo}>
+                    <label className={Home.getstartedlabel} htmlFor="">
+                      Phone number
+                    </label>
 
-                <div className={Home.resumelinkinfo}>
-                  <label className={Home.getstartedlabel} htmlFor="">
-                    Email
-                  </label>
+                    <input
+                      defaultValue=""
+                      required
+                      className={Home.getstartedinput}
+                      {...register('phonenumber')}
+                      placeholder="+23470..."
+                      type="text"
+                    />
+                  </div>
 
-                  <input
-                    defaultValue=""
-                    required
-                    className={Home.getstartedinput}
-                    {...register('email')}
-                    placeholder="abc@gmail.com"
-                    type="email"
-                  />
-                </div>
+                  <div className={Home.resumelinkinfo}>
+                    <label className={Home.getstartedlabel} htmlFor="">
+                      Email
+                    </label>
 
-                <div className={Home.resumelinkinfo}>
-                  <label className={Home.getstartedlabel} htmlFor="">
-                    Address
-                  </label>
+                    <input
+                      defaultValue=""
+                      required
+                      className={Home.getstartedinput}
+                      {...register('email')}
+                      placeholder="abc@gmail.com"
+                      type="email"
+                    />
+                  </div>
 
-                  <input
-                    defaultValue=""
-                    required
-                    className={Home.getstartedinput}
-                    {...register('address')}
-                    placeholder="Lagos, Nigeria"
-                    type="text"
-                  />
-                </div>
+                  <div className={Home.resumelinkinfo}>
+                    <label className={Home.getstartedlabel} htmlFor="">
+                      Address
+                    </label>
 
-                <div className={Home.resumelinkinfo}>
-                  <label className={Home.getstartedlabel} htmlFor="">
-                    Profile Photo
-                  </label>
+                    <input
+                      defaultValue=""
+                      required
+                      className={Home.getstartedinput}
+                      {...register('address')}
+                      placeholder="Lagos, Nigeria"
+                      type="text"
+                    />
+                  </div>
 
-                  <input
-                    required
-                    type="file"
-                    className={Home.getstartedinput}
-                    placeholder="Select an Image"
-                    multiple
-                    accept="image/*"
-                    {...register('MyImage')}
-                  />
-                </div>
+                  <div className={Home.resumelinkinfo}>
+                    <label className={Home.getstartedlabel} htmlFor="">
+                      Profile Photo
+                    </label>
 
-                <button
-                  type="submit"
-                  className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                >
-                  Get started
-                </button>
-              </form>
+                    <input
+                      required
+                      type="file"
+                      className={Home.getstartedinput}
+                      placeholder="Select an Image"
+                      multiple
+                      accept="image/*"
+                      {...register('MyImage')}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                  >
+                    Get started
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+
+      </>
+
+
+
+
+
+
+
+
+
     </div>
+
+
+
+
   )
 }
 

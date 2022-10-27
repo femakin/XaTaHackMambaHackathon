@@ -13,9 +13,6 @@ import { byRadius } from '@cloudinary/url-gen/actions/roundCorners'
 import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity'
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn'
 
-// import { UserLoginContext } from '../../Components/Context/LoginUserContext'
-// import { useAuthContext } from '../../Components/Context/AuthContext'
-
 export default function Nav() {
   // let navigate = useNavigate()
   const [clicked, setClicked] = useState(false)
@@ -23,65 +20,40 @@ export default function Nav() {
   const [signnedin, setSigneedIn] = useState(false)
   const router = useRouter()
   const [alldata, setAlldata] = useState([])
-  //   const {
-  //     setUserdetails,
-  //   loggedinuserdetails,
-  //   setLoggedinUserdetails,
-  //   } = useContext(UserLoginContext)
-  //   const [loggedinuser, setLoggedinUser] = useState()
-  //   const [username, setUserName] = useState()
-  //   const [imageUrl, setImageUrl] = useState()
-
-  //   const { dbUser, setDbuser } = useAuthContext()
-
-  //   const getUser = async () => {
-  //     const models = await DataStore?.query(User)
-
-  //     setUserName(
-  //       models?.find((x) => x?.email === loggedinuser?.attributes?.email),
-  //     )
-
-  //     setLoggedinUserdetails(
-  //       models?.find((x) => x?.email === loggedinuser?.attributes?.email),
-  //     )
-
-  //     let newObject = localStorage?.getItem('user_logged_in')
-
-  //     setLoggedinUser(JSON?.parse(newObject))
-
-  //     setLoggedinUserdetails(JSON?.parse(newObject))
-
-  //     if (
-  //       models.find((x) => x.email === Auth?.user?.attributes?.email) ===
-  //         undefined ||
-  //       models.find((x) => x.email === Auth?.user?.attributes?.email) === false ||
-  //       models.find((x) => x.email === Auth?.user?.attributes?.email) === null
-  //     ) {
-  //     }
-  //   }
-
-  //   const getImageUrl = async () => {
-  //     const Url = await Storage?.get(loggedinuserdetails?.userimage)
-
-  //     setImageUrl(Url)
-  //   }
-
-  //   useEffect(() => {
-  //     getImageUrl()
-
-  //     // console.log( JSON.parse(localStorage.getItem("user_logged_in")), " JSON.parse(localStorage.getItem)")
-
-  //     if (localStorage?.getItem('user_logged_in') === undefined) {
-  //       setLoggedinUserdetails()
-  //     }
-  //     getUser()
-
-  //     // console.log(dbUser, "dbuser")
-  //   }, [username, imageUrl, localStorage])
+  const [storagedata, setStoragedata] = useState()
 
   useEffect(() => {
     let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
-    newObjectuser?.unique_id !== ' ' ? setSigneedIn(true) : setSigneedIn(false)
+    // JSON.parse(localStorage?.getItem('user_id')) === '' &&
+    // JSON.parse(localStorage?.getItem('user_id')) === undefined &&
+    JSON.parse(localStorage?.getItem('user_id')) === null
+      ? setSigneedIn(false)
+      : setSigneedIn(true)
+
+    fetch('/api/fetchall', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response, 'response allllll', newObjectuser)
+        // setAlldata(
+        //   response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
+        // )
+        setStoragedata(newObjectuser)
+
+        setClicked(!clicked)
+      })
+      .catch((err) => console.error(err))
+  }, [])
+
+  useEffect(() => {
+    let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+    // JSON.parse(localStorage?.getItem('user_id')) === '' &&
+    // JSON.parse(localStorage?.getItem('user_id')) === undefined &&
+    JSON.parse(localStorage?.getItem('user_id')) === null
+      ? setSigneedIn(false)
+      : setSigneedIn(true)
 
     fetch('/api/fetchall', {
       headers: { 'Content-Type': 'application/json' },
@@ -90,14 +62,18 @@ export default function Nav() {
       .then((response) => response.json())
       .then((response) => {
         console.log(response, 'response allllll')
-        setAlldata(
-          response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
-        )
-        setClicked(!clicked)
+        if (
+          // JSON.parse(localStorage?.getItem('user_id')) !== '' &&
+          // JSON.parse(localStorage?.getItem('user_id')) !== undefined &&
+          JSON.parse(localStorage?.getItem('user_id')) !== null
+        ) {
+          setAlldata(
+            response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
+          )
+        } else {
+          null
+        }
       })
-      .catch((err) => console.error(err))
-
-    // console.log(newObjectuser.unique_id, 'emaillll')
   }, [])
 
   return (
@@ -128,19 +104,10 @@ export default function Nav() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div>
-                  {signnedin && alldata.length !== 0 ? (
+                  {console.log(storagedata, 'storagedata')}
+                  {signnedin ? (
                     <div className="loggedincontent flex gap-2 items-center justify-center relative ">
-                      <div
-                        // onClick={() =>
-                        //   navigate('/productform', {
-                        //     state: {
-                        //       Loggedindata: dbUser,
-                        //     },
-                        //   })
-                        // }
-
-                        className="submit_text"
-                      >
+                      <div className="submit_text">
                         <h1
                           onClick={() => router.push('/preview')}
                           className="submit_main_text text-[#e12e0d] cursor-pointer"
@@ -150,15 +117,37 @@ export default function Nav() {
                       </div>
 
                       <div
-                        // onClick={() => navigate('/productform')}
+                        onClick={() => {
+                          return router.push('/stepone')
+                        }}
                         className="submit_text"
                       >
-                        <h1 className="submit_main_text text-[#000000] cursor-pointer">
-                          Hello,
+                        <h1
+                          onClick={() => router.push('/preview')}
+                          className="submit_main_text text-[#e12e0d] cursor-pointer"
+                        >
+                          Create CV
                         </h1>
                       </div>
 
+                      {/* <div className="submit_text">
+                        <h1 className="submit_main_text text-[#000000] cursor-pointer">
+                          Welcome,
+                        </h1>
+                      </div> */}
+
                       <div
+                        onClick={() => {
+                          return router.push('/'), localStorage.clear()
+                        }}
+                        className="submit_text"
+                      >
+                        <h1 className="submit_main_text text-[#000000] cursor-pointer">
+                          Logout
+                        </h1>
+                      </div>
+
+                      {/* <div
                         onClick={() => setClicked(!clicked)}
                         className=" w-8 h-8  cursor-pointer"
                       >
@@ -167,26 +156,11 @@ export default function Nav() {
                           src={alldata[0]?.Profile_Photo_Url}
                           alt="userimage"
                         />
-                      </div>
-                      {console.log(alldata, 'alldata')}
 
-                      {/* {alldata.map((x, i) => {
-                        return (
-                          <AdvancedImage
-                            cldImg={cld
-                              .image(`${x?.Public_id}`)
-                              .resize(
-                                fill()
-                                  .width(100)
-                                  .height(100)
-                                  .gravity(focusOn(FocusOn.faces())),
-                              )}
-                          />
-                        )
-                      })} */}
+                      </div> */}
+                      {/* {console.log(alldata, 'alldata')} */}
 
-                      {clicked && (
-                        // <div className="dropdownmenu top-12 cursor-pointer   absolute">
+                      {/* {clicked && (
                         <div className="dropdownmenu top-12 cursor-pointer   absolute">
                           <div
                             onClick={() => {
@@ -204,31 +178,9 @@ export default function Nav() {
                             <h1>Logout</h1>
                           </div>
 
-                          {/* <div>
-                            <h1>My products</h1>
-                          </div>
-
-                          <div>
-                            <h1>Settings</h1>
-                          </div> */}
-
-                          <div
-                          // onClick={() => {
-                          //   return (
-                          //     setUserdetails(),
-                          //     navigate('/'),
-                          //     Auth.signOut(),
-                          //     setClicked(!clicked),
-                          //     localStorage.clear('user_logged_in'),
-                          //     localStorage.clear(),
-                          //     setLoggedinUserdetails()
-                          //   )
-                          // }}
-                          >
-                            {/* <h1>Logout</h1> */}
-                          </div>
+                          <div></div>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   ) : (
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -256,22 +208,6 @@ export default function Nav() {
                             Login
                           </button>
                         </div>
-
-                        {/* <div
-                          onClick={() => {
-                            return router.push('/preview')
-                          }}
-                        >
-                          My CV
-                        </div>
-
-                        <div
-                          onClick={() => {
-                            return router.push('/stepone')
-                          }}
-                        >
-                          Create CV
-                        </div> */}
                       </div>
                     </div>
                   )}

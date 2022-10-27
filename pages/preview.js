@@ -22,6 +22,7 @@ import { useReactToPrint } from 'react-to-print'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
 import Nav from '../components/Nav'
+import Link from 'next/link'
 
 function Preview() {
   const componentRef = useRef()
@@ -30,25 +31,79 @@ function Preview() {
     pageStyle: ' size: 2.5in 4in ',
   })
 
-  // const inputRef = useRef(null)
-  // const printDocument = () => {
-  //   html2canvas(inputRef.current).then((canvas) => {
-  //     const imgData = canvas.toDataURL('image/png')
-  //     const pdf = new jsPDF()
-  //     pdf.addImage(imgData, 'JPEG', 0, 0)
-  //     pdf.save('download.pdf')
-  //   })
-  // }
+  const [signnedin, setSigneedIn] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+    newObjectuser?.unique_id !== ' ' ? setSigneedIn(!signnedin) : setSigneedIn(!signnedin)
+
+
+    if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
+      console.log('undefined')
+      router.push('/')
+    } else {
+      console.log('What should I do')
+      router.push('/preview')
+    }
+
+
+
+  }, [])
+
+
+
+  const Redirect = () => window.location.href = '/'
+
+
 
   return (
-    <section>
-      <Nav />
-      <div className={Previewstyle.previewcontainer}>
-        <Downloadandpreview onClick={handlePrint} />
 
-        <Download ref={componentRef} />
-      </div>
-    </section>
+    <>
+
+
+
+
+      <section>
+        {
+
+
+          <>
+            < Nav />
+
+            <div className={Previewstyle.previewcontainer}>
+              <Downloadandpreview onClick={handlePrint} />
+
+              <Download ref={componentRef} />
+            </div>
+
+          </>
+
+          // :
+
+          // <Redirect />
+
+
+
+
+
+        }
+      </section >
+
+
+
+
+
+
+
+    </>
+
+
+
+
+
+
+
   )
 }
 

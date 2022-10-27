@@ -4,10 +4,26 @@
 
 
 
+
 body {
   background-color: #fff;
 }
 
+
+.wrapperclass {
+  padding: 1rem;
+  border: 1px solid red;
+}
+
+.editorclass {
+  background-color: yellowgreen;
+  padding: 1rem;
+  border: 1px solid blue;
+}
+
+.toolbarclass {
+  border: 1px solid black;
+}
 
 /* html {
   --system-fonts: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,

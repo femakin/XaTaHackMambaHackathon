@@ -22,14 +22,6 @@ const Download = React.forwardRef((props, ref) => {
   )
   const [loading, setLoading] = useState(false)
 
-  // const FetchAll = async () => {
-  //   const xata = getXataClient()
-
-  //   const records = await xata.db.basic_info.getAll()
-
-  //   console.log(records)
-  // }
-
   const [alldata, setAlldata] = useState()
 
   const cld = new Cloudinary({
@@ -56,15 +48,8 @@ const Download = React.forwardRef((props, ref) => {
 
     let newObjectuser = JSON.parse(localStorage.getItem('user_id'))
     console.log(validuser, 'validuser')
-    // console.log(newObjectuser)
-
-    // const ValidUser2 = ('user_details')
-
-    // console.log(newObjectuser, 'newobj')
 
     setLoading(false)
-    // console.log(router.query, 'router.stateeee')
-    // console.log(newObjectuser.unique_id, 'newObjectuser.unique_id')
 
     router.replace('/preview', undefined, { shallow: true })
 

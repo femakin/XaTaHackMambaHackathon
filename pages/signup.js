@@ -55,6 +55,12 @@ function Signup() {
                 console.log(response)
 
                 if (response.id !== " ") {
+                    localStorage.setItem('user_id',
+
+                        JSON.stringify({
+                            unique_id: response.id
+                        })
+                    )
 
                     setsignupid(() => {
                         return {
@@ -138,6 +144,9 @@ function Signup() {
 
     return (
         <div>
+            {
+                console.log(signupid, 'signupid')
+            }
             <Nav />
             <div className={Signupstyles.updateform_main}>
                 <div>
