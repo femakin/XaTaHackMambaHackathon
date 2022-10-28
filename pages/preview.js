@@ -40,10 +40,10 @@ function Preview() {
 
 
     if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
-      console.log('undefined')
+
       router.push('/')
     } else {
-      console.log('What should I do')
+
       router.push('/preview')
     }
 

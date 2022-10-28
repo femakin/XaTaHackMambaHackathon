@@ -8,7 +8,7 @@ const xata = getXataClient()
 const handler = async (req, res) => {
 
 
-    const record = await xata.db.basic_info.create({
+    const record = await xata.db.basic_info.create(`${req.body.unique_id}`, {
         // Address: req.body.Address,
         // Email: req.body.Email,
         // Full_name: req.body.Full_name,
@@ -77,3 +77,46 @@ export default handler
     //     res.end(JSON.stringify(err));
     //     // resolve();
     // })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { getXataClient } from '../../utils/xata.codegen'
+// const xata = getXataClient()
+
+// const handler = async (req, res) => {
+
+//     const xata = getXataClient()
+
+//     const records = await xata.db.basic_info.getAll()
+
+//     console.log(records)
+//     res.end(JSON.stringify(records));
+
+
+// }
+// export default handler
+
+
+
+
+

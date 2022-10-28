@@ -54,18 +54,18 @@ function Stepone() {
     return result
   }
 
-  const PreviewPage = (data) => {
-    return (
-      <Link
-        href={{
-          pathname: '/preview',
-          query: { slug: data },
-        }}
-      />
-    )
-  }
+  // const PreviewPage = (data) => {
+  //   return (
+  //     <Link
+  //       href={{
+  //         pathname: '/preview',
+  //         query: { slug: data },
+  //       }}
+  //     />
+  //   )
+  // }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // setUser(() => {
     //   return data
     // })
@@ -81,113 +81,137 @@ function Stepone() {
       data.phonenumber !== ' ' &&
       data.role !== ' '
     ) {
-      router.push('/steptwo')
-      // const fileName = generateRandom(4)
-      // var formdata = new FormData()
-      // formdata.append('file', data.MyImage[0], '[PROXY]')
-      // formdata.append('upload_preset', 'ml_default')
-      // formdata.append('public_id', `${fileName}`)
-      // formdata.append('api_key', '992692999288596')
 
-      // var requestOptions = {
-      //   method: 'POST',
-      //   body: formdata,
-      //   redirect: 'follow',
-      // }
+      const fileName = generateRandom(4)
+      var formdata = new FormData()
+      formdata.append('file', data.MyImage[0], '[PROXY]')
+      formdata.append('upload_preset', 'ml_default')
+      formdata.append('public_id', `${fileName}`)
+      formdata.append('api_key', `${process.env.REACT_APP_CLOUDINARY_API_KEY}`)
 
-      // fetch(
-      //   'https://api.cloudinary.com/v1_1/femakin/image/upload',
-      //   requestOptions,
-      // )
-      //   .then(async (response) => {
-      //     return await response.json()
-      //   })
-      //   .then(async (result) => {
-      //     console.log(result, 'result')
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow',
+      }
 
-
-
+      fetch(
+        'https://api.cloudinary.com/v1_1/femakin/image/upload',
+        requestOptions,
+      )
+        .then(async (response) => {
+          return await response.json()
+        })
+        .then(async (result) => {
+          console.log(result, 'result   from step one')
+          console.log(loggedinuser, 'loggedinuser')
 
 
-      //     if (data?.secure_url !== ' ') {
-      //       setUser(() => {
-      //         return {
-      //           Full_name: `${data.full_name}`,
-      //           Email: `${data.email}`,
-      //           Role: `${data.role}`,
-      //           Phone_number: `${data.phonenumber}`,
-      //           Address: `${data.address}`,
-      //           Profile_Photo_Url: `${result.secure_url}`,
-      //           Public_id: `${result.public_id}`,
-      //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
-      //         }
-      //       })
-
-      //       localStorage.setItem('user_details',
-
-      //         JSON.stringify({
-      //           Full_name: `${data.full_name}`,
-      //           Email: `${data.email}`,
-      //           Role: `${data.role}`,
-      //           Phone_number: `${data.phonenumber}`,
-      //           Address: `${data.address}`,
-      //           Profile_Photo_Url: `${result.secure_url}`,
-      //           Public_id: `${result.public_id}`,
-      //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
-      //         })
-      //       )
-
-      //       localStorage.setItem('user_id',
-
-      //         JSON.stringify({
-      //           unique_id: signupid.unique_id
-      //         })
-      //       )
 
 
-      //       console.log(
-      //         JSON.stringify({
-      //           Full_name: `${data.full_name}`,
-      //           Email: `${data.email}`,
-      //           Role: `${data.role}`,
-      //           Phone_number: `${data.phonenumber}`,
-      //           Address: `${data.address}`,
-      //           Profile_Photo_Url: `${result.secure_url}`,
-      //           Public_id: `${result.public_id}`,
-      //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
-      //         }),
-      //       )
 
-      //       fetch('/api/upload', {
-      //         headers: { 'Content-Type': 'application/json' },
-      //         method: 'POST',
-      //         body: JSON.stringify({
-      //           Full_name: `${data.full_name}`,
-      //           Email: `${data.email}`,
-      //           Role: `${data.role}`,
-      //           Phone_number: `${data.phonenumber}`,
-      //           Address: `${data.address}`,
-      //           Profile_Photo_Url: `${result.secure_url}`,
-      //           Public_id: `${result.public_id}`,
-      //           unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
-      //         }),
-      //       })
-      //         .then((response) => response.json())
-      //         .then(async (response) => {
-      //           return (
-      //             console.log(response),
-      //             await router.push({
-      //               pathname: '/preview',
-      //               query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
-      //             })
-      //           )
-      //         })
-      //         .catch((err) => console.error(err))
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
+          if (result?.secure_url !== ' ') {
+            setUser(() => {
+              return {
+                Full_name: `${data.full_name}`,
+                Email: `${data.email}`,
+                Role: `${data.role}`,
+                Phone_number: `${data.phonenumber}`,
+                Address: `${data.address}`,
+                Profile_Photo_Url: `${result.secure_url}`,
+                Public_id: `${result.public_id}`,
+                unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? loggedinuser?.data.id : signupid?.unique_id}`,
+              }
+            })
+
+            localStorage.setItem('user_details',
+
+              JSON.stringify({
+                Full_name: `${data.full_name}`,
+                Email: `${data.email}`,
+                Role: `${data.role}`,
+                Phone_number: `${data.phonenumber}`,
+                Address: `${data.address}`,
+                Profile_Photo_Url: `${result.secure_url}`,
+                Public_id: `${result.public_id}`,
+                unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+              })
+            )
+
+            localStorage.setItem('user_id',
+
+              JSON.stringify({
+                unique_id: signupid.unique_id
+              })
+            )
+
+
+            await router.push({
+              pathname: '/steptwo',
+              query: {
+                ...data, steponedata: {
+
+
+                  Full_name: `${data.full_name}`,
+                  Email: `${data.email}`,
+                  Role: `${data.role}`,
+                  Phone_number: `${data.phonenumber}`,
+                  Address: `${data.address}`,
+                  Profile_Photo_Url: `${result.secure_url}`,
+                  Public_id: `${result.public_id}`,
+                  unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+
+                },
+                img_url: `${result.secure_url}`,
+                unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+                profile_phot_public_id: `${result.public_id}`,
+              },
+            })
+
+
+            // console.log(
+            //   JSON.stringify({
+            //     Full_name: `${data.full_name}`,
+            //     Email: `${data.email}`,
+            //     Role: `${data.role}`,
+            //     Phone_number: `${data.phonenumber}`,
+            //     Address: `${data.address}`,
+            //     Profile_Photo_Url: `${result.secure_url}`,
+            //     Public_id: `${result.public_id}`,
+            //     unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+            //   }),
+            // )
+
+            // fetch('/api/upload', {
+            //   headers: { 'Content-Type': 'application/json' },
+            //   method: 'POST',
+            //   body: JSON.stringify({
+            //     Full_name: `${data.full_name}`,
+            //     Email: `${data.email}`,
+            //     Role: `${data.role}`,
+            //     Phone_number: `${data.phonenumber}`,
+            //     Address: `${data.address}`,
+            //     Profile_Photo_Url: `${result.secure_url}`,
+            //     Public_id: `${result.public_id}`,
+            //     unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+            //   }),
+            // })
+            //   .then((response) => response.json())
+            //   .then(async (response) => {
+            //     return (
+            //       console.log(response),
+            //       await router.push({
+            //         pathname: '/preview',
+            //         query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
+            //       })
+            //     )
+            //   })
+            //   .catch((err) => console.error(err))
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 
@@ -196,8 +220,7 @@ function Stepone() {
 
   useEffect(() => {
 
-    // console.log(JSON.parse(localStorage?.getItem('user_id').unique_id), 'JSON.parse(localStorage?.getItem(user_id)')
-    // console.log(loggedinuser.data.id, ' loggedinuser')
+    console.log(loggedinuser, 'loggedinuser')
 
 
     router.replace('/stepone', undefined, { shallow: true })
@@ -205,14 +228,14 @@ function Stepone() {
     newObjectuser?.unique_id !== ' ' ? setSigneedIn(true) : setSigneedIn(false)
 
 
-    console.log(JSON.parse(localStorage?.getItem('user_id')), 'JSON.parse(localStorage?.getItem))')
+    // console.log(JSON.parse(localStorage?.getItem('user_id')), 'JSON.parse(localStorage?.getItem))')
 
 
     if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
-      console.log('undefined')
+      // console.log('undefined')
       router.push('/')
     } else {
-      console.log('What should I do')
+
       router.push('/stepone')
     }
 

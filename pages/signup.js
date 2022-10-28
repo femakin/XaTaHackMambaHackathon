@@ -52,7 +52,7 @@ function Signup() {
         })
             .then((response) => response.json())
             .then(async (response) => {
-                console.log(response)
+                // console.log(response)
 
                 if (response.id !== " ") {
                     localStorage.setItem('user_id',
@@ -144,9 +144,9 @@ function Signup() {
 
     return (
         <div>
-            {
+            {/* {
                 console.log(signupid, 'signupid')
-            }
+            } */}
             <Nav />
             <div className={Signupstyles.updateform_main}>
                 <div>

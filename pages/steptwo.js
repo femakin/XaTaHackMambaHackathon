@@ -1,23 +1,28 @@
-import React, { useState } from 'react'
-import { useContext } from 'react'
-import { useEffect } from 'react'
-
-// import { UserLoginContext } from "../Context/LoginUserContext";
+import React, { useState, useContext, useEffect } from 'react'
 import SteptwoStyle from '../styles/Steptwo.module.css'
-
 import { useForm } from 'react-hook-form'
 import Nav from '../components/Nav'
 import { useRef } from 'react'
 import { useRouter } from 'next/router'
+import Education from '../components/Education'
+import Interest from '../components/Interest'
+import References from '../components/References'
+import Skills from '../components/Skills'
+import Imagesandmedia from '../components/Imagesandmedia'
+import { Extract } from '@cloudinary/url-gen/actions/extract'
+import Extras from '../components/Extras'
+import { GlobalContext } from '../context/globalContext'
+import { signupContext } from '../context/signupContext'
 
-// import "react-quill/dist/quill.snow.css";
-
-// import DatePicker from 'react-date-picker/dist/entry.nostyle';
 
 function steptwo() {
     const [maininfo, setMainInfo] = useState(false)
     const [SideClicked, SetSideClicked] = useState('')
     const [active, setActive] = useState('Experience')
+
+    const { user, setUser, loggedinuser, setLoggedinuser } = useContext(GlobalContext)
+    const { signupid, setsignupid } = useContext(signupContext)
+    const [signnedin, setSigneedIn] = useState(false)
 
     const [images] = useState([])
     const [imageurls, setImageURLs] = useState([])
@@ -37,30 +42,26 @@ function steptwo() {
         width: 200,
     }
 
-    const _onKeyDown = (e) => {
-        if (e.keyCode === 13) {
-            console.log(inputRef.current.value, 'textareatag')
-            console.log('textareatag', inputRef.current.text)
-            // inputRef.current.text = `${inputRef.current.text}\n${textareatag.counter++}. `;
-            inputRef.current.text = `${inputRef.current.text
-                }\n${textareatag.counter++}. `
-            e.preventDefault()
-            e.stopPropagation()
+    // const _onKeyDown = (e) => {
+    //     if (e.keyCode === 13) {
+    //         console.log(inputRef.current.value, 'textareatag')
+    //         console.log('textareatag', inputRef.current.text)
 
-            e.preventDefault()
-            e.stopPropagation()
+    //         inputRef.current.text = `${inputRef.current.text
+    //             }\n${textareatag.counter++}. `
+    //         e.preventDefault()
+    //         e.stopPropagation()
 
-            // setDescriptiondetails(
-            //     `${inputRef.current.value}:  ${inputRef.current.value}\n${textareatag.counter++} `
-            // )
-        }
-    }
+    //         e.preventDefault()
+    //         e.stopPropagation()
+
+
+    //     }
+    // }
 
     const [textVal, setTextVal] = useState('')
 
-    const handleSelect = (date) => {
-        console.log(date)
-    }
+
 
     const SideData = [
         {
@@ -117,15 +118,24 @@ function steptwo() {
     }
 
     useEffect(() => {
-
+        router.replace('/steptwo', undefined, { shallow: true })
 
         if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
-            console.log('undefined')
+            // console.log('undefined')
             router.push('/')
         } else {
             console.log('What should I do')
             router.push('/steptwo')
         }
+
+        // console.log(router.query, 'querydata')
+
+
+
+
+        console.log(JSON.parse(localStorage.getItem('user_details, Localstorage   ')))
+
+        console.log(user, 'userrrrr, Context')
 
 
     }, [])
@@ -140,49 +150,9 @@ function steptwo() {
         // resolver: yupResolver(schema),
     })
 
-    const AddnewProduct = async (data) => {
-        // console.log(user)
-        console.log(data)
-        // const fileNameone = generateRandom(4);
-        // const fileNametwo = generateRandomtwo(4);
-        // Storage.put(fileNameone, data.thumbnailimage[0]);
-        // Storage.put(fileNametwo, data.productimg[0]);
 
-        // await DataStore.save(
-        //     new Product({
-        //         authornames: data?.authornames,
-        //         description: data?.description,
-        //         price: data?.price,
-        //         productimg: fileNameone,
-        //         productlink: data?.productlink,
-        //         productname: data?.productname,
-        //         tagline: data?.tagline,
-        //         thumbnailimage: fileNametwo,
-        //         topic: data?.topic,
-        //         twitteraccount: data?.twitteraccount,
-        //         workers: data?.productname,
-        //         youtubelink: data?.youtubelink,
-        //         votecount: 0,
-        //         email: Auth.user.attributes.email
 
-        //         // email:
-        //     })
-        // )
-        //     .then(async (res) => {
-        //         console.log(res, "resssss");
-
-        //         DataStore.save(
-        //             new Vote({
-        //                 //   productID: res?.id,
-        //                 Votersdetails: [{
-        //                     id: res.id
-        //                 }]
-        //             })
-        //         );
-        //     });
-    }
-
-    const onSubmit = (data) => {
+    const onSubmit1 = (data) => {
         // onClick={()=> navigate('/submission')}
         // if (
         //     data.nameofprodut !== " " &&
@@ -206,8 +176,8 @@ function steptwo() {
         //     // console.log(dbUser, "dbUser")
         // }
 
-        console.log(data, 'data')
-        console.log('State value', textVal)
+        // console.log(data, 'data')
+        // console.log('State value', textVal)
         // reset({
         //     email: "",
         //     nameofproduct: "",
@@ -227,52 +197,659 @@ function steptwo() {
         // });
     }
 
-    const CheckChange = (e) => {
-        if (e.keyCode === 13) {
-            console.log(e.target.value)
+
+
+
+
+
+    const onSubmit2 = (data) => {
+        console.log(data, '')
+
+
+
+
+
+        if (
+            data.achievement1 !== " " &&
+            data.achievement2 !== " " &&
+            data.achievement3 !== " " &&
+            data.PhoneNumber !== " " &&
+            data.Skilllevel !== " " &&
+            data.certificateone[0].name !== " " &&
+            // data.certificatetwo[0].name !== " " &&
+            data.cityortown !== " " &&
+            data.companyname !== " " &&
+            data.contactPerson !== " " &&
+            data.degree !== " " &&
+            data.eduaward !== " " &&
+            data.eduaward2 !== " " &&
+            data.eduaward3 !== " " &&
+            data.educity !== " " &&
+            data.emailaddress !== " " &&
+            data.employer !== " " &&
+            data.enddate !== " " &&
+            data.enddateedu !== " " &&
+            data.interest !== " " &&
+            data.jobtitle !== " " &&
+            data.language !== " " &&
+            data.skill !== " " &&
+            data.startdate !== " " &&
+            data.startdateedu !== " "
+        ) {
+            console.log(data)
+
+
+
+            const fileName = generateRandom(4)
+            var formdata = new FormData()
+            formdata.append('file', data.certificateone[0], '[PROXY]')
+            formdata.append('upload_preset', 'ml_default')
+            formdata.append('public_id', `${fileName}`)
+            formdata.append('api_key', `${process.env.REACT_APP_CLOUDINARY_API_KEY}`)
+
+            var requestOptions = {
+                method: 'POST',
+                body: formdata,
+                redirect: 'follow',
+            }
+
+            fetch(
+                'https://api.cloudinary.com/v1_1/femakin/image/upload',
+                requestOptions,
+            )
+                .then(async (response) => {
+                    return await response.json()
+                })
+                .then(async (result) => {
+                    console.log(result, 'result')
+
+
+                    console.log(
+                        {
+                            Full_name: `${user.full_name}`,
+                            Email: `${user.email}`,
+                            Role: `${user.role}`,
+                            Phone_number: `${user.phonenumber}`,
+                            Address: `${data.address}`,
+                            Profile_Photo_Url: `${user.img_url}`,
+                            Public_id: `${user.profile_phot_public_id}`,
+                            // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                            // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                            Profile_Photo_Url: `${user.unique_id}`,
+                            unique_id: `${user.unique_id}`,
+                            Job_Title_Ex: `${data.jobtitle}`,
+                            City_town_Ex: `${data.cityortown}`,
+                            Employer_Ex: `${data.employer}`,
+                            Start_date_ex: `${data.startdate}`,
+                            End_Date_Ex: `${data.enddate}`,
+                            Achievement_one_Ex: `${data.achievement1}`,
+                            Achievement_two_Ex: `${data.achievement2}`,
+                            Achievement_three_Ex: `${data.achievement3}`,
+                            Degree_Ed: `${data.degree}`,
+                            City_Ed: `${data.educity}`,
+                            School_Ed: `${data.eduschool}`,
+                            Start_date_Ed: `${data.startdateedu}`,
+                            End_date_Ed: `${data.enddateedu}`,
+                            Award_one_Ed: `${data.eduaward}`,
+                            Award_two_Ed: `${data.eduaward2}`,
+                            Award_three_Ed: `${data.eduaward3}`,
+                            Hobby: `${data.interest}`,
+                            Company_name_Rfx: `${data.companyname}`,
+                            Contact_person_Rfx: `${data.contactPerson}`,
+                            Phone_number_Rfx: `${data.PhoneNumber}`,
+                            Email_Address_Rfx: `${data.emailaddress}`,
+                            Skill: `${data.skill}`,
+                            Level_sk: `${data.Skilllevel}`,
+                            Cert_Img_one_url: `${result.secure_url}`,
+                            Language: `${data.language}`,
+                            Cert_Public_id: `${result.public_id}`
+
+
+                        }
+                    )
+
+                    console.log(router.query, 'router.query')
+
+                    console.log(
+                        JSON.parse(localStorage.getItem('user_id'))
+                    )
+
+                    console.log(JSON.parse(localStorage.getItem('user_details')))
+
+                    console.log(user, 'userrrrr')
+
+
+
+                    // if (data?.secure_url !== ' ') {
+                    //     // setUser(() => {
+                    //     //     return {
+                    //     //         Full_name: `${data.full_name}`,
+                    //     //         Email: `${data.email}`,
+                    //     //         Role: `${data.role}`,
+                    //     //         Phone_number: `${data.phonenumber}`,
+                    //     //         Address: `${data.address}`,
+                    //     //         Profile_Photo_Url: `${result.secure_url}`,
+                    //     //         Public_id: `${result.public_id}`,
+                    //     //         unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+                    //     //     }
+                    //     // })
+
+                    //     // localStorage.setItem('user_details',
+
+                    //     //     JSON.stringify({
+                    //     //         Full_name: `${data.full_name}`,
+                    //     //         Email: `${data.email}`,
+                    //     //         Role: `${data.role}`,
+                    //     //         Phone_number: `${data.phonenumber}`,
+                    //     //         Address: `${data.address}`,
+                    //     //         Profile_Photo_Url: `${result.secure_url}`,
+                    //     //         Public_id: `${result.public_id}`,
+                    //     //         unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+                    //     //     })
+                    //     // )
+
+                    //     localStorage.setItem('user_id',
+
+                    //         JSON.stringify({
+                    //             unique_id: signupid.unique_id
+                    //         })
+                    //     )
+
+
+
+
+
+
+
+
+
+
+
+
+                    //     // console.log(
+                    //     //     JSON.stringify({
+                    //     //         Full_name: `${data.full_name}`,
+                    //     //         Email: `${data.email}`,
+                    //     //         Role: `${data.role}`,
+                    //     //         Phone_number: `${data.phonenumber}`,
+                    //     //         Address: `${data.address}`,
+                    //     //         Profile_Photo_Url: `${result.secure_url}`,
+                    //     //         Public_id: `${result.public_id}`,
+                    //     //         unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+                    //     //     }),
+                    //     // )
+
+                    //     // fetch('/api/upload', {
+                    //     //     headers: { 'Content-Type': 'application/json' },
+                    //     //     method: 'POST',
+                    //     //     body: JSON.stringify({
+                    //     //         Full_name: `${router.query.full_name}`,
+                    //     //         Email: `${router.query.email}`,
+                    //     //         Role: `${router.query.role}`,
+                    //     //         Phone_number: `${router.query.phonenumber}`,
+                    //     //         Address: `${data.address}`,
+                    //     //         Profile_Photo_Url: `${router.query.img_url}`,
+                    //     //         Public_id: `${router.query.profile_phot_public_id}`,
+                    //     //         // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                    //     //         // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                    //     //         Profile_Photo_Url: `${router.query.unique_id}`,
+                    //     //         unique_id: `${router.query.unique_id}`,
+                    //     //         Job_Title_Ex: `${data.jobtitle}`,
+                    //     //         City_town_Ex: `${data.cityortown}`,
+                    //     //         Employer_Ex: `${data.employer}`,
+                    //     //         Start_date_ex: `${data.startdate}`,
+                    //     //         End_Date_Ex: `${data.enddate}`,
+                    //     //         Achievement_one_Ex: `${data.achievement1}`,
+                    //     //         Achievement_two_Ex: `${data.achievement2}`,
+                    //     //         Achievement_three_Ex: `${data.achievement3}`,
+                    //     //         Degree_Ed: `${data.degree_Ed}`,
+                    //     //         City_Ed: `${data.educity}`,
+                    //     //         School_Ed: `${data.eduschool}`,
+                    //     //         Start_date_Ed: `${data.startdateedu}`,
+                    //     //         End_date_Ed: `${data.enddateedu}`,
+                    //     //         Award_one_Ed: `${data.eduaward}`,
+                    //     //         Award_two_Ed: `${data.eduaward2}`,
+                    //     //         Award_three_Ed: `${data.eduaward3}`,
+                    //     //         Hobby: `${data.interest}`,
+                    //     //         Company_name_Rfx: `${data.companyname}`,
+                    //     //         Contact_person_Rfx: `${data.contactPerson}`,
+                    //     //         Phone_number_Rfx: `${data.PhoneNumber}`,
+                    //     //         Email_Address_Rfx: `${data.emailaddress}`,
+                    //     //         Skill: `${data.skill}`,
+                    //     //         Level_sk: `${data.Skilllevel}`,
+                    //     //         Cert_Img_one_url: `${result.secure_url}`,
+                    //     //         Language: `${data.language}`,
+                    //     //         Cert_Public_id: `${result.public_id}`
+
+
+
+
+                    //     //     }),
+                    //     // })
+                    //     //     .then((response) => response.json())
+                    //     //     .then(async (response) => {
+                    //     //         return (
+                    //     //             console.log(response, 'log from response'),
+                    //     //             await router.push({
+                    //     //                 pathname: '/preview',
+                    //     //                 query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
+                    //     //             })
+                    //     //         )
+                    //     //     })
+                    //     //     .catch((err) => console.error(err))
+                    // }
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
+
+
+
+        // router.push('/steptwo')
+        // const fileName = generateRandom(4)
+        // var formdata = new FormData()
+        // formdata.append('file', data.MyImage[0], '[PROXY]')
+        // formdata.append('upload_preset', 'ml_default')
+        // formdata.append('public_id', `${fileName}`)
+        // formdata.append('api_key', '992692999288596')
+
+        // var requestOptions = {
+        //   method: 'POST',
+        //   body: formdata,
+        //   redirect: 'follow',
+        // }
+
+        // fetch(
+        //   'https://api.cloudinary.com/v1_1/femakin/image/upload',
+        //   requestOptions,
+        // )
+        //   .then(async (response) => {
+        //     return await response.json()
+        //   })
+        //   .then(async (result) => {
+        //     console.log(result, 'result')
+
+
+
+
+
+        //     if (data?.secure_url !== ' ') {
+        //       setUser(() => {
+        //         return {
+        //           Full_name: `${data.full_name}`,
+        //           Email: `${data.email}`,
+        //           Role: `${data.role}`,
+        //           Phone_number: `${data.phonenumber}`,
+        //           Address: `${data.address}`,
+        //           Profile_Photo_Url: `${result.secure_url}`,
+        //           Public_id: `${result.public_id}`,
+        //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+        //         }
+        //       })
+
+        //       localStorage.setItem('user_details',
+
+        //         JSON.stringify({
+        //           Full_name: `${data.full_name}`,
+        //           Email: `${data.email}`,
+        //           Role: `${data.role}`,
+        //           Phone_number: `${data.phonenumber}`,
+        //           Address: `${data.address}`,
+        //           Profile_Photo_Url: `${result.secure_url}`,
+        //           Public_id: `${result.public_id}`,
+        //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+        //         })
+        //       )
+
+        //       localStorage.setItem('user_id',
+
+        //         JSON.stringify({
+        //           unique_id: signupid.unique_id
+        //         })
+        //       )
+
+
+        //       console.log(
+        //         JSON.stringify({
+        //           Full_name: `${data.full_name}`,
+        //           Email: `${data.email}`,
+        //           Role: `${data.role}`,
+        //           Phone_number: `${data.phonenumber}`,
+        //           Address: `${data.address}`,
+        //           Profile_Photo_Url: `${result.secure_url}`,
+        //           Public_id: `${result.public_id}`,
+        //           unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+        //         }),
+        //       )
+
+        //       fetch('/api/upload', {
+        //         headers: { 'Content-Type': 'application/json' },
+        //         method: 'POST',
+        //         body: JSON.stringify({
+        //           Full_name: `${data.full_name}`,
+        //           Email: `${data.email}`,
+        //           Role: `${data.role}`,
+        //           Phone_number: `${data.phonenumber}`,
+        //           Address: `${data.address}`,
+        //           Profile_Photo_Url: `${result.secure_url}`,
+        //           Public_id: `${result.public_id}`,
+        //           unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+        //         }),
+        //       })
+        //         .then((response) => response.json())
+        //         .then(async (response) => {
+        //           return (
+        //             console.log(response),
+        //             await router.push({
+        //               pathname: '/preview',
+        //               query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
+        //             })
+        //           )
+        //         })
+        //         .catch((err) => console.error(err))
+        //     }
+        //   })
+        //   .catch((err) => {
+        //     console.log(err)
+        //   })
+
     }
 
-    const onChangeText = (text) => {
-        // console.log("called");
-        // text = text !== "<p><br></p>" ? text : "";
-        // // setFieldsValue({ input: text });
-        // setquillValue(text);
-        // e.preventDefault()
-        console.log('called')
-        text = text !== '<p><br></p>' ? text : ''
-        // setFieldsValue({ input: text });
-        setTextVal(text)
+
+    const onSubmit3 = (data) => {
+
+        if (
+            data.achievement1 !== " " &&
+            data.achievement2 !== " " &&
+            data.achievement3 !== " " &&
+            data.PhoneNumber !== " " &&
+            data.Skilllevel !== " " &&
+            data.certificateone[0].name !== " " &&
+            // data.certificatetwo[0].name !== " " &&
+            data.cityortown !== " " &&
+            data.companyname !== " " &&
+            data.contactPerson !== " " &&
+            data.degree !== " " &&
+            data.eduaward !== " " &&
+            data.eduaward2 !== " " &&
+            data.eduaward3 !== " " &&
+            data.educity !== " " &&
+            data.emailaddress !== " " &&
+            data.employer !== " " &&
+            data.enddate !== " " &&
+            data.enddateedu !== " " &&
+            data.interest !== " " &&
+            data.jobtitle !== " " &&
+            data.language !== " " &&
+            data.skill !== " " &&
+            data.startdate !== " " &&
+            data.startdateedu !== " "
+        ) {
+            const fileName = generateRandom(4)
+            var formdata = new FormData()
+            formdata.append('file', data.certificateone[0], '[PROXY]')
+            formdata.append('upload_preset', 'ml_default')
+            formdata.append('public_id', `${fileName}`)
+            formdata.append('api_key', `${process.env.REACT_APP_CLOUDINARY_API_KEY}`)
+
+            var requestOptions = {
+                method: 'POST',
+                body: formdata,
+                redirect: 'follow',
+            }
+
+
+            fetch(
+                'https://api.cloudinary.com/v1_1/femakin/image/upload',
+                requestOptions,
+            )
+                .then(async (response) => {
+                    return await response.json()
+                })
+                .then(async (result) => {
+                    console.log(result, 'result')
+                    const UserDetails = JSON.parse(localStorage?.getItem('user_id'))
+                    console.log(loggedinuser, 'loggeddddinuser')
+
+                    if (result?.secure_url !== ' ') {
+
+                        // setUser(
+                        //     ()=>{
+                        //         return{
+                        //             Full_name: `${user.Full_name}`,
+                        //             Email: `${user.Email}`,
+                        //             Role: `${user.Role}`,
+                        //             Phone_number: `${user.Phone_number}`,
+                        //             Address: `${user.Address}`,
+                        //             Profile_Photo_Url: `${user.Profile_Photo_Url}`,
+                        //             Public_id: `${user.Public_id}`,
+                        //             // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                        //             // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                        //             unique_id: `${user.unique_id}`,
+                        //         }
+                        //     }
+                        // )
+
+
+
+                        // localStorage.setItem('user_details',
+
+                        //     JSON.stringify({
+                        //         Full_name: `${user.Full_name}`,
+                        //         Email: `${user.Email}`,
+                        //         Role: `${user.Role}`,
+                        //         Phone_number: `${user.Phone_number}`,
+                        //         Address: `${user.Address}`,
+                        //         Profile_Photo_Url: `${user.Profile_Photo_Url}`,
+                        //         Public_id: `${user.Public_id}`,
+                        //         // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                        //         // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                        //         unique_id: `${user.unique_id}`,
+                        //     })
+                        // )
+
+                        // localStorage.setItem('user_id',
+
+                        //     JSON.stringify({
+                        //         unique_id: user.unique_id
+                        //     })
+                        // )
+
+
+
+
+
+
+                        fetch('/api/upload', {
+                            headers: { 'Content-Type': 'application/json' },
+                            method: 'POST',
+                            body: JSON.stringify({
+                                Full_name: `${user.Full_name}`,
+                                Email: `${user.Email}`,
+                                Role: `${user.Role}`,
+                                Phone_number: `${user.Phone_number}`,
+                                Address: `${user.Address}`,
+                                Profile_Photo_Url: `${user.Profile_Photo_Url}`,
+                                Public_id: `${user.Public_id}`,
+                                // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                                // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                                unique_id: `${user.unique_id}`,
+                                Job_Title_Ex: `${data.jobtitle}`,
+                                City_town_Ex: `${data.cityortown}`,
+                                Employer_Ex: `${data.employer}`,
+                                Start_date_ex: `${data.startdate}`,
+                                End_Date_Ex: `${data.enddate}`,
+                                Achievement_one_Ex: `${data.achievement1}`,
+                                Achievement_two_Ex: `${data.achievement2}`,
+                                Achievement_three_Ex: `${data.achievement3}`,
+                                Degree_Ed: `${data.degree}`,
+                                City_Ed: `${data.educity}`,
+                                School_Ed: `${data.eduschool}`,
+                                Start_date_Ed: `${data.startdateedu}`,
+                                End_date_Ed: `${data.enddateedu}`,
+                                Award_one_Ed: `${data.eduaward}`,
+                                Award_two_Ed: `${data.eduaward2}`,
+                                Award_three_Ed: `${data.eduaward3}`,
+                                Hobby: `${data.interest}`,
+                                Company_name_Rfx: `${data.companyname}`,
+                                Contact_person_Rfx: `${data.contactPerson}`,
+                                Phone_number_Rfx: `${data.PhoneNumber}`,
+                                Email_Address_Rfx: `${data.emailaddress}`,
+                                Skill: `${data.skill}`,
+                                Level_sk: `${data.Skilllevel}`,
+                                Cert_Img_one_url: `${result.secure_url}`,
+                                Language: `${data.language}`,
+                                Cert_Public_Id: `${result.public_id}`
+
+                            }),
+                        })
+                            .then((response) => response.json())
+                            .then(async (response) => {
+                                return (
+                                    console.log(response),
+                                    await router.push({
+                                        pathname: '/preview',
+                                        query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
+                                    })
+                                )
+                            })
+                            .catch((err) => console.error(err))
+
+
+
+                    }
+
+
+
+
+
+                    // console.log(
+                    //     {
+                    //         Full_name: `${user.Full_name}`,
+                    //         Email: `${user.Email}`,
+                    //         Role: `${user.Role}`,
+                    //         Phone_number: `${user.Phone_number}`,
+                    //         Address: `${user.Address}`,
+                    //         Profile_Photo_Url: `${user.Profile_Photo_Url}`,
+                    //         Public_id: `${user.Public_id}`,
+                    //         // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                    //         // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                    //         unique_id: `${user.unique_id}`,
+                    //         Job_Title_Ex: `${data.jobtitle}`,
+                    //         City_town_Ex: `${data.cityortown}`,
+                    //         Employer_Ex: `${data.employer}`,
+                    //         Start_date_ex: `${data.startdate}`,
+                    //         End_Date_Ex: `${data.enddate}`,
+                    //         Achievement_one_Ex: `${data.achievement1}`,
+                    //         Achievement_two_Ex: `${data.achievement2}`,
+                    //         Achievement_three_Ex: `${data.achievement3}`,
+                    //         Degree_Ed: `${data.degree}`,
+                    //         City_Ed: `${data.educity}`,
+                    //         School_Ed: `${data.eduschool}`,
+                    //         Start_date_Ed: `${data.startdateedu}`,
+                    //         End_date_Ed: `${data.enddateedu}`,
+                    //         Award_one_Ed: `${data.eduaward}`,
+                    //         Award_two_Ed: `${data.eduaward2}`,
+                    //         Award_three_Ed: `${data.eduaward3}`,
+                    //         Hobby: `${data.interest}`,
+                    //         Company_name_Rfx: `${data.companyname}`,
+                    //         Contact_person_Rfx: `${data.contactPerson}`,
+                    //         Phone_number_Rfx: `${data.PhoneNumber}`,
+                    //         Email_Address_Rfx: `${data.emailaddress}`,
+                    //         Skill: `${data.skill}`,
+                    //         Level_sk: `${data.Skilllevel}`,
+                    //         Cert_Img_one_url: `${result.secure_url}`,
+                    //         Language: `${data.language}`,
+                    //         Cert_Public_id: `${result.public_id}`
+
+
+                    //     }
+                    // )
+
+                    // console.log(router.query, 'router.query')
+
+                    // console.log(
+                    //     JSON.parse(localStorage.getItem('user_id'))
+                    // )
+
+                    // // console.log(JSON.parse(localStorage.getItem('user_details')))
+
+                    // console.log(user, 'userrrrr')
+                    // console.log(UserDetails, 'UserDetails -localstorage')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
-    const modules = {
-        toolbar: [
-            [{ font: [] }],
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ color: [] }, { background: [] }],
-            [{ script: 'sub' }, { script: 'super' }],
-            ['blockquote', 'code-block'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ indent: '-1' }, { indent: '+1' }, { align: [] }],
-            ['link', 'image', 'video'],
-            ['clean'],
-        ],
-    }
+
+
+
+
+
 
     return (
         <div>
             <div>
                 <div className="prd_container">
-                    {/* <div className="top_nav">
-                        <Example />
-                    </div> */}
+
                     <Nav />
 
                     <div className={SteptwoStyle.product_body_container}>
                         <div className="submission_content">
                             <div className={SteptwoStyle.draft_title}>
-                                <h1 className="drfat_name">Welcome</h1>
+                                <h1 className="drfat_name">Welcome {router.query.full_name}</h1>
                             </div>
                         </div>
 
@@ -288,7 +865,7 @@ function steptwo() {
                                                             SetSideClicked(x?.title),
                                                             setMainInfo(!maininfo),
                                                             setActive(x?.title)
-                                                            // console.log(active)
+
                                                         )
                                                     }}
                                                     className={`${SteptwoStyle.images_info_content
@@ -306,7 +883,7 @@ function steptwo() {
                             <div className={SteptwoStyle.product_form_content}>
                                 <form
                                     className={SteptwoStyle.form}
-                                    onSubmit={handleSubmit(onSubmit)}
+                                    onSubmit={handleSubmit(onSubmit3)}
                                 >
                                     {active === 'Experience' ? (
                                         <div className="MainContent_Container">
@@ -334,6 +911,9 @@ function steptwo() {
                                                         type="text"
                                                         placeholder="e.g Cloud Engineer"
                                                         {...register('jobtitle')}
+                                                    // defaultValue=''
+
+
                                                     />
                                                 </div>
 
@@ -365,7 +945,7 @@ function steptwo() {
                                                         className={SteptwoStyle.getstarted_input}
                                                         type="text"
                                                         placeholder="e.g Hackmamba"
-                                                        {...register('emplyer')}
+                                                        {...register('employer')}
                                                     />
                                                 </div>
 
@@ -412,22 +992,22 @@ function steptwo() {
                                                     <textarea
                                                         className={SteptwoStyle.getstarted_input}
                                                         type="date"
-                                                        placeholder="e.g Archviement 1"
-                                                        {...register('pArchviement3')}
+                                                        placeholder="e.g Achievement 1"
+                                                        {...register('achievement1')}
                                                     />
 
                                                     <textarea
                                                         className={SteptwoStyle.getstarted_input}
                                                         type="date"
-                                                        placeholder="e.g Archviement 2"
-                                                        {...register('Archviement2')}
+                                                        placeholder="e.g Achievement 2"
+                                                        {...register('achievement2')}
                                                     />
 
                                                     <textarea
                                                         className={SteptwoStyle.getstarted_input}
                                                         type="date"
-                                                        placeholder="e.g Archviement 3"
-                                                        {...register('Archviement3')}
+                                                        placeholder="e.g Achievement 3"
+                                                        {...register('achievement3')}
                                                     />
                                                 </div>
 
@@ -442,1175 +1022,28 @@ function steptwo() {
                                                 </button>
                                             </div>
                                         </div>
+
+
                                     ) : active === 'Education and Qualification' ? (
-                                        // <div className="Images_container">
-                                        //     <div className="tell_us_title">
-                                        //         <h1 className="main_tell_title">Thumbnail</h1>
 
-                                        //         <p className="sub_tell_us_content">
-                                        //             Let's make your product look nice
-                                        //         </p>
-                                        //         <div className={SteptwoStyle.link_container}>
-                                        //             <div className={SteptwoStyle.hr_text}></div>
 
-                                        //             {/* <h1 className={SteptwoStyle.link_title}>Description</h1> */}
+                                        <Education register={register} setActive={setActive} />
 
-                                        //             <div className={SteptwoStyle.product_link_info}>
-                                        //                 <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                        //                     Recommended size: 240x240 | JPG, PNG, GIF. Max size:
-                                        //                     2MB
-                                        //                 </label>
-                                        //                 <input
-                                        //                     type="file"
-                                        //                     className={SteptwoStyle.getstarted_input}
-                                        //                     placeholder="Select an Image"
-                                        //                     multiple
-                                        //                     accept="image/*"
-                                        //                     // onChange={onImageChange}
-                                        //                     {...register("thumbnailimage")}
-                                        //                 />
 
-                                        //                 <div className={SteptwoStyle.image_wrapper}>
-                                        //                     {imageurls.map((imageSrc) => (
-                                        //                         <div className="single_img">
-                                        //                             <img
-                                        //                                 className={SteptwoStyle.thumbnail_img}
-                                        //                                 src={imageSrc}
-                                        //                                 alt=""
-                                        //                             />
-                                        //                         </div>
-                                        //                     ))}
-                                        //                 </div>
-                                        //             </div>
-                                        //         </div>
 
-                                        //         <div className={SteptwoStyle.link_container}>
-                                        //             <div className={SteptwoStyle.hr_text}></div>
-
-                                        //             <h1 className={SteptwoStyle.link_title}>Gallery</h1>
-
-                                        //             <div className={SteptwoStyle.product_link_info}>
-                                        //                 <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                        //                     The first image will be used as the social preview
-                                        //                     when your link is shared online. We recommend at
-                                        //                     least 3 or more images.
-                                        //                 </label>
-
-                                        //                 <input
-                                        //                     type="file"
-                                        //                     className={SteptwoStyle.getstarted_input}
-                                        //                     placeholder="Select an Image"
-                                        //                     multiple
-                                        //                     accept="image/*"
-                                        //                     // onChange={onImageChange}
-                                        //                     {...register("productimg")}
-                                        //                 />
-                                        //                 <div className={SteptwoStyle.image_wrapper}>
-                                        //                     {imageurls.map((imageSrc) => (
-                                        //                         <div className="single_img">
-                                        //                             <img
-                                        //                                 className={SteptwoStyle.thumbnail_img}
-                                        //                                 src={imageSrc}
-                                        //                                 alt=""
-                                        //                             />
-                                        //                         </div>
-                                        //                     ))}
-                                        //                 </div>
-                                        //             </div>
-                                        //         </div>
-
-                                        //         <div className={SteptwoStyle.link_container}>
-                                        //             <div className={SteptwoStyle.hr_text}></div>
-
-                                        //             <h1 className={SteptwoStyle.link_title}>Youtube</h1>
-
-                                        //             <div className={SteptwoStyle.product_link_info}>
-                                        //                 <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                        //                     This is optional but we find that showing how your
-                                        //                     product works is helpful to convince people. If you
-                                        //                     do add a video, it will appear as the first item in
-                                        //                     your gallery when you launch.
-                                        //                 </label>
-
-                                        //                 <input
-                                        //                     className={SteptwoStyle.getstarted_input}
-                                        //                     type="text"
-                                        //                     placeholder="Video of the product (optional) "
-                                        //                     {...register("youtubelink")}
-                                        //                 />
-                                        //             </div>
-                                        //         </div>
-
-                                        //         <button
-                                        //             onClick={() => {
-                                        //                 return setActive("Interests");
-                                        //             }}
-                                        //             className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                        //         >
-                                        //             Next step: Interests
-                                        //         </button>
-                                        //     </div>
-                                        // </div>
-
-                                        <div className="MainContent_Container">
-                                            <div className="tell_us_title">
-                                                <h1 className={SteptwoStyle.main_tell_title}>
-                                                    Education and Qualification
-                                                </h1>
-
-                                                <p className={SteptwoStyle.sub_tell_us_content}>
-                                                    Education
-                                                </p>
-                                            </div>
-
-                                            <div className={SteptwoStyle.product_form}>
-                                                <div className={SteptwoStyle.product_link_info}>
-                                                    <label
-                                                        className={SteptwoStyle.getstartedlabel}
-                                                        htmlFor=""
-                                                    >
-                                                        Degree
-                                                    </label>
-
-                                                    <input
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="text"
-                                                        placeholder="e.g Bachelor of Mathematics"
-                                                        {...register('degree')}
-                                                    />
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_link_info}>
-                                                    <label
-                                                        className={SteptwoStyle.getstartedlabel}
-                                                        htmlFor=""
-                                                    >
-                                                        City/Town
-                                                    </label>
-
-                                                    <input
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="text"
-                                                        placeholder="e.g Lagos Nigeria"
-                                                        {...register('educity')}
-                                                    />
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_link_info}>
-                                                    <label
-                                                        className={SteptwoStyle.getstartedlabel}
-                                                        htmlFor=""
-                                                    >
-                                                        School
-                                                    </label>
-
-                                                    <input
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="text"
-                                                        placeholder="e.g Kwara State University"
-                                                        {...register('emplyer')}
-                                                    />
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_link_info}>
-                                                    <label
-                                                        className={SteptwoStyle.getstartedlabel}
-                                                        htmlFor=""
-                                                    >
-                                                        Start Date
-                                                    </label>
-
-                                                    <input
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="date"
-                                                        placeholder="e.g Startdate"
-                                                        {...register('startdateedu')}
-                                                    />
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_link_info}>
-                                                    <label
-                                                        className={SteptwoStyle.getstartedlabel}
-                                                        htmlFor=""
-                                                    >
-                                                        End Date
-                                                    </label>
-
-                                                    <input
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="date"
-                                                        placeholder="e.g enddate"
-                                                        {...register('enddateedu')}
-                                                    />
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_link_info}>
-                                                    <label
-                                                        className={SteptwoStyle.getstartedlabel}
-                                                        htmlFor=""
-                                                    >
-                                                        Description
-                                                    </label>
-
-                                                    <textarea
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="date"
-                                                        placeholder="e.g Award 1"
-                                                        {...register('eduaward')}
-                                                    />
-
-                                                    <textarea
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="date"
-                                                        placeholder="e.g Award 2"
-                                                        {...register('eduaward2')}
-                                                    />
-
-                                                    <textarea
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="date"
-                                                        placeholder="e.g Archviement 3"
-                                                        {...register('eduaward3')}
-                                                    />
-                                                </div>
-
-                                                <button
-                                                    // type="submit"
-                                                    onClick={() => {
-                                                        return setActive('Interests')
-                                                    }}
-                                                    className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                                >
-                                                    Next step: Interests
-                                                </button>
-                                            </div>
-                                        </div>
                                     ) : active === 'Interests' ? (
-                                        <div className="MainContent_Container">
-                                            <div className="tell_us_title">
-                                                <h1 className={SteptwoStyle.main_tell_title}>
-                                                    Interest
-                                                </h1>
+                                        <Interest register={register} setActive={setActive} />
 
-                                                {/* <p className={SteptwoStyle.sub_tell_us_content}>
-                                                            Education
-                                                        </p> */}
-                                            </div>
-
-                                            <div className={SteptwoStyle.product_form}>
-                                                <div className={SteptwoStyle.product_link_info}>
-                                                    <label
-                                                        className={SteptwoStyle.getstartedlabel}
-                                                        htmlFor=""
-                                                    >
-                                                        Hobby
-                                                    </label>
-
-                                                    <input
-                                                        className={SteptwoStyle.getstarted_input}
-                                                        type="text"
-                                                        placeholder="e.g Driving"
-                                                        {...register('interest')}
-                                                    />
-                                                </div>
-
-                                                {/* <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                City/Town
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Lagos Nigeria"
-
-                                                                {...register("educity")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                School
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Kwara State University"
-
-                                                                {...register("emplyer")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Start Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Startdate"
-
-                                                                {...register("startdateedu")}
-                                                            />
-
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                End Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g enddate"
-
-                                                                {...register("enddateedu")}
-                                                            />
-
-                                                        </div>
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Description
-                                                            </label>
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 1"
-
-                                                                {...register("eduaward")}
-                                                            />
-
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 2"
-
-                                                                {...register("eduaward2")}
-                                                            />
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Archviement 3"
-
-                                                                {...register("eduaward3")}
-                                                            />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                        </div>
-
-
- */}
-
-                                                <button
-                                                    // type="submit"
-                                                    onClick={() => {
-                                                        return setActive('References')
-                                                    }}
-                                                    className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                                >
-                                                    Next step: References
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ) : //                     <div className="Images_container">
-                                        //                         <div className="tell_us_title">
-                                        //                             <h1 className="main_tell_title">
-                                        //                                 Did you work on this product?
-                                        //                             </h1>
-
-                                        //                             <p className="sub_tell_us_content">
-                                        //                                 It’s fine either way. Just need to know.
-                                        //                             </p>
-
-                                        //                             <div className={SteptwoStyle.link_container}>
-                                        //                                 <div className={SteptwoStyle.hr_text}></div>
-
-                                        //                                 <div className={SteptwoStyle.product_link_info}>
-                                        //                                     {/* <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                        //     Short description of the product
-                                        //   </label>
-
-                                        //   <textarea
-                                        //     className={SteptwoStyle.getstarted_input}
-                                        //     // type="text"
-                                        //     placeholder="Short description of the product "
-                                        //     rows="5"
-                                        //     {...register("moredescription")}
-                                        //   ></textarea> */}
-
-                                        //                                     <div className={SteptwoStyle.radio}>
-                                        //                                         <label>
-                                        //                                             <input
-                                        //                                                 type="radio"
-                                        //                                                 value="projectowner"
-                                        //                                                 className={SteptwoStyle.options}
-                                        //                                                 {...register("workers")}
-                                        //                                             />
-                                        //                                             I worked on this product
-                                        //                                         </label>
-                                        //                                     </div>
-
-                                        //                                     <div className={SteptwoStyle.radio}>
-                                        //                                         <label>
-                                        //                                             <input
-                                        //                                                 type="radio"
-                                        //                                                 value="otherpeople"
-                                        //                                                 className={SteptwoStyle.options}
-                                        //                                                 {...register("workers")}
-                                        //                                             />
-                                        //                                             I didn't work on this product
-                                        //                                         </label>
-                                        //                                     </div>
-                                        //                                 </div>
-                                        //                             </div>
-
-                                        //                             <div className={SteptwoStyle.link_container}>
-                                        //                                 <div className={SteptwoStyle.hr_text}></div>
-
-                                        //                                 <h1 className={SteptwoStyle.link_title}>
-                                        //                                     Who worked on this product?
-                                        //                                 </h1>
-
-                                        //                                 <div className={SteptwoStyle.product_link_info}>
-                                        //                                     <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                        //                                         This part needs to be filled out if you didn't work
-                                        //                                         alone on the project
-                                        //                                     </label>
-
-                                        //                                     <input
-                                        //                                         className={SteptwoStyle.getstarted_input}
-                                        //                                         type="text"
-                                        //                                         placeholder="Add with Product Hunt username or Twitter handles "
-                                        //                                         {...register("authornames")}
-                                        //                                     />
-                                        //                                 </div>
-                                        //                             </div>
-
-                                        //                             <button
-                                        //                                 onClick={() => {
-                                        //                                     return setActive("Extras");
-                                        //                                 }}
-                                        //                                 className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                        //                             >
-                                        //                                 Next step: Extras
-                                        //                             </button>
-                                        //                         </div>
-                                        //                     </div>
-
+                                    ) :
                                         active === 'References' ? (
-                                            <div className="MainContent_Container">
-                                                <div className="tell_us_title">
-                                                    <h1 className={SteptwoStyle.main_tell_title}>
-                                                        References
-                                                    </h1>
+                                            <References register={register} setActive={setActive} />
 
-                                                    {/* <p className={SteptwoStyle.sub_tell_us_content}>
-                                                            Education
-                                                        </p> */}
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_form}>
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Company Name
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            type="text"
-                                                            placeholder=""
-                                                            {...register('companyname')}
-                                                        />
-                                                    </div>
-
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Contact Person
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            type="text"
-                                                            placeholder=""
-                                                            {...register('contactPerson')}
-                                                        />
-                                                    </div>
-
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Phone Number
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            type="text"
-                                                            placeholder=""
-                                                            {...register('Phone Number')}
-                                                        />
-                                                    </div>
-
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Email Address
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            type="text"
-                                                            placeholder=""
-                                                            {...register('emailaddress')}
-                                                        />
-                                                    </div>
-
-                                                    {/* <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                City/Town
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Lagos Nigeria"
-
-                                                                {...register("educity")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                School
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Kwara State University"
-
-                                                                {...register("emplyer")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Start Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Startdate"
-
-                                                                {...register("startdateedu")}
-                                                            />
-
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                End Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g enddate"
-
-                                                                {...register("enddateedu")}
-                                                            />
-
-                                                        </div>
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Description
-                                                            </label>
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 1"
-
-                                                                {...register("eduaward")}
-                                                            />
-
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 2"
-
-                                                                {...register("eduaward2")}
-                                                            />
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Archviement 3"
-
-                                                                {...register("eduaward3")}
-                                                            />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                        </div>
-
-
- */}
-
-                                                    <button
-                                                        // type="submit"
-                                                        onClick={() => {
-                                                            return setActive('Skills')
-                                                        }}
-                                                        className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                                    >
-                                                        Next step: Skills
-                                                    </button>
-                                                </div>
-                                            </div>
                                         ) : active === 'Skills' ? (
-                                            <div className="MainContent_Container">
-                                                <div className="tell_us_title">
-                                                    <h1 className={SteptwoStyle.main_tell_title}>Skills</h1>
-
-                                                    {/* <p className={SteptwoStyle.sub_tell_us_content}>
-                                                            Education
-                                                        </p> */}
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_form}>
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Skill
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            type="text"
-                                                            placeholder="e.g. Microsoft Word"
-                                                            {...register('skill')}
-                                                        />
-                                                    </div>
-
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Level
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            type="text"
-                                                            placeholder="Expert"
-                                                            {...register('Skilllevel')}
-                                                        />
-                                                    </div>
-
-                                                    {/* <div className={SteptwoStyle.product_link_info}>
-                                                                        <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                            Phone Number
-                                                                        </label>
-
-                                                                        <input
-                                                                            className={SteptwoStyle.getstarted_input}
-                                                                            type="text"
-                                                                            placeholder=""
-
-                                                                            {...register("Phone Number")}
-                                                                        />
-                                                                    </div> */}
-
-                                                    {/* <div className={SteptwoStyle.product_link_info}>
-                                                                        <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                            Email Address
-                                                                        </label>
-
-                                                                        <input
-                                                                            className={SteptwoStyle.getstarted_input}
-                                                                            type="text"
-                                                                            placeholder=""
-
-                                                                            {...register("emailaddress")}
-
-                                                                        />
-                                                                    </div> */}
-
-                                                    {/* <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                City/Town
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Lagos Nigeria"
-
-                                                                {...register("educity")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                School
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Kwara State University"
-
-                                                                {...register("emplyer")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Start Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Startdate"
-
-                                                                {...register("startdateedu")}
-                                                            />
-
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                End Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g enddate"
-
-                                                                {...register("enddateedu")}
-                                                            />
-
-                                                        </div>
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Description
-                                                            </label>
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 1"
-
-                                                                {...register("eduaward")}
-                                                            />
-
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 2"
-
-                                                                {...register("eduaward2")}
-                                                            />
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Archviement 3"
-
-                                                                {...register("eduaward3")}
-                                                            />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                        </div>
-
-
- */}
-
-                                                    <button
-                                                        // type="submit"
-                                                        onClick={() => {
-                                                            return setActive('Images and media')
-                                                        }}
-                                                        className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                                    >
-                                                        Next step: Images and media
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            <Skills register={register} setActive={setActive} />
                                         ) : active === 'Images and media' ? (
-                                            <div className="MainContent_Container">
-                                                <div className="tell_us_title">
-                                                    <h1 className={SteptwoStyle.main_tell_title}>
-                                                        Certificates
-                                                    </h1>
-
-                                                    {/* <p className={SteptwoStyle.sub_tell_us_content}>
-                                                            Education
-                                                        </p> */}
-                                                </div>
-
-                                                <div className={SteptwoStyle.product_form}>
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Upload your certificate
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            placeholder="Select an Image"
-                                                            {...register('certificateone')}
-                                                            type="file"
-                                                            multiple
-                                                            accept="image/*"
-                                                        />
-                                                    </div>
-
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Upload your certificate
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            placeholder="Select an Image"
-                                                            {...register('certificatetwo')}
-                                                            type="file"
-                                                            multiple
-                                                            accept="image/*"
-                                                        />
-                                                    </div>
-
-                                                    {/* <div className={SteptwoStyle.product_link_info}>
-                                                                        <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                            Phone Number
-                                                                        </label>
-
-                                                                        <input
-                                                                            className={SteptwoStyle.getstarted_input}
-                                                                            type="text"
-                                                                            placeholder=""
-
-                                                                            {...register("Phone Number")}
-                                                                        />
-                                                                    </div> */}
-
-                                                    {/* <div className={SteptwoStyle.product_link_info}>
-                                                                        <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                            Email Address
-                                                                        </label>
-
-                                                                        <input
-                                                                            className={SteptwoStyle.getstarted_input}
-                                                                            type="text"
-                                                                            placeholder=""
-
-                                                                            {...register("emailaddress")}
-
-                                                                        />
-                                                                    </div> */}
-
-                                                    {/* <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                City/Town
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Lagos Nigeria"
-
-                                                                {...register("educity")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                School
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="text"
-                                                                placeholder="e.g Kwara State University"
-
-                                                                {...register("emplyer")}
-                                                            />
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Start Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Startdate"
-
-                                                                {...register("startdateedu")}
-                                                            />
-
-                                                        </div>
-
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                End Date
-                                                            </label>
-
-                                                            <input
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g enddate"
-
-                                                                {...register("enddateedu")}
-                                                            />
-
-                                                        </div>
-
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <label className={SteptwoStyle.getstartedlabel} htmlFor="">
-                                                                Description
-                                                            </label>
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 1"
-
-                                                                {...register("eduaward")}
-                                                            />
-
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Award 2"
-
-                                                                {...register("eduaward2")}
-                                                            />
-
-
-                                                            <textarea
-                                                                className={SteptwoStyle.getstarted_input}
-                                                                type="date"
-                                                                placeholder="e.g Archviement 3"
-
-                                                                {...register("eduaward3")}
-                                                            />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                        </div>
-
-
- */}
-
-                                                    <button
-                                                        // type="submit"
-                                                        onClick={() => {
-                                                            return setActive('Extras')
-                                                        }}
-                                                        className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                                    >
-                                                        Next step: Extras
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            <Imagesandmedia register={register} setActive={setActive} />
                                         ) : active === 'Extras' ? (
-                                            <div className="Images_container">
-                                                <div className="tell_us_title">
-                                                    {/* <h1 className="main_tell_title">Language</h1> */}
-
-
-                                                    <div className={SteptwoStyle.product_link_info}>
-                                                        <label
-                                                            className={SteptwoStyle.getstartedlabel}
-                                                            htmlFor=""
-                                                        >
-                                                            Language
-                                                        </label>
-
-                                                        <input
-                                                            className={SteptwoStyle.getstarted_input}
-                                                            type="text"
-                                                            placeholder="e.g Yoruba"
-                                                            {...register('language')}
-                                                        />
-                                                    </div>
-
-                                                    <button
-                                                        // onClick={() => {
-                                                        //   return setActive("");
-                                                        // }}
-                                                        type="submit"
-                                                        className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                                                    >
-                                                        Next step: Download
-                                                    </button>
-
-                                                    {/* <p className="sub_tell_us_content">
-                                                        Optional, but the community really appreciates
-                                                        knowing.
-                                                    </p> */}
-
-                                                    {/* <div className={SteptwoStyle.link_container}>
-                                                        <div className={SteptwoStyle.hr_text}></div>
-
-                                                        <div className={SteptwoStyle.product_link_info}>
-                                                            <div className={SteptwoStyle.radio}>
-                                                                <label>
-                                                                    <input
-                                                                        type="radio"
-                                                                        value="free"
-                                                                        className={SteptwoStyle.options}
-                                                                        {...register('price')}
-                                                                    />
-                                                                    Free
-                                                                </label>
-                                                            </div>
-
-                                                            <div className={SteptwoStyle.radio}>
-                                                                <label>
-                                                                    <input
-                                                                        type="radio"
-                                                                        value="paid"
-                                                                        className={SteptwoStyle.options}
-                                                                        {...register('price')}
-                                                                    />
-                                                                    Paid
-                                                                </label>
-                                                            </div>
-
-                                                            <div className={SteptwoStyle.radio}>
-                                                                <label>
-                                                                    <input
-                                                                        type="radio"
-                                                                        value="paidandfree"
-                                                                        className={SteptwoStyle.options}
-                                                                        {...register('price')}
-                                                                    />
-                                                                    Paid with free
-                                                                </label>
-                                                            </div>
-                                                        </div>
-
-                                                    </div> */}
-                                                </div>
-                                            </div>
+                                            <Extras register={register} setActive={setActive} />
                                         ) : null}
                                 </form>
                             </div>

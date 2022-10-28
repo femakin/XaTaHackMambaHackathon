@@ -23,7 +23,7 @@ function Signup() {
         const hashedPassword = Base64.encode(data.password)
 
 
-        console.log(data)
+        // console.log(data)
 
         fetch('/api/getuser', {
             headers: { 'Content-Type': 'application/json' },
@@ -31,7 +31,7 @@ function Signup() {
         })
             .then((response) => response.json())
             .then(async (response) => {
-                console.log(response, 'login response')
+                // console.log(response, 'login response')
                 setUsername(response)
 
 

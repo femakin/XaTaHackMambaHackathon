@@ -41,13 +41,13 @@ const Download = React.forwardRef((props, ref) => {
   )
 
   useEffect(() => {
-    console.log(loggedinuser, 'loggedinuser')
-    console.log(user, 'user---inside preview')
+    // console.log(loggedinuser, 'loggedinuser')
+    // console.log(user, 'user---inside preview')
 
     const validuser = loggedinuser?.data?.id
 
     let newObjectuser = JSON.parse(localStorage.getItem('user_id'))
-    console.log(validuser, 'validuser')
+    // console.log(validuser, 'validuser')
 
     setLoading(false)
 
@@ -59,7 +59,7 @@ const Download = React.forwardRef((props, ref) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response, 'response allllll')
+        // console.log(response, 'response allllll from download page')
         setAlldata(
           response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
         )
@@ -74,7 +74,7 @@ const Download = React.forwardRef((props, ref) => {
         <h1>loading....</h1>
       ) : (
         <div ref={ref}>
-          {console.log(alldata, 'alldattttttt')}
+          {/* {console.log(alldata, 'alldattttttt')} */}
           {alldata.map((x, i) => {
             return (
               <section className={Previewstyle.top_summary}>

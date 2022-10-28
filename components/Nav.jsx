@@ -36,7 +36,7 @@ export default function Nav() {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response, 'response allllll', newObjectuser)
+        // console.log(response, 'response allllll', newObjectuser)
         // setAlldata(
         //   response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
         // )
@@ -61,7 +61,7 @@ export default function Nav() {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response, 'response allllll')
+        // console.log(response, 'response allllll')
         if (
           // JSON.parse(localStorage?.getItem('user_id')) !== '' &&
           // JSON.parse(localStorage?.getItem('user_id')) !== undefined &&
@@ -73,6 +73,9 @@ export default function Nav() {
         } else {
           null
         }
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }, [])
 
@@ -104,7 +107,7 @@ export default function Nav() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div>
-                  {console.log(storagedata, 'storagedata')}
+                  {/* {console.log(storagedata, 'storagedata')} */}
                   {signnedin ? (
                     <div className="loggedincontent flex gap-2 items-center justify-center relative ">
                       <div className="submit_text">
@@ -123,7 +126,7 @@ export default function Nav() {
                         className="submit_text"
                       >
                         <h1
-                          onClick={() => router.push('/preview')}
+                          onClick={() => router.push('/stepone')}
                           className="submit_main_text text-[#e12e0d] cursor-pointer"
                         >
                           Create CV
@@ -157,7 +160,7 @@ export default function Nav() {
                           alt="userimage"
                         />
 
-                      </div> */}
+                    </div> */}
                       {/* {console.log(alldata, 'alldata')} */}
 
                       {/* {clicked && (
