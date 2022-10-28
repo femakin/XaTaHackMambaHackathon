@@ -136,6 +136,17 @@ function steptwo() {
         console.log(JSON.parse(localStorage.getItem('user_details, Localstorage   ')))
 
         console.log(user, 'userrrrr, Context')
+        console.log(signupid, 'signupid')
+
+
+
+        localStorage.setItem('user_id',
+
+            JSON.stringify({
+                unique_id: signupid.unique_id
+            })
+        )
+
 
 
     }, [])

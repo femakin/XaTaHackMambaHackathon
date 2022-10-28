@@ -23,10 +23,15 @@ export default function Nav() {
   const [storagedata, setStoragedata] = useState()
 
   useEffect(() => {
-    let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+    // let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+
     // JSON.parse(localStorage?.getItem('user_id')) === '' &&
     // JSON.parse(localStorage?.getItem('user_id')) === undefined &&
-    JSON.parse(localStorage?.getItem('user_id')) === null
+    // JSON.parse(localStorage?.getItem('user_id')) === null
+    JSON.parse(localStorage?.getItem('user_id')) === '' ||
+    JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+    JSON.parse(localStorage?.getItem('user_id')) === null ||
+    JSON.parse(localStorage?.getItem('user_id')) === '{}'
       ? setSigneedIn(false)
       : setSigneedIn(true)
 
@@ -48,10 +53,22 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
-    let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+    console.log(
+      JSON.parse(localStorage?.getItem('user_id')),
+      JSON.parse(localStorage?.getItem('user_id')),
+      JSON.parse(localStorage?.getItem('user_id')),
+      JSON.parse(localStorage?.getItem('user_id')),
+    )
+
+    // let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+
     // JSON.parse(localStorage?.getItem('user_id')) === '' &&
     // JSON.parse(localStorage?.getItem('user_id')) === undefined &&
-    JSON.parse(localStorage?.getItem('user_id')) === null
+    // JSON.parse(localStorage?.getItem('user_id')) === null
+    JSON.parse(localStorage?.getItem('user_id')) === '' ||
+    JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+    JSON.parse(localStorage?.getItem('user_id')) === null ||
+    JSON.parse(localStorage?.getItem('user_id')) === '{}'
       ? setSigneedIn(false)
       : setSigneedIn(true)
 
@@ -67,9 +84,9 @@ export default function Nav() {
           // JSON.parse(localStorage?.getItem('user_id')) !== undefined &&
           JSON.parse(localStorage?.getItem('user_id')) !== null
         ) {
-          setAlldata(
-            response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
-          )
+          // setAlldata(
+          //   response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
+          // )
         } else {
           null
         }

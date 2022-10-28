@@ -118,6 +118,11 @@ function afteredit() {
     }
 
     useEffect(() => {
+
+        console.log(router.query, 'inside after edit')
+        JSON.parse(localStorage?.getItem('user_id'))
+
+
         router.replace('/afteredit', undefined, { shallow: true })
 
         if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
@@ -198,16 +203,16 @@ function afteredit() {
 
                     console.log(
                         {
-                            Full_name: `${user.Full_name}`,
-                            Email: `${user.Email}`,
-                            Role: `${user.Role}`,
-                            Phone_number: `${user.Phone_number}`,
-                            Address: `${user.Address}`,
-                            Profile_Photo_Url: `${user.Profile_Photo_Url}`,
-                            Public_id: `${user.Public_id}`,
+                            Full_name: `${router.query.full_name}`,
+                            Email: `${router.query.email}`,
+                            Role: `${router.query.role}`,
+                            Phone_number: `${router.query.phonenumber}`,
+                            Address: `${router.query.address}`,
+                            Profile_Photo_Url: `${router.query.img_url}`,
+                            Public_id: `${router.query.profile_phot_public_id}`,
                             // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
                             // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
-                            unique_id: `${user.unique_id}`,
+                            unique_id: `${router.query.unique_id}`,
                             Job_Title_Ex: `${data.jobtitle}`,
                             City_town_Ex: `${data.cityortown}`,
                             Employer_Ex: `${data.employer}`,

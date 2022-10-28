@@ -65,6 +65,7 @@ function Stepone() {
   //   )
   // }
 
+  console.log(signupid, 'signupppppp')
   const onSubmit = async (data) => {
     // setUser(() => {
     //   return data
@@ -120,7 +121,7 @@ function Stepone() {
                 Address: `${data.address}`,
                 Profile_Photo_Url: `${result.secure_url}`,
                 Public_id: `${result.public_id}`,
-                unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? loggedinuser?.data.id : signupid?.unique_id}`,
+                unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid?.unique_id}`,
               }
             })
 
@@ -134,7 +135,7 @@ function Stepone() {
                 Address: `${data.address}`,
                 Profile_Photo_Url: `${result.secure_url}`,
                 Public_id: `${result.public_id}`,
-                unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+                unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid.unique_id}`,
               })
             )
 
@@ -159,11 +160,11 @@ function Stepone() {
                   Address: `${data.address}`,
                   Profile_Photo_Url: `${result.secure_url}`,
                   Public_id: `${result.public_id}`,
-                  unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+                  unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid?.unique_id}`,
 
                 },
                 img_url: `${result.secure_url}`,
-                unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
+                unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid?.unique_id}`,
                 profile_phot_public_id: `${result.public_id}`,
               },
             })
@@ -221,6 +222,7 @@ function Stepone() {
   useEffect(() => {
 
     console.log(loggedinuser, 'loggedinuser')
+    console.log(signupid, 'signupid')
 
 
     router.replace('/stepone', undefined, { shallow: true })

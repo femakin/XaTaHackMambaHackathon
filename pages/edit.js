@@ -120,36 +120,104 @@ function Edit() {
 
                     if (result?.secure_url !== ' ') {
 
-
-                        router.push({
-                            pathname: '/afteredit',
-                            query: {
-                                ...data, steponedata: {
-
-
-                                    Full_name: `${alldata.full_name}`,
-                                    Email: `${data.email}`,
-                                    Role: `${data.role}`,
-                                    Phone_number: `${data.phonenumber}`,
-                                    Address: `${data.address}`,
-                                    Profile_Photo_Url: `${result.secure_url}`,
-                                    Public_id: `${result.public_id}`,
-                                    unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-
-                                },
-                                img_url: `${result.secure_url}`,
-                                unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-                                profile_phot_public_id: `${result.public_id}`,
-                            },
+                        fetch('/api/fetchall', {
+                            headers: { 'Content-Type': 'application/json' },
+                            method: 'GET',
                         })
+                            .then((response) => response.json())
+                            .then((response) => {
+                                console.log(response?.filter((x) => x?.unique_id === id), 'response allllll from download page'),
+                                    setAlldata(
+                                        response?.filter((x) => x?.unique_id === id),
+                                    )
+                                // setLoading(true)
+
+                                const Incomingdata = response?.filter((x) => x?.unique_id === id)
+
+
+                                if (Incomingdata.length !== 0) {
+
+                                    router.push({
+                                        pathname: '/afteredit',
+                                        query: {
+                                            ...data, steponedata: {
+
+
+                                                Full_name: `${data.full_name}`,
+                                                Email: `${data.email}`,
+                                                Role: `${data.role}`,
+                                                Phone_number: `${data.phonenumber}`,
+                                                Address: `${data.address}`,
+                                                Profile_Photo_Url: `${result.secure_url}`,
+                                                Public_id: `${result.public_id}`,
+                                                unique_id: `${Incomingdata[0].unique_id}`
+                                                // unique_id: `${alldata[0]?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
+
+                                            },
+                                            img_url: `${result.secure_url}`,
+                                            unique_id: `${Incomingdata[0].unique_id}`,
+                                            profile_phot_public_id: `${result.public_id}`,
+                                        },
+                                    })
+                                }
+
+
+
+
+
+
+
+
+
+
+                            })
+                            .catch((err) => console.error(err))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        console.log(alldata[0])
+                        // router.push({
+                        //     pathname: '/afteredit',
+                        //     query: {
+                        //         ...data, steponedata: {
+
+
+                        //             Full_name: `${alldata.full_name}`,
+                        //             Email: `${data.email}`,
+                        //             Role: `${data.role}`,
+                        //             Phone_number: `${data.phonenumber}`,
+                        //             Address: `${data.address}`,
+                        //             Profile_Photo_Url: `${result.secure_url}`,
+                        //             Public_id: `${result.public_id}`,
+                        //             unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
+
+                        //         },
+                        //         img_url: `${result.secure_url}`,
+                        //         unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
+                        //         profile_phot_public_id: `${result.public_id}`,
+                        //     },
+                        // })
 
 
                         console.log(
                             {
-                                ...data, steponedata: {
+                                steponedata: {
 
 
-                                    Full_name: `${alldata[0].full_name}`,
+                                    Full_name: `${data.full_name}`,
                                     Email: `${data.email}`,
                                     Role: `${data.role}`,
                                     Phone_number: `${data.phonenumber}`,
@@ -283,7 +351,18 @@ function Edit() {
         console.log(user, 'user')
         console.log(user, user)
         console.log(loggedinuser.unique_id, 'iddddddd')
-        setid(JSON.parse(localStorage?.getItem('user_id')).unique_id)
+
+        JSON.parse(localStorage?.getItem('user_id')) === '' ||
+            JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+            JSON.parse(localStorage?.getItem('user_id')) === null ||
+            JSON.parse(localStorage?.getItem('user_id')) === '{}'
+            ? router.push('/')
+            : setid(JSON.parse(localStorage?.getItem('user_id')).unique_id)
+
+
+
+
+
 
 
         router.replace('/edit', undefined, { shallow: true })
@@ -295,19 +374,7 @@ function Edit() {
 
 
 
-        fetch('/api/fetchall', {
-            headers: { 'Content-Type': 'application/json' },
-            method: 'GET',
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                // console.log(response, 'response allllll from download page')
-                setAlldata(
-                    response?.filter((x) => x?.unique_id === id),
-                )
-                setLoading(true)
-            })
-            .catch((err) => console.error(err))
+
 
 
 

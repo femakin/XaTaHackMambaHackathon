@@ -35,8 +35,16 @@ function Preview() {
   const router = useRouter()
 
   useEffect(() => {
-    let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
-    newObjectuser?.unique_id !== ' ' ? setSigneedIn(!signnedin) : setSigneedIn(!signnedin)
+    // let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
+    // newObjectuser?.unique_id !== ' ' ? setSigneedIn(!signnedin) : setSigneedIn(!signnedin)
+
+
+    JSON.parse(localStorage?.getItem('user_id')) === '' ||
+      JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+      JSON.parse(localStorage?.getItem('user_id')) === null ||
+      JSON.parse(localStorage?.getItem('user_id')) === '{}'
+      ? setSigneedIn(false)
+      : setSigneedIn(true)
 
 
     if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
