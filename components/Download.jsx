@@ -11,7 +11,6 @@ import { BsFillTelephoneFill } from 'react-icons/bs'
 import { MdOutlineAlternateEmail } from 'react-icons/md'
 import { CiLocationOn } from 'react-icons/ci'
 import { useEffect } from 'react'
-import Nav from './Nav'
 
 const Download = React.forwardRef((props, ref) => {
   const router = useRouter()
@@ -56,6 +55,27 @@ const Download = React.forwardRef((props, ref) => {
         setAlldata(
           response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
         )
+
+        JSON.stringify({
+          steponedata: {
+            Full_name: `${response[0].Full_name}`,
+            Email: `${response[0].Email}`,
+            Role: `${response[0].Role}`,
+            Phone_number: `${response[0].Phone_number}`,
+            Address: `${response[0].Address}`,
+            Profile_Photo_Url: `${response[0].Profile_Photo_Url}`,
+            Public_id: `${response[0].Public_id}`,
+            unique_id: `${response[0].unique_id}`,
+            profile_phot_public_id: `${response[0].Public_id}`,
+            img_url: `${response[0].Profile_Photo_Url}`,
+            // id: `${response[0].id}`,
+          },
+          img_url: `${response[0].Profile_Photo_Url}`,
+          unique_id: `${response[0].unique_id}`,
+          profile_phot_public_id: `${response[0].Public_id}`,
+          // id: `${response[0].id}`,
+        })
+
         setLoading(true)
       })
       .catch((err) => console.error(err))
@@ -67,7 +87,6 @@ const Download = React.forwardRef((props, ref) => {
         <h1>loading....</h1>
       ) : (
         <div ref={ref}>
-          {console.log(alldata, 'alldattttttt')}
           {alldata.map((x, i) => {
             return (
               <section className={Previewstyle.top_summary}>
@@ -108,7 +127,6 @@ const Download = React.forwardRef((props, ref) => {
                     </div>
                   </div>
                 </section>
-                {console.log(x, 'xxx')}
 
                 <section className={Previewstyle.top_img}>
                   <AdvancedImage

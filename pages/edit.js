@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useContext } from 'react'
+
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
+
 import Home from '../styles/Home.module.css'
 import { useRouter } from 'next/router'
-// import { BasicInfoProvider, useBasicInfoContext } from './basicInfo'
+
 import { GlobalContext } from '../context/globalContext'
 import Nav from '../components/Nav'
-import { signupContext } from '../context/signupContext'
-import { BsTypeH1 } from 'react-icons/bs'
 
 function Edit() {
-
-
-    const { user, setUser, loggedinuser, setLoggedinuser } = useContext(
-        GlobalContext,
-    )
-    const { newObjectuser, setnewObjectuser } = useContext(signupContext)
-    const [signnedin, setSigneedIn] = useState(false)
+    const [, setSigneedIn] = useState(false)
 
     const router = useRouter()
     const {
@@ -42,7 +34,7 @@ function Edit() {
     }
 
     const onSubmit = async (data) => {
-        let UniqueId = JSON.parse(localStorage?.getItem('user_id'))
+
         reset({
             resumelink: '',
         })
@@ -87,6 +79,8 @@ function Edit() {
                                     (x) => x?.unique_id === id,
                                 )
 
+                                console.log(Incomingdata, 'Incoming')
+
                                 if (Incomingdata.length !== 0) {
                                     router.push({
                                         pathname: '/afteredit',
@@ -101,13 +95,38 @@ function Edit() {
                                                 Profile_Photo_Url: `${result.secure_url}`,
                                                 Public_id: `${result.public_id}`,
                                                 unique_id: `${Incomingdata[0].unique_id}`,
-
+                                                id: `${Incomingdata[0].id}`,
                                             },
                                             img_url: `${result.secure_url}`,
                                             unique_id: `${Incomingdata[0].unique_id}`,
                                             profile_phot_public_id: `${result.public_id}`,
+                                            id: `${Incomingdata[0].id}`,
                                         },
                                     })
+
+                                    localStorage.setItem(
+                                        'firstpagetoedit',
+
+                                        JSON.stringify({
+                                            steponedata: {
+                                                Full_name: `${data.full_name}`,
+                                                Email: `${data.email}`,
+                                                Role: `${data.role}`,
+                                                Phone_number: `${data.phonenumber}`,
+                                                Address: `${data.address}`,
+                                                Profile_Photo_Url: `${result.secure_url}`,
+                                                Public_id: `${result.public_id}`,
+                                                unique_id: `${Incomingdata[0].unique_id}`,
+                                                profile_phot_public_id: `${result.public_id}`,
+                                                img_url: `${result.secure_url}`,
+                                                id: `${result.id}`,
+                                            },
+                                            img_url: `${result.secure_url}`,
+                                            unique_id: `${Incomingdata[0].unique_id}`,
+                                            profile_phot_public_id: `${result.public_id}`,
+                                            id: `${Incomingdata[0].id}`,
+                                        }),
+                                    )
                                 }
                             })
                             .catch((err) => console.error(err))
@@ -238,7 +257,6 @@ function Edit() {
                                         </label>
 
                                         <input
-
                                             defaultValue=""
                                             required
                                             className={Home.getstartedinput}

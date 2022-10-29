@@ -7,20 +7,12 @@ import { GlobalContext } from '../context/globalContext'
 function Downloadandpreview({ onClick }) {
     const router = useRouter()
     const [alldata, setAlldata] = useState()
-    const { user, setUser, loggedinuser, setLoggedinuser } = useContext(GlobalContext)
+    const { user, setUser, loggedinuser, setLoggedinuser } = useContext(
+        GlobalContext,
+    )
     const { signupid, setsignupid } = useContext(signupContext)
 
-
     useEffect(() => {
-
-
-
-        console.log(JSON.parse(localStorage.getItem('user_details')))
-
-        console.log(user, 'user')
-        console.log(signupid, 'signupid')
-        // console.log(newObjectuser)
-
 
 
         JSON.parse(localStorage?.getItem('user_id')) === '' ||
@@ -29,9 +21,6 @@ function Downloadandpreview({ onClick }) {
             JSON.parse(localStorage?.getItem('user_id')) === '{}'
             ? router.push('/')
             : router.push('/preview')
-
-
-
 
         fetch('/api/fetchall', {
             headers: { 'Content-Type': 'application/json' },
@@ -47,40 +36,36 @@ function Downloadandpreview({ onClick }) {
                 setLoading(true)
             })
             .catch((err) => console.error(err))
-    }, []);
-
-
-
+    }, [])
 
     return (
         <div>
             <div className="flex mt-10 justify-between ">
-
+                <div onClick={onClick} className={Previewstyle.preview}>
+                    Download
+                </div>
                 {
-                    console.log(alldata, 'alldata')
+                    console.log(alldata, 'aalllll')
                 }
 
-                <div onClick={onClick} className={Previewstyle.preview}>Download</div>
+                <div
+                    onClick={() =>
+                        router.push({
+                            pathname: '/edit',
+                            query: {
+                                userdata: {
+                                    data: alldata[0],
+                                },
 
-                <div onClick={() => router.push({
-                    pathname: '/edit',
-                    query: {
-                        userdata: {
-
-
-                            data: alldata[0]
-                        }
-
-                        ,
-                        useravailabledata: `${alldata}`
+                                useravailabledata: `${alldata}`,
+                            },
+                        })
                     }
-
-
-
-
-                })} className={Previewstyle.preview}>Edit</div>
+                    className={Previewstyle.preview}
+                >
+                    Edit
+                </div>
             </div>
-
         </div>
     )
 }

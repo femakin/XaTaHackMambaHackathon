@@ -27,7 +27,7 @@ export default function Nav() {
     })
       .then((response) => response.json())
       .then((response) => {
-        setStoragedata(newObjectuser)
+        // setStoragedata(newObjectuser)
 
         setClicked(!clicked)
       })

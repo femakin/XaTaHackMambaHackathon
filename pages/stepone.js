@@ -13,6 +13,7 @@ function Stepone() {
   )
   const { signupid, setsignupid } = useContext(signupContext)
   const [signnedin, setSigneedIn] = useState(false)
+  const [loadingstate, setLoadingState] = useState(false)
 
   const router = useRouter()
 
@@ -39,6 +40,7 @@ function Stepone() {
 
 
   const onSubmit = async (data) => {
+
     reset({
       resumelink: '',
     })
@@ -51,6 +53,7 @@ function Stepone() {
       data.phonenumber !== ' ' &&
       data.role !== ' '
     ) {
+      setLoadingState(true)
       const fileName = generateRandom(4)
       var formdata = new FormData()
       formdata.append('file', data.MyImage[0], '[PROXY]')
@@ -73,6 +76,7 @@ function Stepone() {
         })
         .then(async (result) => {
           if (result?.secure_url !== ' ') {
+            setLoadingState(!loadingstate)
             setUser(() => {
               return {
                 Full_name: `${data?.full_name}`,

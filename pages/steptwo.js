@@ -187,6 +187,7 @@ function steptwo() {
                                 Profile_Photo_Url: `${user.Profile_Photo_Url}`,
                                 Public_id: `${user.Public_id}`,
                                 unique_id: `${user.unique_id}`,
+                                id: `${user.id}`
                             }),
                         )
 
@@ -242,6 +243,15 @@ function steptwo() {
                             .then(async (response) => {
                                 return (
                                     console.log(response),
+                                    localStorage.setItem(
+                                        '_id',
+
+                                        JSON.stringify({
+                                            _id: response.id,
+                                        }),
+                                    ),
+
+
                                     await router.push({
                                         pathname: '/preview',
                                         query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
