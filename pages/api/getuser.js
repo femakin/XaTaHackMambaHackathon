@@ -13,10 +13,22 @@ const handler = async (req, res) => {
 
 
     res.setHeader('content-type', 'application/json');
-    res.send(JSON.stringify({ records }));
+    res.send(JSON.stringify({ records }))
 
 
-    res.end()
+        .then((data) => {
+            res.end(JSON.stringify(data));
+        })
+        .catch((err) => {
+            res.end(JSON.stringify(err));
+            res.end()
+        })
+    console.log(record, 'record')
+    res.end(JSON.stringify(record));
+    resolve();
+    res.end(JSON.stringify(res));
+
+    // res.end()
     // if (!user) {
     //     await xata.db.users.create({ username, password: password })
     //     return {

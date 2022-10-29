@@ -50,10 +50,22 @@ const handler = async (req, res) => {
     })
 
     res.setHeader('content-type', 'application/json');
-    res.send(JSON.stringify({ record }));
+    res.send(JSON.stringify(record))
+
+        .then((data) => {
+            res.end(JSON.stringify(data));
+        })
+        .catch((err) => {
+            res.end(JSON.stringify(err));
+            res.end()
+        })
+    console.log(record, 'record')
+    res.end(JSON.stringify(record));
+    resolve();
+    res.end(JSON.stringify(res));
 
 
-    res.end()
+    // res.end()
 
 
     // .then((data) => {
