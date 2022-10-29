@@ -18,6 +18,11 @@ const handler = async (req, res) => {
         password: hashedPassword,
         username: req.body.username,
     })
+
+    res.setHeader('content-type', 'application/json');
+    res.send(JSON.stringify({ record }));
+
+
     res.end()
 
     // .then((data) => {

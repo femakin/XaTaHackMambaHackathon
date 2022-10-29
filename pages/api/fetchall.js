@@ -7,9 +7,16 @@ const handler = async (req, res) => {
 
     const records = await xata.db.basic_info.getAll()
 
+
+    res.setHeader('content-type', 'application/json');
+    res.send(JSON.stringify({ records }));
+
+
+    res.end()
+
     // console.log(records)
     // res.end(JSON.stringify(records));
-    res.end()
+    // res.end()
 
 
 }

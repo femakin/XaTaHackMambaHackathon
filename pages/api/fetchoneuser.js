@@ -55,7 +55,15 @@ const handler = async (req, res) => {
         Cert_Public_Id: req.body.Cert_Public_Id
 
     })
+
+
+    res.setHeader('content-type', 'application/json');
+    res.send(JSON.stringify({ record }));
+
+
     res.end()
+
+    // res.end()
 
     // .then((data) => {
     //     res.end(JSON.stringify(data));

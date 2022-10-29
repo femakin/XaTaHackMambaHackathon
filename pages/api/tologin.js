@@ -14,9 +14,15 @@ const handler = async (req, res) => {
     //     username: "string",
     // });
 
-    res.end()
+    // res.end()
 
     console.log(records);
+
+    res.setHeader('content-type', 'application/json');
+    res.send(JSON.stringify({ records }));
+
+
+    res.end()
 
 
     // res.end(JSON.stringify(records));
