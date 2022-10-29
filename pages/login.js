@@ -7,23 +7,20 @@ import { useRouter } from 'next/router'
 import { signupContext } from '../context/signupContext'
 import { GlobalContext } from '../context/globalContext'
 import bcrypt from 'bcryptjs'
-import { Base64 } from 'js-base64';
+import { Base64 } from 'js-base64'
 
-function Signup() {
-    const [images, setImages] = useState([])
-    const [username, setUsername] = useState()
-    const [existinguser, setexistingUser] = useState()
+function Login() {
+
+    const [, setUsername] = useState()
     const router = useRouter()
 
     const { signupid, setsignupid } = useContext(signupContext)
-    const { loggedinuser, setLoggedinuser } = useContext(GlobalContext)
+    const { setLoggedinuser } = useContext(GlobalContext)
+    const [passwordcheck, setpasswordcheck] = useState(false)
 
     const onSubmit = (data) => {
         const salt = bcrypt.genSaltSync(10)
         const hashedPassword = Base64.encode(data.password)
-
-
-        // console.log(data)
 
         fetch('/api/getuser', {
             headers: { 'Content-Type': 'application/json' },
@@ -31,29 +28,15 @@ function Signup() {
         })
             .then((response) => response.json())
             .then(async (response) => {
-                // console.log(response, 'login response')
                 setUsername(response)
-
-
-
-
 
                 const Loggedinemail = response.filter((x) => {
                     return x?.email === data?.email
                 })
 
-                // console.log(hashedPassword === Loggedinemail[0]?.password, 'hasspasss to login')
-
-                // console.log(Loggedinemail[0]?.password, 'loggedinuser')
-                // console.log(hashedPassword, 'hashedPassword')
-
-                // console.log(Loggedinemail, 'loggedinemail')
-
-
-
                 if (
-                    Loggedinemail[0]?.email === data?.email
-                    && hashedPassword === Loggedinemail[0]?.password
+                    Loggedinemail[0]?.email === data?.email &&
+                    hashedPassword === Loggedinemail[0]?.password
                 ) {
                     localStorage.setItem(
                         'user_id',
@@ -71,13 +54,11 @@ function Signup() {
                         pathname: '/stepone',
                     })
                 } else {
-                    router.push({
-                        pathname: '/signup',
-                    })
+                    // router.push({
+                    //     pathname: '/signup',
+                    // })
+                    setpasswordcheck(!passwordcheck)
                 }
-
-
-
             })
     }
 
@@ -118,71 +99,32 @@ function Signup() {
 
                         <button
                             style={{
-                                marginBottom: '20px'
+                                marginBottom: '20px',
                             }}
-
                             type="submit"
                             className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
                         >
                             Login
                         </button>
-
-
-
                     </form>
 
-                    <span
+                    <span>
+                        Don't have an account yet?{' '}
+                        <span
+                            style={{ color: 'red' }}
+                            onClick={() => router.push('/signup')}
+                        >
+                            Signup
+                        </span>{' '}
+                    </span>
 
-
-                    >Don't have an account yet?  <span style={{ color: 'red' }}
-
-                        onClick={() => router.push('/signup')}
-                    >Signup</span>  </span>
+                    <div style={{ marginTop: '20px', color: 'red' }}>
+                        {passwordcheck && <span>Wrong Details!</span>}
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Signup
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// if (
-//     Loggedinemail[0]?.email !== undefined ||
-//     Loggedinemail[0] !== undefined && Loggedinemail[0]?.password === hashedPassword
-// ) {
-//     localStorage.setItem(
-//         'user_id',
-//         JSON.stringify({
-//             unique_id: Loggedinemail[0]?.id,
-//         }),
-//     ),
-//         setLoggedinuser(() => {
-//             return {
-//                 data: Loggedinemail[0],
-//             }
-//         })
-
-//     router.push({
-//         pathname: '/preview',
-//     })
-// } else {
-//     router.push({
-//         pathname: '/signup',
-//     })
-// }
+export default Login

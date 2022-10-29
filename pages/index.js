@@ -1,70 +1,25 @@
 // import { GetServerSideProps } from 'next/types'
 import React, { FC, useEffect } from 'react'
-import { useContext } from 'react'
-import { useState } from 'react'
 import Nav from '../components/Nav'
 import { getXataClient } from '../utils/xata.codegen'
-// import { authorize } from '../util/Authorize'
 import Home from '../styles/Home.module.css'
 import { set, useForm } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Router } from 'react-router-dom'
 import { useRouter } from 'next/router'
 
-
-
-// type Props = Awaited<ReturnType<typeof getServerSideProps>>['props']
-
-
-
-
-
 const Index = ({ items }) => {
-
-  // useEffect(() => {
   const router = useRouter()
 
-
-  //   fetch('/api/getuser', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     method: 'GET',
-  //   })
-  //     .then((response) => response.json())
-  //     .then((response) => {
-  //       console.log(response, 'user details')
-
-  //     })
-  //     .catch((err) => console.error(err))
-
-
-  // }, [])
-
-
-  // const schema = yup.object().shape({
-  //   email: yup.string().email().required('Email is required'),
-  // })
-
-  // const { user, setUser, loggedinuser, setLoggedinuser } = useContext(GlobalContext)
-  // const { signupid, setsignupid } = useContext(signupContext)
-  // const [signnedin, setSigneedIn] = useState(false)
   const {
-    control,
-    getValues,
-    setValue,
-    trigger,
     register,
     reset,
-    watch,
+
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: 'all',
   })
 
-
   const onSubmit = (data) => {
-
     reset({
       resumelink: '',
     })
@@ -79,8 +34,6 @@ const Index = ({ items }) => {
     ) {
       router.push('/login')
     }
-
-
   }
   return (
     <div>
@@ -208,22 +161,9 @@ const Index = ({ items }) => {
             </div>
           </div>
         </div>
-
       </>
-
     </div>
   )
 }
 
 export default Index
-
-
-
-
-
-
-
-
-
-
-
