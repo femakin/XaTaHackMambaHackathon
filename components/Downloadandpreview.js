@@ -28,7 +28,7 @@ function Downloadandpreview({ onClick }) {
             JSON.parse(localStorage?.getItem('user_id')) === null ||
             JSON.parse(localStorage?.getItem('user_id')) === '{}'
             ? router.push('/')
-            : router.push('/edit')
+            : router.push('/preview')
 
 
 

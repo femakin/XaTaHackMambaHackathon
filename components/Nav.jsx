@@ -1,33 +1,19 @@
 /* This Nav requires Tailwind CSS v2.0+ */
-import { Fragment, useContext, useEffect, useState } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { useEffect, useState } from 'react'
+import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { json, useNavigate } from 'react-router-dom'
-import NavStyle from '../styles/Nav.module.css'
+
 import { useRouter } from 'next/router'
-import { Cloudinary } from '@cloudinary/url-gen'
-import { AdvancedImage } from '@cloudinary/react'
-import { fill } from '@cloudinary/url-gen/actions/resize'
-import { thumbnail } from '@cloudinary/url-gen/actions/resize'
-import { byRadius } from '@cloudinary/url-gen/actions/roundCorners'
-import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity'
-import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn'
 
 export default function Nav() {
-  // let navigate = useNavigate()
   const [clicked, setClicked] = useState(false)
-  const [loggedinuserdetails, setLoggedinUserdetails] = useState(false)
+
   const [signnedin, setSigneedIn] = useState(false)
   const router = useRouter()
   const [alldata, setAlldata] = useState([])
   const [storagedata, setStoragedata] = useState()
 
   useEffect(() => {
-    // let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
-
-    // JSON.parse(localStorage?.getItem('user_id')) === '' &&
-    // JSON.parse(localStorage?.getItem('user_id')) === undefined &&
-    // JSON.parse(localStorage?.getItem('user_id')) === null
     JSON.parse(localStorage?.getItem('user_id')) === '' ||
     JSON.parse(localStorage?.getItem('user_id')) === undefined ||
     JSON.parse(localStorage?.getItem('user_id')) === null ||
@@ -41,10 +27,6 @@ export default function Nav() {
     })
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response, 'response allllll', newObjectuser)
-        // setAlldata(
-        //   response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
-        // )
         setStoragedata(newObjectuser)
 
         setClicked(!clicked)
@@ -53,18 +35,6 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
-    console.log(
-      JSON.parse(localStorage?.getItem('user_id')),
-      JSON.parse(localStorage?.getItem('user_id')),
-      JSON.parse(localStorage?.getItem('user_id')),
-      JSON.parse(localStorage?.getItem('user_id')),
-    )
-
-    // let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
-
-    // JSON.parse(localStorage?.getItem('user_id')) === '' &&
-    // JSON.parse(localStorage?.getItem('user_id')) === undefined &&
-    // JSON.parse(localStorage?.getItem('user_id')) === null
     JSON.parse(localStorage?.getItem('user_id')) === '' ||
     JSON.parse(localStorage?.getItem('user_id')) === undefined ||
     JSON.parse(localStorage?.getItem('user_id')) === null ||
@@ -78,15 +48,7 @@ export default function Nav() {
     })
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response, 'response allllll')
-        if (
-          // JSON.parse(localStorage?.getItem('user_id')) !== '' &&
-          // JSON.parse(localStorage?.getItem('user_id')) !== undefined &&
-          JSON.parse(localStorage?.getItem('user_id')) !== null
-        ) {
-          // setAlldata(
-          //   response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
-          // )
+        if (JSON.parse(localStorage?.getItem('user_id')) !== null) {
         } else {
           null
         }
@@ -150,12 +112,6 @@ export default function Nav() {
                         </h1>
                       </div>
 
-                      {/* <div className="submit_text">
-                        <h1 className="submit_main_text text-[#000000] cursor-pointer">
-                          Welcome,
-                        </h1>
-                      </div> */}
-
                       <div
                         onClick={() => {
                           return router.push('/'), localStorage.clear()
@@ -166,41 +122,6 @@ export default function Nav() {
                           Logout
                         </h1>
                       </div>
-
-                      {/* <div
-                        onClick={() => setClicked(!clicked)}
-                        className=" w-8 h-8  cursor-pointer"
-                      >
-                        <img
-                          className=" cursor-pointer rounded-full border border-gray-100 shadow-sm"
-                          src={alldata[0]?.Profile_Photo_Url}
-                          alt="userimage"
-                        />
-
-                    </div> */}
-                      {/* {console.log(alldata, 'alldata')} */}
-
-                      {/* {clicked && (
-                        <div className="dropdownmenu top-12 cursor-pointer   absolute">
-                          <div
-                            onClick={() => {
-                              return router.push('/stepone')
-                            }}
-                          >
-                            <h1>Craete CV</h1>
-                          </div>
-
-                          <div
-                            onClick={() => {
-                              return router.push('/'), localStorage.clear()
-                            }}
-                          >
-                            <h1>Logout</h1>
-                          </div>
-
-                          <div></div>
-                        </div>
-                      )} */}
                     </div>
                   ) : (
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

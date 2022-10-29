@@ -22,10 +22,11 @@ function Stepone() {
     email: yup.string().email().required('Email is required'),
   })
 
-  const { user, setUser, loggedinuser, setLoggedinuser } = useContext(GlobalContext)
+  const { user, setUser, loggedinuser, setLoggedinuser } = useContext(
+    GlobalContext,
+  )
   const { signupid, setsignupid } = useContext(signupContext)
   const [signnedin, setSigneedIn] = useState(false)
-
 
   const router = useRouter()
   //   const navigate = useNavigate()
@@ -66,6 +67,45 @@ function Stepone() {
   // }
 
   console.log(signupid, 'signupppppp')
+
+  useEffect(() => {
+    // console.log(
+    //   JSON.parse(localStorage.getItem('user_id'))?.user_id,
+    //   'JSON.parse(localStorage.getItem(user_id))?.user_id',
+    // )
+    // console.log(signupid.unique_id, 'signupid.unique_id')
+    // console.log(loggedinuser, 'loggedinuser')
+    // console.log(loggedinuser, 'loggedinuser.data.id')
+    // console.log(
+    //   JSON.parse(localStorage.getItem('user_details'))?.unique_id,
+    //   'userdetailsss-unique_id',
+    // )
+    // console.log(
+    //   JSON.parse(localStorage.getItem('user_details')),
+    //   'userdetailsss',
+    // )
+    // console.log(
+    //   JSON.parse(localStorage.getItem('user_details')),
+    //   'userdetailsss-unique_id',
+    // )
+    // console.log(
+    //   JSON.parse(localStorage.getItem('user_id'))?.unique_id,
+    //   'userdetailsss-serid_id',
+    // )
+    // console.log(loggedinuser?.data?.id, 'loggedinuser')
+
+    // console.log(
+    //   loggedinuser?.data?.id === undefined ||
+    //     loggedinuser?.data?.id === '{}' ||
+    //     loggedinuser?.data?.id === null
+    //     ? JSON.parse(localStorage?.getItem('user_id'))?.unique_id
+    //     : loggedinuser?.data?.id,
+    // )
+
+    // console.log(user, 'userrrrr')
+
+  }, [])
+
   const onSubmit = async (data) => {
     // setUser(() => {
     //   return data
@@ -82,7 +122,6 @@ function Stepone() {
       data.phonenumber !== ' ' &&
       data.role !== ' '
     ) {
-
       const fileName = generateRandom(4)
       var formdata = new FormData()
       formdata.append('file', data.MyImage[0], '[PROXY]')
@@ -106,53 +145,115 @@ function Stepone() {
         .then(async (result) => {
           console.log(result, 'result   from step one')
           console.log(loggedinuser, 'loggedinuser')
-
-
-
-
+          console.log(
+            JSON.stringify({
+              Full_name: `${data?.full_name}`,
+              Email: `${data?.email}`,
+              Role: `${data?.role}`,
+              Phone_number: `${data?.phonenumber}`,
+              Address: `${data?.address}`,
+              Profile_Photo_Url: `${result?.secure_url}`,
+              Public_id: `${result.public_id}`,
+              // unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null || signupid?.unique_id === "{}" ? JSON.parse(localStorage.getItem('user_id'))?.user_id : loggedinuser.data.id}`,
+              unique_id:
+                loggedinuser?.data?.id === undefined ||
+                  loggedinuser?.data?.id === '{}' ||
+                  loggedinuser?.data?.id === null
+                  ? JSON.parse(localStorage.getItem('user_id')).unique_id
+                  : loggedinuser?.data?.id,
+            }),
+          )
 
           if (result?.secure_url !== ' ') {
             setUser(() => {
               return {
-                Full_name: `${data.full_name}`,
-                Email: `${data.email}`,
-                Role: `${data.role}`,
-                Phone_number: `${data.phonenumber}`,
-                Address: `${data.address}`,
-                Profile_Photo_Url: `${result.secure_url}`,
-                Public_id: `${result.public_id}`,
-                unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid?.unique_id}`,
+                Full_name: `${data?.full_name}`,
+                Email: `${data?.email}`,
+                Role: `${data?.role}`,
+                Phone_number: `${data?.phonenumber}`,
+                Address: `${data?.address}`,
+                Profile_Photo_Url: `${result?.secure_url}`,
+                Public_id: `${result?.public_id}`,
+                // unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null || signupid?.unique_id === "{}" ? JSON.parse(localStorage.getItem('user_id'))?.user_id : loggedinuser.data.id}`,
+                unique_id:
+                  loggedinuser?.data?.id === undefined ||
+                    loggedinuser?.data?.id === '{}' ||
+                    loggedinuser?.data?.id === null
+                    ? JSON.parse(localStorage.getItem('user_id'))?.unique_id
+                    : loggedinuser?.data?.id,
               }
             })
 
-            localStorage.setItem('user_details',
+            localStorage.setItem(
+              'user_details',
 
               JSON.stringify({
-                Full_name: `${data.full_name}`,
-                Email: `${data.email}`,
-                Role: `${data.role}`,
-                Phone_number: `${data.phonenumber}`,
+                Full_name: `${data?.full_name}`,
+                Email: `${data?.email}`,
+                Role: `${data?.role}`,
+                Phone_number: `${data?.phonenumber}`,
+                Address: `${data?.address}`,
+                Profile_Photo_Url: `${result?.secure_url}`,
+                Public_id: `${result?.public_id}`,
+                // unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null || signupid?.unique_id === "{}" ? JSON.parse(localStorage.getItem('user_id'))?.user_id : loggedinuser.data.id}`,
+                unique_id:
+                  loggedinuser?.data?.id === undefined ||
+                    loggedinuser?.data?.id === '{}' ||
+                    loggedinuser?.data?.id === null
+                    ? JSON.parse(localStorage.getItem('user_id'))?.unique_id
+                    : loggedinuser?.data?.id,
+              }),
+            )
+
+            localStorage.setItem(
+              'user_id',
+
+              JSON.stringify({
+                unique_id: signupid.unique_id,
+              }),
+            )
+
+            console.log(
+              JSON.parse(localStorage.getItem('user_id'))?.user_id,
+              'JSON.parse(localStorage.getItem(user_id))?.user_id',
+            )
+            console.log(signupid.unique_id, 'signupid.unique_id')
+            console.log(loggedinuser, 'loggedinuser')
+            console.log(loggedinuser?.data?.id, 'loggedinuser.data.id')
+            console.log(
+              JSON.parse(localStorage?.getItem('user_id')),
+              'userdetailsss',
+            )
+            console.log(loggedinuser?.data?.id === "{}" || loggedinuser?.data?.id === undefined || loggedinuser?.data?.id === null ? JSON.parse(localStorage?.getItem('user_id')).unique_id : loggedinuser?.data?.id)
+
+
+
+
+            console.log(
+              {
+                Full_name: `${data?.full_name}`,
+                Email: `${data?.email}`,
+                Role: `${data?.role}`,
+                Phone_number: `${data?.phonenumber}`,
                 Address: `${data.address}`,
-                Profile_Photo_Url: `${result.secure_url}`,
-                Public_id: `${result.public_id}`,
-                unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid.unique_id}`,
-              })
+                Profile_Photo_Url: `${result?.secure_url}`,
+                Public_id: `${result?.public_id}`,
+                // unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null || signupid?.unique_id === "{}" ? JSON.parse(localStorage.getItem('user_id'))?.user_id : loggedinuser.data.id}`,
+                unique_id:
+                  loggedinuser?.data?.id === undefined ||
+                    loggedinuser?.data?.id === '{}' ||
+                    loggedinuser?.data?.id === null
+                    ? JSON.parse(localStorage.getItem('user_id'))?.unique_id
+                    : loggedinuser?.data?.id,
+              },
+              'where the data is missing',
             )
-
-            localStorage.setItem('user_id',
-
-              JSON.stringify({
-                unique_id: signupid.unique_id
-              })
-            )
-
 
             await router.push({
               pathname: '/steptwo',
               query: {
-                ...data, steponedata: {
-
-
+                ...data,
+                steponedata: {
                   Full_name: `${data.full_name}`,
                   Email: `${data.email}`,
                   Role: `${data.role}`,
@@ -160,28 +261,41 @@ function Stepone() {
                   Address: `${data.address}`,
                   Profile_Photo_Url: `${result.secure_url}`,
                   Public_id: `${result.public_id}`,
-                  unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid?.unique_id}`,
-
+                  unique_id:
+                    loggedinuser?.data?.id === undefined ||
+                      loggedinuser?.data?.id === '{}' ||
+                      loggedinuser?.data?.id === null
+                      ? JSON.parse(localStorage.getItem('user_id'))?.unique_id
+                      : loggedinuser?.data?.id,
                 },
                 img_url: `${result.secure_url}`,
-                unique_id: `${signupid?.unique_id === undefined || signupid?.unique_id === null ? JSON.parse(localStorage.getItem('user_id'))?.user_id : signupid?.unique_id}`,
+                unique_id:
+                  loggedinuser?.data?.id === undefined ||
+                    loggedinuser?.data?.id === '{}' ||
+                    loggedinuser?.data?.id === null
+                    ? JSON.parse(localStorage?.getItem('user_id')).unique_id
+                    : loggedinuser?.data?.id,
                 profile_phot_public_id: `${result.public_id}`,
               },
             })
 
-
-            // console.log(
-            //   JSON.stringify({
-            //     Full_name: `${data.full_name}`,
-            //     Email: `${data.email}`,
-            //     Role: `${data.role}`,
-            //     Phone_number: `${data.phonenumber}`,
-            //     Address: `${data.address}`,
-            //     Profile_Photo_Url: `${result.secure_url}`,
-            //     Public_id: `${result.public_id}`,
-            //     unique_id: `${signupid.unique_id === undefined || signupid.unique_id === null ? loggedinuser.data.id : signupid.unique_id}`,
-            //   }),
-            // )
+            console.log(
+              ({
+                Full_name: `${data.full_name}`,
+                Email: `${data.email}`,
+                Role: `${data.role}`,
+                Phone_number: `${data.phonenumber}`,
+                Address: `${data.address}`,
+                Profile_Photo_Url: `${result.secure_url}`,
+                Public_id: `${result.public_id}`,
+                unique_id:
+                  loggedinuser?.data?.id === undefined ||
+                    loggedinuser?.data?.id === '{}' ||
+                    loggedinuser?.data?.id === null
+                    ? JSON.parse(localStorage.getItem('user_id'))?.unique_id
+                    : loggedinuser?.data?.id,
+              }),
+            )
 
             // fetch('/api/upload', {
             //   headers: { 'Content-Type': 'application/json' },
@@ -194,7 +308,11 @@ function Stepone() {
             //     Address: `${data.address}`,
             //     Profile_Photo_Url: `${result.secure_url}`,
             //     Public_id: `${result.public_id}`,
-            //     unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+            //     unique_id: `${
+            //       signupid.unique_id === undefined
+            //         ? JSON.parse(localStorage?.getItem('user_id')).unique_id
+            //         : signupid.unique_id
+            //     }`,
             //   }),
             // })
             //   .then((response) => response.json())
@@ -217,32 +335,28 @@ function Stepone() {
   }
 
   //const Redirect = () => window.location.href = '/'
-  const [id, setid] = useState();
+  const [id, setid] = useState()
 
   useEffect(() => {
-
     console.log(loggedinuser, 'loggedinuser')
     console.log(signupid, 'signupid')
-
 
     router.replace('/stepone', undefined, { shallow: true })
     let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
     newObjectuser?.unique_id !== ' ' ? setSigneedIn(true) : setSigneedIn(false)
 
-
     // console.log(JSON.parse(localStorage?.getItem('user_id')), 'JSON.parse(localStorage?.getItem))')
 
-
-    if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
+    if (
+      JSON.parse(localStorage?.getItem('user_id')) === '' ||
+      JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+      JSON.parse(localStorage?.getItem('user_id')) === null
+    ) {
       // console.log('undefined')
       router.push('/')
     } else {
-
       router.push('/stepone')
     }
-
-
-
 
     // if (signnedin.email === undefined) {
     //   setid(JSON.parse(localStorage?.getItem('user_id')))
@@ -260,20 +374,18 @@ function Stepone() {
     //     signupid['email'] = 'ase@gmail.com'
     //   )
     // }
-
-
-
-
   }, [])
+
+
+
+
+
 
 
 
 
   return (
     <div>
-
-
-
       <>
         <div className={Home.resume_body}>
           <div className="top_nav">
@@ -398,22 +510,8 @@ function Stepone() {
             </div>
           </div>
         </div>
-
       </>
-
-
-
-
-
-
-
-
-
     </div>
-
-
-
-
   )
 }
 

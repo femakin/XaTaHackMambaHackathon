@@ -74,7 +74,7 @@ const Download = React.forwardRef((props, ref) => {
         <h1>loading....</h1>
       ) : (
         <div ref={ref}>
-          {/* {console.log(alldata, 'alldattttttt')} */}
+          {console.log(alldata, 'alldattttttt')}
           {alldata.map((x, i) => {
             return (
               <section className={Previewstyle.top_summary}>
@@ -115,6 +115,7 @@ const Download = React.forwardRef((props, ref) => {
                     </div>
                   </div>
                 </section>
+                {console.log(x, 'xxx')}
 
                 <section className={Previewstyle.top_img}>
                   <AdvancedImage
