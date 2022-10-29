@@ -23,7 +23,10 @@ function Login() {
         const hashedPassword = Base64.encode(data.password)
 
         fetch('/api/getuser', {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             method: 'GET'
         })
             .then((response) => response.json())

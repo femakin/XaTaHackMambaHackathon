@@ -19,7 +19,10 @@ function Downloadandpreview({ onClick }) {
             : router.push('/preview')
 
         fetch('/api/fetchall', {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             method: 'GET'
         })
             .then((response) => response.json())

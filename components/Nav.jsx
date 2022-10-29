@@ -22,7 +22,10 @@ export default function Nav() {
       : setSigneedIn(true)
 
     fetch('/api/fetchall', {
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
       method: 'GET',
     })
       .then((response) => response.json())
@@ -43,7 +46,10 @@ export default function Nav() {
       : setSigneedIn(true)
 
     fetch('/api/fetchall', {
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
       method: 'GET',
     })
       .then((response) => response.json())

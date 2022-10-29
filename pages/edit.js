@@ -70,7 +70,10 @@ function Edit() {
                 .then(async (result) => {
                     if (result?.secure_url !== ' ') {
                         fetch('/api/fetchall', {
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
                             method: 'GET'
                         })
                             .then((response) => response.json())

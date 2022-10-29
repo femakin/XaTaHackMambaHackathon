@@ -8,6 +8,23 @@ import { useRouter } from 'next/router'
 import Nav from '../components/Nav'
 
 function Signup() {
+
+
+
+
+    useEffect(() => {
+
+        JSON.stringify({
+            username: 'Femi',
+            email: 'Tosin',
+            password: 'Oyedun'
+        }), 'Fetchhhhhhhh'
+
+    }, []);
+
+
+
+
     const router = useRouter()
 
     const schema = yup.object().shape({
@@ -17,12 +34,19 @@ function Signup() {
     const { signupid, setsignupid } = useContext(signupContext)
     const [loading, setLoading] = useState(false)
 
+
+
+
+
     const onSubmit = (data) => {
 
         setLoading(true)
 
         fetch('/api/signup', {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             method: 'POST',
             body: JSON.stringify({
                 username: data.name,

@@ -200,7 +200,10 @@ function steptwo() {
                         )
 
                         fetch('/api/upload', {
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
                             method: 'POST',
                             body: JSON.stringify({
                                 Full_name: user.Full_name,

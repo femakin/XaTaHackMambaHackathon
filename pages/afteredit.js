@@ -112,7 +112,10 @@ function afteredit() {
                     const IDData = JSON.parse(localStorage.getItem('firstpagetoedit'))?.id
 
                     fetch('/api/edit', {
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
                         method: 'POST',
                         body: JSON.stringify({
                             Full_name: Details.steponedata.Full_name,
