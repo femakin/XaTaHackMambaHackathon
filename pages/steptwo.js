@@ -12,6 +12,7 @@ import Imagesandmedia from '../components/Imagesandmedia'
 import Extras from '../components/Extras'
 import { GlobalContext } from '../context/globalContext'
 import { signupContext } from '../context/signupContext'
+import axios from 'axios'
 
 function steptwo() {
     const [maininfo, setMainInfo] = useState(false)

@@ -19,9 +19,11 @@ const handler = async (req, res) => {
         username: req.body.username,
     }).then((data) => {
         res.end(JSON.stringify(data));
+        // res.end(data)
     })
         .catch((err) => {
             res.end(JSON.stringify(err));
+            res.end(err)
             res.end()
         })
 

@@ -88,58 +88,68 @@ const Download = React.forwardRef((props, ref) => {
         <div ref={ref}>
           {alldata.map((x, i) => {
             return (
-              <section className={Previewstyle.top_summary}>
-                <section className={Previewstyle.right_details}>
-                  <div className={Previewstyle.full_nameandrole}>
-                    <div className={Previewstyle.fullname}>
-                      <h1>{x?.Full_name}</h1>
-                    </div>
-
-                    <div className={Previewstyle.role}>
-                      {' '}
-                      <h2>{x?.Role}</h2>
-                    </div>
-                  </div>
-
-                  <div className={Previewstyle.titleandcontacts}>
-                    <div className={Previewstyle.contacts}>
-                      <div className={Previewstyle.mobile}>
-                        <div>
-                          <BsFillTelephoneFill />
-                        </div>
-                        <div>{x?.Phone_number}</div>
+              <>
+                <section className={Previewstyle.top_summary}>
+                  <section className={Previewstyle.right_details}>
+                    <div className={Previewstyle.full_nameandrole}>
+                      <div className={Previewstyle.fullname}>
+                        <h1>{x?.Full_name}</h1>
                       </div>
 
-                      <div className={Previewstyle.email}>
-                        <div>
-                          <MdOutlineAlternateEmail />
-                        </div>
-                        <div>{x?.Email}</div>
-                      </div>
-
-                      <div className={Previewstyle.address}>
-                        <div>
-                          <CiLocationOn />
-                        </div>
-                        <div>{x?.Address}</div>
+                      <div className={Previewstyle.role}>
+                        {' '}
+                        <h2>{x?.Role}</h2>
                       </div>
                     </div>
-                  </div>
+
+                    <div className={Previewstyle.titleandcontacts}>
+                      <div className={Previewstyle.contacts}>
+                        <div className={Previewstyle.mobile}>
+                          <div>
+                            <BsFillTelephoneFill />
+                          </div>
+                          <div>{x?.Phone_number}</div>
+                        </div>
+
+                        <div className={Previewstyle.email}>
+                          <div>
+                            <MdOutlineAlternateEmail />
+                          </div>
+                          <div>{x?.Email}</div>
+                        </div>
+
+                        <div className={Previewstyle.address}>
+                          <div>
+                            <CiLocationOn />
+                          </div>
+                          <div>{x?.Address}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section className={Previewstyle.top_img}>
+                    <AdvancedImage
+                      cldImg={cld
+                        .image(`${x?.Public_id}`)
+                        .resize(
+                          fill()
+                            .width(100)
+                            .height(100)
+                            .gravity(focusOn(FocusOn.faces())),
+                        )}
+                    />
+                  </section>
                 </section>
 
-                <section className={Previewstyle.top_img}>
-                  <AdvancedImage
-                    cldImg={cld
-                      .image(`${x?.Public_id}`)
-                      .resize(
-                        fill()
-                          .width(100)
-                          .height(100)
-                          .gravity(focusOn(FocusOn.faces())),
-                      )}
-                  />
+                <section className={Previewstyle.skills_section}>
+                  <h1>Skills</h1>
+
+                  <ul className={Previewstyle.skills_items}>
+                    <li>{x.Skill}</li>
+                  </ul>
                 </section>
-              </section>
+              </>
             )
           })}
         </div>

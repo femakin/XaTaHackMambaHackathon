@@ -6,6 +6,7 @@ import Signupstyles from '../styles/SignUp.module.css'
 import { signupContext } from '../context/signupContext'
 import { useRouter } from 'next/router'
 import Nav from '../components/Nav'
+import axios from 'axios'
 
 function Signup() {
 
@@ -36,25 +37,39 @@ function Signup() {
 
 
 
-
+    // var config = {
+    //     method: 'post',
+    //     url: '/api/signup',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'
+    //     },
+    //     data: ({
+    //         username: data.name,
+    //         email: data.email,
+    //         password: data.password
+    //     }),
+    //     body: ({
+    //         username: data.name,
+    //         email: data.email,
+    //         password: data.password
+    //     })
+    // }
+    // axios(config)
 
     const onSubmit = (data) => {
 
         setLoading(true)
 
         fetch('/api/signup', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             method: 'POST',
             body: JSON.stringify({
                 username: data.name,
                 email: data.email,
                 password: data.password
             })
-        })
-            .then((response) => response.json())
+        }).then((response) => response.json())
             .then(async (response) => {
                 if (response.id !== ' ') {
                     setLoading(false)

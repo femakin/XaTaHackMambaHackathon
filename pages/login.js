@@ -8,6 +8,7 @@ import { signupContext } from '../context/signupContext'
 import { GlobalContext } from '../context/globalContext'
 import bcrypt from 'bcryptjs'
 import { Base64 } from 'js-base64'
+import axios from 'axios'
 
 function Login() {
 
@@ -25,11 +26,9 @@ function Login() {
         fetch('/api/getuser', {
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
             },
             method: 'GET'
-        })
-            .then((response) => response.json())
+        }).then((response) => response.json())
             .then(async (response) => {
                 setUsername(response)
 
