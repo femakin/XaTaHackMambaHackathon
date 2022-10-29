@@ -14,10 +14,12 @@ const handler = async (req, res) => {
     //     username: "string",
     // });
 
+    res.end()
+
     console.log(records);
 
 
-    res.end(JSON.stringify(records));
+    // res.end(JSON.stringify(records));
 
 }
 export default handler

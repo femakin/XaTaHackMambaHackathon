@@ -54,13 +54,16 @@ const handler = async (req, res) => {
         Language: req.body.Language,
         Cert_Public_Id: req.body.Cert_Public_Id
 
-    }).then((data) => {
-        res.end(JSON.stringify(data));
     })
-        .catch((err) => {
-            res.end(JSON.stringify(err));
-            res.end()
-        })
+    res.end()
+
+    // .then((data) => {
+    //     res.end(JSON.stringify(data));
+    // })
+    //     .catch((err) => {
+    //         res.end(JSON.stringify(err));
+    //         res.end()
+    //     })
     // console.log(record, 'record')
     // res.end(JSON.stringify(record));
     // resolve();

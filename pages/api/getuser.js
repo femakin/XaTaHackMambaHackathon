@@ -21,7 +21,8 @@ const handler = async (req, res) => {
     // res.status(400).json({ error: "Bad Request" });
 
     // console.log(user)
-    res.end(JSON.stringify(records));
+    // res.end(JSON.stringify(records));
+    res.end()
 
 
 

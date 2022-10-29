@@ -17,15 +17,18 @@ const handler = async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         username: req.body.username,
-    }).then((data) => {
-        res.end(JSON.stringify(data));
-        // res.end(data)
     })
-        .catch((err) => {
-            res.end(JSON.stringify(err));
-            res.end(err)
-            res.end()
-        })
+    res.end()
+
+    // .then((data) => {
+    //     res.end(JSON.stringify(data));
+    //     // res.end(data)
+    // })
+    //     .catch((err) => {
+    //         res.end(JSON.stringify(err));
+    //         res.end(err)
+    //         res.end()
+    //     })
 
 }
 export default handler
