@@ -1,52 +1,14 @@
 import { getXataClient } from '../../utils/xata.codegen'
-const xata = getXataClient()
+
 
 const handler = async (req, res) => {
-
-    const xata = getXataClient();
-
-
-
-    const records = await xata.db.users.getAll();
-
-    console.log(records)
-
-
-    res.setHeader('content-type', 'application/json');
-    res.send(JSON.stringify({ records }))
-
-
-        .then((data) => {
-            res.end(JSON.stringify(data));
-        })
-        .catch((err) => {
-            res.end(JSON.stringify(err));
-            res.end()
-        })
-    console.log(record, 'record')
-    res.end(JSON.stringify(record));
-    resolve();
-    res.end(JSON.stringify(res));
-
-    // res.end()
-    // if (!user) {
-    //     await xata.db.users.create({ username, password: password })
-    //     return {
-    //         isAuthenticated: true, username
-    //     }
-    // }
-
-
-    // res.status(400).json({ error: "Bad Request" });
-
-    // console.log(user)
-    // res.end(JSON.stringify(records));
-    // res.end()
-
-
-
+    try {
+        const xata = getXataClient()
+        const records = await xata.db.users.getAll()
+        return res.status(200).json(records)
+    } catch (error) {
+        console.error(error)
+        return res.status(500).send(error)
+    }
 }
 export default handler
-
-
-

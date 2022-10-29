@@ -9,22 +9,14 @@ import Nav from '../components/Nav'
 import axios from 'axios'
 
 function Signup() {
-
-
-
-
     useEffect(() => {
-
         JSON.stringify({
             username: 'Femi',
             email: 'Tosin',
-            password: 'Oyedun'
-        }), 'Fetchhhhhhhh'
-
-    }, []);
-
-
-
+            password: 'Oyedun',
+        }),
+            'Fetchhhhhhhh'
+    }, [])
 
     const router = useRouter()
 
@@ -35,30 +27,7 @@ function Signup() {
     const { signupid, setsignupid } = useContext(signupContext)
     const [loading, setLoading] = useState(false)
 
-
-
-    // var config = {
-    //     method: 'post',
-    //     url: '/api/signup',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json'
-    //     },
-    //     data: ({
-    //         username: data.name,
-    //         email: data.email,
-    //         password: data.password
-    //     }),
-    //     body: ({
-    //         username: data.name,
-    //         email: data.email,
-    //         password: data.password
-    //     })
-    // }
-    // axios(config)
-
     const onSubmit = (data) => {
-
         setLoading(true)
 
         fetch('/api/signup', {
@@ -67,9 +36,10 @@ function Signup() {
             body: JSON.stringify({
                 username: data.name,
                 email: data.email,
-                password: data.password
-            })
-        }).then((response) => response.json())
+                password: data.password,
+            }),
+        })
+            .then((response) => response.json())
             .then(async (response) => {
                 if (response.id !== ' ') {
                     setLoading(false)
@@ -152,7 +122,6 @@ function Signup() {
                         </button>
                     </form>
 
-
                     <span>
                         Already Registered?{' '}
                         <span
@@ -162,9 +131,6 @@ function Signup() {
                             Login
                         </span>{' '}
                     </span>
-
-
-
                 </div>
             </div>
         </div>
