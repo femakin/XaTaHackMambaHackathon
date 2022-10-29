@@ -15,9 +15,11 @@ function Signup() {
     })
 
     const { signupid, setsignupid } = useContext(signupContext)
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = (data) => {
-        console.log(data)
+
+        setLoading(true)
 
         fetch('/api/signup', {
             headers: { 'Content-Type': 'application/json' },
@@ -25,12 +27,13 @@ function Signup() {
             body: JSON.stringify({
                 username: `${data.name}`,
                 email: `${data.email}`,
-                password: `${data.password}`,
+                password: `${data.password}`
             }),
         })
             .then((response) => response.json())
             .then(async (response) => {
                 if (response.id !== ' ') {
+                    setLoading(false)
                     localStorage.setItem(
                         'user_id',
 
@@ -109,6 +112,20 @@ function Signup() {
                             SignUp
                         </button>
                     </form>
+
+
+                    <span>
+                        Already Registered?{' '}
+                        <span
+                            style={{ color: 'red' }}
+                            onClick={() => router.push('/login')}
+                        >
+                            Login
+                        </span>{' '}
+                    </span>
+
+
+
                 </div>
             </div>
         </div>

@@ -71,7 +71,7 @@ function Edit() {
                     if (result?.secure_url !== ' ') {
                         fetch('/api/fetchall', {
                             headers: { 'Content-Type': 'application/json' },
-                            method: 'GET',
+                            method: 'GET'
                         })
                             .then((response) => response.json())
                             .then((response) => {

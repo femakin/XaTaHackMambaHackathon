@@ -20,7 +20,7 @@ function Downloadandpreview({ onClick }) {
 
         fetch('/api/fetchall', {
             headers: { 'Content-Type': 'application/json' },
-            method: 'GET',
+            method: 'GET'
         })
             .then((response) => response.json())
             .then((response) => {

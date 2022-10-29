@@ -1,5 +1,5 @@
 // import { GetServerSideProps } from 'next/types'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import Nav from '../components/Nav'
 import { getXataClient } from '../utils/xata.codegen'
 import Home from '../styles/Home.module.css'
@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 
 const Index = ({ items }) => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const {
     register,
@@ -20,6 +21,7 @@ const Index = ({ items }) => {
   })
 
   const onSubmit = (data) => {
+    setLoading(true)
     reset({
       resumelink: '',
     })
@@ -32,7 +34,7 @@ const Index = ({ items }) => {
       data.phonenumber !== ' ' &&
       data.role !== ' '
     ) {
-      router.push('/login')
+      router.push('/signup')
     }
   }
   return (
