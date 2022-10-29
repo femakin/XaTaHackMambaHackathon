@@ -1,44 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import Header from '../components/Header'
 import Home from '../styles/Home.module.css'
-import axios from 'axios'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useNavigate } from 'react-router-dom'
-import { BrowserRouter } from 'react-router-dom'
 // import { BasicInfoProvider, useBasicInfoContext } from './basicInfo'
-import { useReducer } from 'react'
 import { GlobalContext } from '../context/globalContext'
 import Nav from '../components/Nav'
 import { signupContext } from '../context/signupContext'
 import { BsTypeH1 } from 'react-icons/bs'
 
-
 function Edit() {
-    const schema = yup.object().shape({
-        email: yup.string().email().required('Email is required'),
-    })
 
-    const { user, setUser, loggedinuser, setLoggedinuser } = useContext(GlobalContext)
+
+    const { user, setUser, loggedinuser, setLoggedinuser } = useContext(
+        GlobalContext,
+    )
     const { newObjectuser, setnewObjectuser } = useContext(signupContext)
     const [signnedin, setSigneedIn] = useState(false)
-    const [alldata, setAlldata] = useState([])
-
 
     const router = useRouter()
-    //   const navigate = useNavigate()
     const {
-        control,
-        getValues,
-        setValue,
-        trigger,
         register,
         reset,
-        watch,
+
         handleSubmit,
         formState: { errors },
     } = useForm({
@@ -56,25 +41,7 @@ function Edit() {
         return result
     }
 
-    // const PreviewPage = (data) => {
-    //   return (
-    //     <Link
-    //       href={{
-    //         pathname: '/preview',
-    //         query: { slug: data },
-    //       }}
-    //     />
-    //   )
-    // }
-
     const onSubmit = async (data) => {
-        // setUser(() => {
-        //   return data
-        // })
-
-
-        console.log(alldata[0], 'alldata')
-
         let UniqueId = JSON.parse(localStorage?.getItem('user_id'))
         reset({
             resumelink: '',
@@ -88,7 +55,6 @@ function Edit() {
             data.phonenumber !== ' ' &&
             data.role !== ' '
         ) {
-
             const fileName = generateRandom(4)
             var formdata = new FormData()
             formdata.append('file', data.MyImage[0], '[PROXY]')
@@ -110,39 +76,23 @@ function Edit() {
                     return await response.json()
                 })
                 .then(async (result) => {
-                    console.log(result, 'result   from step one')
-                    console.log(loggedinuser, 'loggedinuser')
-                    console.log(newObjectuser, 'newObjectuser')
-
-
-
-
-
                     if (result?.secure_url !== ' ') {
-
                         fetch('/api/fetchall', {
                             headers: { 'Content-Type': 'application/json' },
                             method: 'GET',
                         })
                             .then((response) => response.json())
                             .then((response) => {
-                                console.log(response?.filter((x) => x?.unique_id === id), 'response allllll from download page'),
-                                    setAlldata(
-                                        response?.filter((x) => x?.unique_id === id),
-                                    )
-                                // setLoading(true)
-
-                                const Incomingdata = response?.filter((x) => x?.unique_id === id)
-
+                                const Incomingdata = response?.filter(
+                                    (x) => x?.unique_id === id,
+                                )
 
                                 if (Incomingdata.length !== 0) {
-
                                     router.push({
                                         pathname: '/afteredit',
                                         query: {
-                                            ...data, steponedata: {
-
-
+                                            ...data,
+                                            steponedata: {
                                                 Full_name: `${data.full_name}`,
                                                 Email: `${data.email}`,
                                                 Role: `${data.role}`,
@@ -150,9 +100,8 @@ function Edit() {
                                                 Address: `${data.address}`,
                                                 Profile_Photo_Url: `${result.secure_url}`,
                                                 Public_id: `${result.public_id}`,
-                                                unique_id: `${Incomingdata[0].unique_id}`
+                                                unique_id: `${Incomingdata[0].unique_id}`,
                                                 // unique_id: `${alldata[0]?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-
                                             },
                                             img_url: `${result.secure_url}`,
                                             unique_id: `${Incomingdata[0].unique_id}`,
@@ -160,179 +109,8 @@ function Edit() {
                                         },
                                     })
                                 }
-
-
-
-
-
-
-
-
-
-
                             })
                             .catch((err) => console.error(err))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        console.log(alldata[0])
-                        // router.push({
-                        //     pathname: '/afteredit',
-                        //     query: {
-                        //         ...data, steponedata: {
-
-
-                        //             Full_name: `${alldata.full_name}`,
-                        //             Email: `${data.email}`,
-                        //             Role: `${data.role}`,
-                        //             Phone_number: `${data.phonenumber}`,
-                        //             Address: `${data.address}`,
-                        //             Profile_Photo_Url: `${result.secure_url}`,
-                        //             Public_id: `${result.public_id}`,
-                        //             unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-
-                        //         },
-                        //         img_url: `${result.secure_url}`,
-                        //         unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-                        //         profile_phot_public_id: `${result.public_id}`,
-                        //     },
-                        // })
-
-
-                        console.log(
-                            {
-                                steponedata: {
-
-
-                                    Full_name: `${data.full_name}`,
-                                    Email: `${data.email}`,
-                                    Role: `${data.role}`,
-                                    Phone_number: `${data.phonenumber}`,
-                                    Address: `${data.address}`,
-                                    Profile_Photo_Url: `${result.secure_url}`,
-                                    Public_id: `${result.public_id}`,
-                                    unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-
-                                },
-                                img_url: `${result.secure_url}`,
-                                unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-                                profile_phot_public_id: `${result.public_id}`,
-                            },
-                        )
-
-
-                        // setUser(() => {
-                        //     return {
-                        //         Full_name: `${data.full_name}`,
-                        //         Email: `${data.email}`,
-                        //         Role: `${data.role}`,
-                        //         Phone_number: `${data.phonenumber}`,
-                        //         Address: `${data.address}`,
-                        //         Profile_Photo_Url: `${result.secure_url}`,
-                        //         Public_id: `${result.public_id}`,
-                        //         unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-                        //     }
-                        // })
-
-                        // localStorage.setItem('user_details',
-
-                        //     JSON.stringify({
-                        //         Full_name: `${data.full_name}`,
-                        //         Email: `${data.email}`,
-                        //         Role: `${data.role}`,
-                        //         Phone_number: `${data.phonenumber}`,
-                        //         Address: `${data.address}`,
-                        //         Profile_Photo_Url: `${result.secure_url}`,
-                        //         Public_id: `${result.public_id}`,
-                        //         unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-                        //     })
-                        // )
-
-                        // localStorage.setItem('user_id',
-
-                        //     JSON.stringify({
-                        //         unique_id: newObjectuser.unique_id
-                        //     })
-                        // )
-
-
-                        // await
-
-
-                        // router.push({
-                        //     pathname: '/afteredit',
-                        //     // query: {
-                        //     //     ...data, steponedata: {
-
-
-                        //     //         Full_name: `${data.full_name}`,
-                        //     //         Email: `${data.email}`,
-                        //     //         Role: `${data.role}`,
-                        //     //         Phone_number: `${data.phonenumber}`,
-                        //     //         Address: `${data.address}`,
-                        //     //         Profile_Photo_Url: `${result.secure_url}`,
-                        //     //         Public_id: `${result.public_id}`,
-                        //     //         unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-
-                        //     //     },
-                        //     //     img_url: `${result.secure_url}`,
-                        //     //     unique_id: `${newObjectuser?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
-                        //     //     profile_phot_public_id: `${result.public_id}`,
-                        //     // },
-                        // })
-
-
-                        // console.log(
-                        //   JSON.stringify({
-                        //     Full_name: `${data.full_name}`,
-                        //     Email: `${data.email}`,
-                        //     Role: `${data.role}`,
-                        //     Phone_number: `${data.phonenumber}`,
-                        //     Address: `${data.address}`,
-                        //     Profile_Photo_Url: `${result.secure_url}`,
-                        //     Public_id: `${result.public_id}`,
-                        //     unique_id: `${newObjectuser.unique_id === undefined || newObjectuser.unique_id === null ? loggedinuser.data.id : newObjectuser.unique_id}`,
-                        //   }),
-                        // )
-
-                        // fetch('/api/upload', {
-                        //   headers: { 'Content-Type': 'application/json' },
-                        //   method: 'POST',
-                        //   body: JSON.stringify({
-                        //     Full_name: `${data.full_name}`,
-                        //     Email: `${data.email}`,
-                        //     Role: `${data.role}`,
-                        //     Phone_number: `${data.phonenumber}`,
-                        //     Address: `${data.address}`,
-                        //     Profile_Photo_Url: `${result.secure_url}`,
-                        //     Public_id: `${result.public_id}`,
-                        //     unique_id: `${newObjectuser.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : newObjectuser.unique_id}`,
-                        //   }),
-                        // })
-                        //   .then((response) => response.json())
-                        //   .then(async (response) => {
-                        //     return (
-                        //       console.log(response),
-                        //       await router.push({
-                        //         pathname: '/preview',
-                        //         query: { ...data, data: { TeamA: 'yes', TeamB: 'no' } },
-                        //       })
-                        //     )
-                        //   })
-                        //   .catch((err) => console.error(err))
                     }
                 })
                 .catch((err) => {
@@ -341,17 +119,9 @@ function Edit() {
         }
     }
 
-    //const Redirect = () => window.location.href = '/'
-    const [id, setid] = useState();
+    const [id, setid] = useState()
 
     useEffect(() => {
-
-        console.log(loggedinuser, 'loggedinuser')
-        console.log(router.query, 'inside edit')
-        console.log(user, 'user')
-        console.log(user, user)
-        console.log(loggedinuser.unique_id, 'iddddddd')
-
         JSON.parse(localStorage?.getItem('user_id')) === '' ||
             JSON.parse(localStorage?.getItem('user_id')) === undefined ||
             JSON.parse(localStorage?.getItem('user_id')) === null ||
@@ -359,70 +129,23 @@ function Edit() {
             ? router.push('/')
             : setid(JSON.parse(localStorage?.getItem('user_id')).unique_id)
 
-
-
-
-
-
-
         router.replace('/edit', undefined, { shallow: true })
         let newObjectuser = JSON.parse(localStorage?.getItem('user_id'))
         newObjectuser?.unique_id !== ' ' ? setSigneedIn(true) : setSigneedIn(false)
 
-
-        console.log(JSON.parse(localStorage?.getItem('user_id')), 'JSON.parse(localStorage?.getItem))')
-
-
-
-
-
-
-
-
-
-
-
-        if (JSON.parse(localStorage?.getItem('user_id')) === '' || JSON.parse(localStorage?.getItem('user_id')) === undefined || JSON.parse(localStorage?.getItem('user_id')) === null) {
-            // console.log('undefined')
+        if (
+            JSON.parse(localStorage?.getItem('user_id')) === '' ||
+            JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+            JSON.parse(localStorage?.getItem('user_id')) === null
+        ) {
             router.push('/')
         } else {
-
             router.push('/edit')
         }
-
-
-
-
-        // if (signnedin.email === undefined) {
-        //   setid(JSON.parse(localStorage?.getItem('user_id')))
-        // } else {
-        //   setid(newObjectuser.unique_id)
-        //   // setnewObjectuser(() => {
-        //   //   return {
-        //   //     username: `${data.name}`,
-        //   //     email: `${data.email}`,
-        //   //     password: `${data.password}`,
-        //   //     unique_id: `${response.id}`
-        //   //   }
-        //   // })
-        //   console.log(
-        //     newObjectuser['email'] = 'ase@gmail.com'
-        //   )
-        // }
-
-
-
-
     }, [])
-
-
-
 
     return (
         <div>
-
-
-
             <>
                 <div className={Home.resume_body}>
                     <div className="top_nav">
@@ -452,7 +175,7 @@ function Edit() {
 
                                         <input
                                             // defaultValue={alldata[0].Full_name}
-                                            defaultValue=''
+                                            defaultValue=""
                                             required
                                             className={Home.getstartedinput}
                                             {...register('full_name')}
@@ -461,7 +184,6 @@ function Edit() {
                                         />
                                     </div>
 
-
                                     <div className={Home.resumelinkinfo}>
                                         <label className={Home.getstartedlabel} htmlFor="">
                                             Role
@@ -469,7 +191,7 @@ function Edit() {
 
                                         <input
                                             // defaultValue={alldata[0].Role}
-                                            defaultValue=''
+                                            defaultValue=""
                                             required
                                             className={Home.getstartedinput}
                                             {...register('role')}
@@ -485,7 +207,7 @@ function Edit() {
 
                                         <input
                                             // defaultValue={alldata[0].Phone_number}
-                                            defaultValue=''
+                                            defaultValue=""
                                             required
                                             className={Home.getstartedinput}
                                             {...register('phonenumber')}
@@ -501,7 +223,7 @@ function Edit() {
 
                                         <input
                                             // defaultValue={alldata[0].Email}
-                                            defaultValue=''
+                                            defaultValue=""
                                             required
                                             className={Home.getstartedinput}
                                             {...register('email')}
@@ -517,7 +239,7 @@ function Edit() {
 
                                         <input
                                             // defaultValue={alldata[0].Address}
-                                            defaultValue=''
+                                            defaultValue=""
                                             required
                                             className={Home.getstartedinput}
                                             {...register('address')}
@@ -553,22 +275,8 @@ function Edit() {
                         </div>
                     </div>
                 </div>
-
             </>
-
-
-
-
-
-
-
-
-
         </div>
-
-
-
-
     )
 }
 

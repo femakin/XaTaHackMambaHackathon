@@ -21,7 +21,6 @@ function steptwo() {
         GlobalContext,
     )
     const { signupid, setsignupid } = useContext(signupContext)
-    const [signnedin, setSigneedIn] = useState(false)
     const inputRef = useRef(null)
     const router = useRouter()
 
