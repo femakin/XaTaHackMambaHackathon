@@ -149,7 +149,7 @@ function afteredit() {
                             Cert_Img_one_url: `${result.secure_url}`,
                             Language: `${data.language}`,
                             Cert_Public_id: `${result.public_id}`,
-                            id: `${IDData}`,
+                            id: `${IDData}`
                         }),
                     })
                         .then((response) => response.json())

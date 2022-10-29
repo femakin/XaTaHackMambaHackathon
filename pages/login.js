@@ -24,7 +24,7 @@ function Login() {
 
         fetch('/api/getuser', {
             headers: { 'Content-Type': 'application/json' },
-            method: 'GET',
+            method: 'GET'
         })
             .then((response) => response.json())
             .then(async (response) => {
