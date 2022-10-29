@@ -79,13 +79,13 @@ function Stepone() {
             setLoadingState(!loadingstate)
             setUser(() => {
               return {
-                Full_name: `${data?.full_name}`,
-                Email: `${data?.email}`,
-                Role: `${data?.role}`,
-                Phone_number: `${data?.phonenumber}`,
-                Address: `${data?.address}`,
-                Profile_Photo_Url: `${result?.secure_url}`,
-                Public_id: `${result?.public_id}`,
+                Full_name: data?.full_name,
+                Email: data?.email,
+                Role: data?.role,
+                Phone_number: data?.phonenumber,
+                Address: data?.address,
+                Profile_Photo_Url: result?.secure_url,
+                Public_id: result?.public_id,
 
                 unique_id:
                   loggedinuser?.data?.id === undefined ||

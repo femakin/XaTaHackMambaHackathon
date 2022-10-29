@@ -6,7 +6,7 @@ const handler = async (req, res) => {
     const { email, password } = req.body
 
 
-    const records = await (await xata?.db?.users.getAll()).filter('email', 'akinfemi46@gmail.com')
+    const records = (await xata?.db?.users.getAll()).filter('email', 'akinfemi46@gmail.com')
 
     // const record = await xata.db.users.create({
     //     password: "string",

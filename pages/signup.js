@@ -25,10 +25,10 @@ function Signup() {
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
             body: JSON.stringify({
-                username: `${data.name}`,
-                email: `${data.email}`,
-                password: `${data.password}`
-            }),
+                username: data.name,
+                email: data.email,
+                password: data.password
+            })
         })
             .then((response) => response.json())
             .then(async (response) => {
