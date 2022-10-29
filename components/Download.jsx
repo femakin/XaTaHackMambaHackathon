@@ -5,8 +5,6 @@ import { GlobalContext } from '../context/globalContext'
 import { Cloudinary } from '@cloudinary/url-gen'
 import { AdvancedImage } from '@cloudinary/react'
 import { fill } from '@cloudinary/url-gen/actions/resize'
-import { thumbnail } from '@cloudinary/url-gen/actions/resize'
-import { byRadius } from '@cloudinary/url-gen/actions/roundCorners'
 import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity'
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn'
 import { BsFillTelephoneFill } from 'react-icons/bs'
@@ -41,13 +39,9 @@ const Download = React.forwardRef((props, ref) => {
   )
 
   useEffect(() => {
-    // console.log(loggedinuser, 'loggedinuser')
-    // console.log(user, 'user---inside preview')
-
     const validuser = loggedinuser?.data?.id
 
     let newObjectuser = JSON.parse(localStorage.getItem('user_id'))
-    // console.log(validuser, 'validuser')
 
     setLoading(false)
 
@@ -59,7 +53,6 @@ const Download = React.forwardRef((props, ref) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response, 'response allllll from download page')
         setAlldata(
           response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
         )

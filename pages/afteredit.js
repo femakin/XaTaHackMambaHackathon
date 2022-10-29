@@ -192,10 +192,7 @@ function afteredit() {
                 return response.json()
             })
             .then((result) => {
-                console.log(result, 'result')
-                // const UserDetails = JSON.parse(localStorage?.getItem('user_id'))
-                // console.log(loggedinuser, 'loggeddddinuser')
-                // console.log(user, 'userrr')
+
 
                 if (result) {
                     console.log(result, 'resultttttttt')

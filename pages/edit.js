@@ -101,7 +101,7 @@ function Edit() {
                                                 Profile_Photo_Url: `${result.secure_url}`,
                                                 Public_id: `${result.public_id}`,
                                                 unique_id: `${Incomingdata[0].unique_id}`,
-                                                // unique_id: `${alldata[0]?.unique_id === undefined || newObjectuser?.unique_id === null ? UniqueId?.unique_id : newObjectuser?.unique_id}`,
+
                                             },
                                             img_url: `${result.secure_url}`,
                                             unique_id: `${Incomingdata[0].unique_id}`,
@@ -238,7 +238,7 @@ function Edit() {
                                         </label>
 
                                         <input
-                                            // defaultValue={alldata[0].Address}
+
                                             defaultValue=""
                                             required
                                             className={Home.getstartedinput}
