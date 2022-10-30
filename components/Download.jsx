@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import Previewstyle from '../styles/Preview.module.css'
 import { useRouter } from 'next/router'
-import { GlobalContext } from '../context/globalContext'
 import { Cloudinary } from '@cloudinary/url-gen'
 import { AdvancedImage } from '@cloudinary/react'
 import { fill } from '@cloudinary/url-gen/actions/resize'
@@ -14,7 +13,6 @@ import { useEffect } from 'react'
 
 const Download = React.forwardRef((props, ref) => {
   const router = useRouter()
-  const { loggedinuser } = useContext(GlobalContext)
   const [loading, setLoading] = useState(false)
 
   const [alldata, setAlldata] = useState()
@@ -25,24 +23,10 @@ const Download = React.forwardRef((props, ref) => {
     },
   })
 
-  // const myImage = cld.image(`${alldata?.Public_id}`)
-
-  // cld
-  //   .image(`${alldata?.Public_id}`)
-  //   .resize(fill().width(100).height(100).gravity(focusOn(FocusOn.faces())))
-
-  // myImage.resize(
-  //   fill().width(100).height(100).gravity(focusOn(FocusOn.faces())),
-  // )
-
   useEffect(() => {
-    const validuser = loggedinuser?.data?.id
-
     let newObjectuser = JSON.parse(localStorage.getItem('user_id'))
-    console.log(newObjectuser.unique_id)
-    console.log(JSON.parse(localStorage.getItem('user_details')))
+
     let UserDetails = JSON.parse(localStorage.getItem('user_details'))
-    console.log(UserDetails?.unique_id)
 
     setLoading(false)
 
@@ -148,7 +132,6 @@ const Download = React.forwardRef((props, ref) => {
                     />
                   </section>
                 </section>
-                {console.log(x)}
 
                 <section className={Previewstyle.skills_section}>
                   <h1>Skills</h1>
@@ -173,57 +156,13 @@ const Download = React.forwardRef((props, ref) => {
                     </h1>
 
                     <ol className={Previewstyle.skills_items}>
-                      <li>{x.Achievement_one_Ex}</li>
-                      <li>{x.Achievement_two_Ex}</li>
-                      <li>{x.Achievement_three_Ex}</li>
-                    </ol>
-                  </div>
-
-                  {/* <div className={Previewstyle.skills_items}>
-                    <h1>
-                      <span className={Previewstyle.sub_title}>
-                        Company Name, Location
-                      </span>{' '}
-                      <span className={Previewstyle.inner_sub_title}>
-                        {' '}
-                        -Job Title
-                      </span>
-                    </h1>
-
-                    <ol className={Previewstyle.skills_items}>
-                      <li>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </li>
-                      <li>Aenean ac interdum nisi. Sed in consequat mi.</li>
-                      <li>
-                        Sed in consequat mi, sed pulvinar lacinia felis eu
-                        finibus.
+                      <li key={x.Achievement_one_Ex}>{x.Achievement_one_Ex}</li>
+                      <li key={x.Achievement_two_Ex}>{x.Achievement_two_Ex}</li>
+                      <li key={x.Achievement_three_Ex}>
+                        {x.Achievement_three_Ex}
                       </li>
                     </ol>
                   </div>
-
-                  <div className={Previewstyle.skills_items}>
-                    <h1>
-                      <span className={Previewstyle.sub_title}>
-                        Company Name, Location
-                      </span>{' '}
-                      <span className={Previewstyle.inner_sub_title}>
-                        {' '}
-                        -Job Title
-                      </span>
-                    </h1>
-
-                    <ol className={Previewstyle.skills_items}>
-                      <li>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </li>
-                      <li>Aenean ac interdum nisi. Sed in consequat mi.</li>
-                      <li>
-                        Sed in consequat mi, sed pulvinar lacinia felis eu
-                        finibus.
-                      </li>
-                    </ol>
-                  </div> */}
                 </section>
 
                 <section className={Previewstyle.skills_section}>
@@ -236,13 +175,6 @@ const Download = React.forwardRef((props, ref) => {
                     <h2>
                       {x?.School_Ed}, {x?.City_Ed} - {x?.Degree_Ed}
                     </h2>
-
-                    {/* <ul className={Previewstyle.skills_items}>
-                      <li>{x.Award_one_Ed}</li>
-
-                      <li>{x.Award_two_Ed}</li>
-                      <li>{x.Award_three_Ed}</li>
-                    </ul> */}
                   </div>
                 </section>
 
@@ -271,9 +203,6 @@ const Download = React.forwardRef((props, ref) => {
                   <h1 className={Previewstyle.title}>References</h1>
 
                   <div className={Previewstyle.skills_items}>
-                    {/* <h2 className={Previewstyle.date}>
-                      Company Name- {x.Company_name_Rfx}
-                    </h2> */}
                     <h2>Company Name- {x.Company_name_Rfx}</h2>
                     <h2>Contact Person- {x.Contact_person_Rfx}</h2>
                     <h2>Phone Number- {x.Phone_number_Rfx}</h2>
