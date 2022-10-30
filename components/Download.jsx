@@ -137,7 +137,7 @@ const Download = React.forwardRef((props, ref) => {
                   <h1>Skills</h1>
 
                   <ul className={Previewstyle.skills_items}>
-                    <li>{x.Skill}</li>
+                    <li key={x?.Skill}>{x?.Skill}</li>
                   </ul>
                 </section>
 
@@ -147,19 +147,23 @@ const Download = React.forwardRef((props, ref) => {
                   <div className={Previewstyle.skills_items}>
                     <h1>
                       <span className={Previewstyle.sub_title}>
-                        {x.Employer_Ex}, {x.City_town_Ex}
+                        {x?.Employer_Ex}, {x?.City_town_Ex}
                       </span>{' '}
-                      <span className={Previewstyle.inner_sub_title}>
+                      <span className={Previewstyle?.inner_sub_title}>
                         {' '}
-                        - {x.Role}
+                        - {x?.Role}
                       </span>
                     </h1>
 
                     <ol className={Previewstyle.skills_items}>
-                      <li key={x.Achievement_one_Ex}>{x.Achievement_one_Ex}</li>
-                      <li key={x.Achievement_two_Ex}>{x.Achievement_two_Ex}</li>
-                      <li key={x.Achievement_three_Ex}>
-                        {x.Achievement_three_Ex}
+                      <li key={x?.Achievement_one_Ex}>
+                        {x?.Achievement_one_Ex}
+                      </li>
+                      <li key={x?.Achievement_two_Ex}>
+                        {x?.Achievement_two_Ex}
+                      </li>
+                      <li key={x?.Achievement_three_Ex}>
+                        {x?.Achievement_three_Ex}
                       </li>
                     </ol>
                   </div>
@@ -183,18 +187,18 @@ const Download = React.forwardRef((props, ref) => {
 
                   <div className={Previewstyle.skills_items}>
                     <ul className={Previewstyle.skills_items}>
-                      <li>{x.Award_one_Ed}</li>
-                      <li>{x.Award_two_Ed}</li>
-                      <li>{x.Award_three_Ed}</li>
+                      <li key={x?.Award_one_Ed}>{x?.Award_one_Ed}</li>
+                      <li key={x?.Award_two_Ed}>{x?.Award_two_Ed}</li>
+                      <li key={x?.Award_three_Ed}>{x?.Award_three_Ed}</li>
                     </ul>
                   </div>
                 </section>
                 <section className={Previewstyle.skills_section}>
-                  <h1 className={Previewstyle.title}>Interest</h1>
+                  <h1 className={Previewstyle?.title}>Interest</h1>
 
-                  <div className={Previewstyle.skills_items}>
-                    <ul className={Previewstyle.skills_items}>
-                      <li>{x.Hobby}</li>
+                  <div className={Previewstyle?.skills_items}>
+                    <ul className={Previewstyle?.skills_items}>
+                      <li key={x?.Hobby}>{x?.Hobby}</li>
                     </ul>
                   </div>
                 </section>
@@ -203,10 +207,10 @@ const Download = React.forwardRef((props, ref) => {
                   <h1 className={Previewstyle.title}>References</h1>
 
                   <div className={Previewstyle.skills_items}>
-                    <h2>Company Name- {x.Company_name_Rfx}</h2>
-                    <h2>Contact Person- {x.Contact_person_Rfx}</h2>
-                    <h2>Phone Number- {x.Phone_number_Rfx}</h2>
-                    <h2>Email Address- {x.Email_Address_Rfx}</h2>
+                    <h2>Company Name- {x?.Company_name_Rfx}</h2>
+                    <h2>Contact Person- {x?.Contact_person_Rfx}</h2>
+                    <h2>Phone Number- {x?.Phone_number_Rfx}</h2>
+                    <h2>Email Address- {x?.Email_Address_Rfx}</h2>
                   </div>
                 </section>
 
@@ -231,7 +235,7 @@ const Download = React.forwardRef((props, ref) => {
                   <h1 className={Previewstyle.title}>Language(s)</h1>
 
                   <div className={Previewstyle.skills_items}>
-                    <h2 className={Previewstyle.date}>{x.Language}</h2>
+                    <h2 className={Previewstyle.date}>{x?.Language}</h2>
                   </div>
                 </section>
               </>
