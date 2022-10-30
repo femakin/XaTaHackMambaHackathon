@@ -173,18 +173,13 @@ const Download = React.forwardRef((props, ref) => {
                     </h1>
 
                     <ol className={Previewstyle.skills_items}>
-                      <li>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </li>
-                      <li>Aenean ac interdum nisi. Sed in consequat mi.</li>
-                      <li>
-                        Sed in consequat mi, sed pulvinar lacinia felis eu
-                        finibus.
-                      </li>
+                      <li>{x.Achievement_one_Ex}</li>
+                      <li>{x.Achievement_two_Ex}</li>
+                      <li>{x.Achievement_three_Ex}</li>
                     </ol>
                   </div>
 
-                  <div className={Previewstyle.skills_items}>
+                  {/* <div className={Previewstyle.skills_items}>
                     <h1>
                       <span className={Previewstyle.sub_title}>
                         Company Name, Location
@@ -228,7 +223,7 @@ const Download = React.forwardRef((props, ref) => {
                         finibus.
                       </li>
                     </ol>
-                  </div>
+                  </div> */}
                 </section>
 
                 <section className={Previewstyle.skills_section}>
