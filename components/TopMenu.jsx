@@ -5,22 +5,21 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { useRouter } from 'next/router'
 
-export default function Nav() {
+export default function TopMenu() {
   const [clicked, setClicked] = useState(false)
 
   const [signnedin, setSigneedIn] = useState(false)
   const router = useRouter()
   const [alldata, setAlldata] = useState([])
   const [storagedata, setStoragedata] = useState()
-  const [logout, SetLogout] = useState(false)
 
   useEffect(() => {
-    JSON.parse(localStorage?.getItem('user_id')) === '' ||
-    JSON.parse(localStorage?.getItem('user_id')) === undefined ||
-    JSON.parse(localStorage?.getItem('user_id')) === null ||
-    JSON.parse(localStorage?.getItem('user_id')) === '{}'
-      ? setSigneedIn(false)
-      : setSigneedIn(true)
+    // JSON.parse(localStorage?.getItem('user_id')) === '' ||
+    // JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+    // JSON.parse(localStorage?.getItem('user_id')) === null ||
+    // JSON.parse(localStorage?.getItem('user_id')) === '{}'
+    //   ? setSigneedIn(false)
+    //   : setSigneedIn(true)
 
     fetch('/api/fetchall', {
       headers: {
@@ -36,15 +35,15 @@ export default function Nav() {
         setClicked(!clicked)
       })
       .catch((err) => console.error(err))
-  }, [logout])
+  }, [])
 
   useEffect(() => {
-    JSON.parse(localStorage?.getItem('user_id')) === '' ||
-    JSON.parse(localStorage?.getItem('user_id')) === undefined ||
-    JSON.parse(localStorage?.getItem('user_id')) === null ||
-    JSON.parse(localStorage?.getItem('user_id')) === '{}'
-      ? setSigneedIn(false)
-      : setSigneedIn(true)
+    // JSON.parse(localStorage?.getItem('user_id')) === '' ||
+    // JSON.parse(localStorage?.getItem('user_id')) === undefined ||
+    // JSON.parse(localStorage?.getItem('user_id')) === null ||
+    // JSON.parse(localStorage?.getItem('user_id')) === '{}'
+    //   ? setSigneedIn(false)
+    //   : setSigneedIn(true)
 
     fetch('/api/fetchall', {
       headers: {
@@ -94,7 +93,8 @@ export default function Nav() {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div>
                   {/* {console.log(storagedata, 'storagedata')} */}
-                  {signnedin ? (
+
+                  {/* {signnedin ? (
                     <div className="loggedincontent flex gap-2 items-center justify-center relative ">
                       <div className="submit_text">
                         <h1
@@ -121,11 +121,7 @@ export default function Nav() {
 
                       <div
                         onClick={() => {
-                          return (
-                            router.push('/'),
-                            localStorage.clear(),
-                            SetLogout(true)
-                          )
+                          return router.push('/'), localStorage.clear()
                         }}
                         className="submit_text"
                       >
@@ -134,35 +130,35 @@ export default function Nav() {
                         </h1>
                       </div>
                     </div>
-                  ) : (
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                      <div className="flex  items-center  flex-wrap gap-8 cursor-pointer ">
-                        <div>
-                          <button
-                            onClick={() => {
-                              return router.push('/signup')
-                            }}
-                            href="/"
-                            className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                          >
-                            Sign Up
-                          </button>
-                        </div>
+                  ) : ( */}
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <div className="flex  items-center  flex-wrap gap-8 cursor-pointer ">
+                      <div>
+                        <button
+                          onClick={() => {
+                            return router.push('/signup')
+                          }}
+                          href="/"
+                          className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                        >
+                          Sign Up
+                        </button>
+                      </div>
 
-                        <div>
-                          <button
-                            onClick={() => {
-                              return router.push('/login')
-                            }}
-                            href="/login"
-                            className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                          >
-                            Login
-                          </button>
-                        </div>
+                      <div>
+                        <button
+                          onClick={() => {
+                            return router.push('/login')
+                          }}
+                          href="/login"
+                          className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                        >
+                          Login
+                        </button>
                       </div>
                     </div>
-                  )}
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             </div>

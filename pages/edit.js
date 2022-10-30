@@ -182,10 +182,10 @@ function Edit() {
                         </div>
 
                         <div className={Home.right_form}>
-                            <h1 className={Home.form_title}>Create my CV</h1>
+                            <h1 className={Home.form_title}>Create my Resume</h1>
 
                             <p className={Home.sub_title}>
-                                With quick CV, you can build the right resume & CV today.
+                                With quick Resume, you can build the right resume  today.
                             </p>
 
                             <div className={Home.resume_form}>

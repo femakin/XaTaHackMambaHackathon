@@ -15,6 +15,7 @@ import { signupContext } from '../context/signupContext'
 
 function steptwo() {
     const [maininfo, setMainInfo] = useState(false)
+    const [loading, setloading] = useState(false)
     const [, SetSideClicked] = useState('')
     const [active, setActive] = useState('Experience')
     const { user, setUser, loggedinuser, setLoggedinuser } = useContext(
@@ -101,6 +102,7 @@ function steptwo() {
     })
 
     const onSubmit3 = (data) => {
+        setloading(true)
         if (
             data.achievement1 !== ' ' &&
             data.achievement2 !== ' ' &&
@@ -240,7 +242,9 @@ function steptwo() {
                             .then((response) => response.json())
                             .then(async (response) => {
                                 return (
-                                    console.log(response),
+                                    // console.log(response),
+                                    setloading(false),
+
                                     localStorage.setItem(
                                         '_id',
 
@@ -414,21 +418,21 @@ function steptwo() {
                                                     <textarea
                                                         className={SteptwoStyle.getstarted_input}
                                                         type="date"
-                                                        placeholder="e.g Achievement 1"
+                                                        placeholder="e.g Duty at work "
                                                         {...register('achievement1')}
                                                     />
 
                                                     <textarea
                                                         className={SteptwoStyle.getstarted_input}
                                                         type="date"
-                                                        placeholder="e.g Achievement 2"
+                                                        placeholder="e.g Duty at work "
                                                         {...register('achievement2')}
                                                     />
 
                                                     <textarea
                                                         className={SteptwoStyle.getstarted_input}
                                                         type="date"
-                                                        placeholder="e.g Achievement 3"
+                                                        placeholder="e.g Duty at work "
                                                         {...register('achievement3')}
                                                     />
                                                 </div>
@@ -454,7 +458,7 @@ function steptwo() {
                                     ) : active === 'Images and media' ? (
                                         <Imagesandmedia register={register} setActive={setActive} />
                                     ) : active === 'Extras' ? (
-                                        <Extras register={register} setActive={setActive} />
+                                        <Extras loading={loading} register={register} setActive={setActive} />
                                     ) : null}
                                 </form>
                             </div>

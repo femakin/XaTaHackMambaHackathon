@@ -53,7 +53,7 @@ function Signup() {
                         }
                     })
                     router.push({
-                        pathname: '/stepone',
+                        pathname: '/login',
                         query: {
                             ...data,
                             state: `${response.id}`,
@@ -107,12 +107,19 @@ function Signup() {
                             />
                         </div>
 
-                        <button
-                            type="submit"
-                            className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                        >
-                            SignUp
-                        </button>
+                        {
+                            loading ? <button
+                                type="submit"
+                                className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                            >
+                                Loading...
+                            </button> : <button
+                                type="submit"
+                                className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                            >
+                                SignUp
+                            </button>
+                        }
                     </form>
 
                     <span>

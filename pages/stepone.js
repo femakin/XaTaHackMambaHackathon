@@ -6,6 +6,7 @@ import Home from '../styles/Home.module.css'
 import { useRouter } from 'next/router'
 import { GlobalContext } from '../context/globalContext'
 import Nav from '../components/Nav'
+import TopMenu from '../components/TopMenu'
 import { signupContext } from '../context/signupContext'
 function Stepone() {
   const { user, setUser, loggedinuser, setLoggedinuser } = useContext(
@@ -193,6 +194,7 @@ function Stepone() {
         <div className={Home.resume_body}>
           <div className="top_nav">
             <Nav />
+            {/* <TopMenu /> */}
           </div>
 
           <div className={Home.resume_main}>
@@ -203,10 +205,10 @@ function Stepone() {
             </div>
 
             <div className={Home.right_form}>
-              <h1 className={Home.form_title}>Create my CV</h1>
+              <h1 className={Home.form_title}>Create my Resume</h1>
 
               <p className={Home.sub_title}>
-                With quick CV, you can build the right resume & CV today.
+                With quick Resume, you can build the right resume today.
               </p>
 
               <div className={Home.resume_form}>
@@ -302,12 +304,22 @@ function Stepone() {
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                  >
-                    Get started
-                  </button>
+                  {
+                    loadingstate ? <button
+                      type="submit"
+                      className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                    >
+                      Loading...
+                    </button> :
+                      <button
+                        type="submit"
+                        className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                      >
+                        Get started
+                      </button>
+                  }
+
+
                 </form>
               </div>
             </div>
