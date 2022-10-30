@@ -1,14 +1,18 @@
 // import { GetServerSideProps } from 'next/types'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import Nav from '../components/Nav'
 import { getXataClient } from '../utils/xata.codegen'
 import Home from '../styles/Home.module.css'
 import { set, useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import Signup from './signup'
+import Signupstyles from '../styles/SignUp.module.css'
+import { signupContext } from '../context/signupContext'
 
 const Index = ({ items }) => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const { signupid, setsignupid } = useContext(signupContext)
 
   const {
     register,
@@ -22,21 +26,48 @@ const Index = ({ items }) => {
 
   const onSubmit = (data) => {
     setLoading(true)
-    reset({
-      resumelink: '',
-    })
 
-    if (
-      data.MyImage[0].name != '' &&
-      data.email !== ' ' &&
-      data.address !== ' ' &&
-      data.full_name !== ' ' &&
-      data.phonenumber !== ' ' &&
-      data.role !== ' '
-    ) {
-      router.push('/signup')
-    }
+    fetch('/api/signup', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        username: data.name,
+        email: data.email,
+        password: data.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then(async (response) => {
+        if (response.id !== ' ') {
+          setLoading(false)
+          localStorage.setItem(
+            'user_id',
+
+            JSON.stringify({
+              unique_id: response.id,
+            }),
+          )
+
+          setsignupid(() => {
+            return {
+              username: `${data.name}`,
+              email: `${data.email}`,
+              password: `${data.password}`,
+              unique_id: `${response.id}`,
+            }
+          })
+          router.push({
+            pathname: '/login',
+            query: {
+              ...data,
+              state: `${response.id}`,
+            },
+          })
+        }
+      })
+      .catch((err) => console.error(err))
   }
+
   return (
     <div>
       <>
@@ -63,101 +94,63 @@ const Index = ({ items }) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className={Home.resumelinkinfo}>
                     <label className={Home.getstartedlabel} htmlFor="">
-                      Full Name
-                    </label>
-
-                    <input
-                      defaultValue=""
-                      required
-                      className={Home.getstartedinput}
-                      {...register('full_name')}
-                      placeholder="FullName"
-                      type="text"
-                    />
-                  </div>
-
-                  <div className={Home.resumelinkinfo}>
-                    <label className={Home.getstartedlabel} htmlFor="">
-                      Role
-                    </label>
-
-                    <input
-                      defaultValue=""
-                      required
-                      className={Home.getstartedinput}
-                      {...register('role')}
-                      placeholder="e.g. Software Engineer"
-                      type="text"
-                    />
-                  </div>
-
-                  <div className={Home.resumelinkinfo}>
-                    <label className={Home.getstartedlabel} htmlFor="">
-                      Phone number
-                    </label>
-
-                    <input
-                      defaultValue=""
-                      required
-                      className={Home.getstartedinput}
-                      {...register('phonenumber')}
-                      placeholder="+23470..."
-                      type="text"
-                    />
-                  </div>
-
-                  <div className={Home.resumelinkinfo}>
-                    <label className={Home.getstartedlabel} htmlFor="">
                       Email
                     </label>
 
                     <input
-                      defaultValue=""
                       required
-                      className={Home.getstartedinput}
+                      defaultValue=""
+                      className={Signupstyles.getstartedinput}
                       {...register('email')}
-                      placeholder="abc@gmail.com"
+                      placeholder="Email"
                       type="email"
                     />
                   </div>
 
                   <div className={Home.resumelinkinfo}>
                     <label className={Home.getstartedlabel} htmlFor="">
-                      Address
+                      Username
                     </label>
 
                     <input
                       defaultValue=""
-                      required
-                      className={Home.getstartedinput}
-                      {...register('address')}
-                      placeholder="Lagos, Nigeria"
+                      className={Signupstyles.getstartedinput}
+                      {...register('name')}
+                      placeholder="Username"
                       type="text"
+                      required
                     />
                   </div>
-
                   <div className={Home.resumelinkinfo}>
                     <label className={Home.getstartedlabel} htmlFor="">
-                      Profile Photo
+                      Password
                     </label>
 
                     <input
+                      defaultValue=""
+                      className={Signupstyles.getstartedinput}
+                      {...register('password')}
+                      placeholder="password"
+                      type="password"
                       required
-                      type="file"
-                      className={Home.getstartedinput}
-                      placeholder="Select an Image"
-                      multiple
-                      accept="image/*"
-                      {...register('MyImage')}
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
-                  >
-                    Get started
-                  </button>
+                  {loading ? (
+                    <button
+                      type="submit"
+                      className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                    >
+                      Loading...
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded"
+                    >
+                      Get started
+                    </button>
+                  )}
                 </form>
               </div>
             </div>
