@@ -9,14 +9,7 @@ import Nav from '../components/Nav'
 import axios from 'axios'
 
 function Signup() {
-    useEffect(() => {
-        JSON.stringify({
-            username: 'Femi',
-            email: 'Tosin',
-            password: 'Oyedun',
-        }),
-            'Fetchhhhhhhh'
-    }, [])
+
 
     const router = useRouter()
 
