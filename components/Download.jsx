@@ -204,13 +204,10 @@ const Download = React.forwardRef((props, ref) => {
                 </section>
 
                 <section className={Previewstyle.skills_section}>
-                  <h1 className={Previewstyle.title}>References</h1>
+                  <h1 className={Previewstyle.title}>Language(s)</h1>
 
                   <div className={Previewstyle.skills_items}>
-                    <h2>Company Name- {x?.Company_name_Rfx}</h2>
-                    <h2>Contact Person- {x?.Contact_person_Rfx}</h2>
-                    <h2>Phone Number- {x?.Phone_number_Rfx}</h2>
-                    <h2>Email Address- {x?.Email_Address_Rfx}</h2>
+                    <h2 className={Previewstyle.date}>{x?.Language}</h2>
                   </div>
                 </section>
 
@@ -232,10 +229,13 @@ const Download = React.forwardRef((props, ref) => {
                 </section>
 
                 <section className={Previewstyle.skills_section}>
-                  <h1 className={Previewstyle.title}>Language(s)</h1>
+                  <h1 className={Previewstyle.title}>References</h1>
 
                   <div className={Previewstyle.skills_items}>
-                    <h2 className={Previewstyle.date}>{x?.Language}</h2>
+                    <h2>Company Name- {x?.Company_name_Rfx}</h2>
+                    <h2>Contact Person- {x?.Contact_person_Rfx}</h2>
+                    <h2>Phone Number- {x?.Phone_number_Rfx}</h2>
+                    <h2>Email Address- {x?.Email_Address_Rfx}</h2>
                   </div>
                 </section>
               </>

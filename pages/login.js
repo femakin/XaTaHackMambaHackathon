@@ -32,9 +32,14 @@ function Login() {
             .then(async (response) => {
                 setUsername(response)
 
+
+                // console.log(response, 'response....')
+
                 const Loggedinemail = response.filter((x) => {
                     return x?.email === data?.email
                 })
+
+                // console.log(Loggedinemail, 'Loggedinemail')
 
                 if (
                     Loggedinemail[0]?.email === data?.email &&
