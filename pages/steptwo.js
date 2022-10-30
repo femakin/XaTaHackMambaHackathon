@@ -73,7 +73,7 @@ function steptwo() {
     useEffect(() => {
         router.replace('/steptwo', undefined, { shallow: true })
 
-        console.log(signupid.unique_id, 'signupid.unique_id,')
+
 
         if (
             JSON.parse(localStorage?.getItem('user_id')) === '' ||
@@ -150,9 +150,9 @@ function steptwo() {
                     return await response.json()
                 })
                 .then(async (result) => {
-                    console.log(result, 'result')
+
                     const UserDetails = JSON.parse(localStorage?.getItem('user_id'))
-                    console.log(loggedinuser, 'loggeddddinuser')
+
 
                     if (result?.secure_url !== ' ') {
                         setUser(
