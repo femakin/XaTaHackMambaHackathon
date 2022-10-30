@@ -77,6 +77,21 @@ function Stepone() {
         .then(async (result) => {
           if (result?.secure_url !== ' ') {
             setLoadingState(!loadingstate)
+            localStorage.setItem(
+              'user_id',
+
+              JSON.stringify({
+                // unique_id: signupid.unique_id === undefined || signupid.unique_id === '{}' ||
+                //   signupid.unique_id === null ?
+
+                unique_id:
+                  loggedinuser?.data?.id === undefined ||
+                    loggedinuser?.data?.id === '{}' ||
+                    loggedinuser?.data?.id === null
+                    ? JSON.parse(localStorage.getItem('user_id'))?.unique_id
+                    : loggedinuser?.data?.id,
+              }),
+            )
             setUser(() => {
               return {
                 Full_name: data?.full_name,
@@ -117,13 +132,7 @@ function Stepone() {
               }),
             )
 
-            localStorage.setItem(
-              'user_id',
 
-              JSON.stringify({
-                unique_id: signupid.unique_id,
-              }),
-            )
 
             await router.push({
               pathname: '/steptwo',

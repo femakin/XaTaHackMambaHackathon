@@ -73,6 +73,8 @@ function steptwo() {
     useEffect(() => {
         router.replace('/steptwo', undefined, { shallow: true })
 
+        console.log(signupid.unique_id, 'signupid.unique_id,')
+
         if (
             JSON.parse(localStorage?.getItem('user_id')) === '' ||
             JSON.parse(localStorage?.getItem('user_id')) === undefined ||
@@ -83,13 +85,6 @@ function steptwo() {
             router.push('/')
         } else {
 
-            localStorage.setItem(
-                'user_id',
-
-                JSON.stringify({
-                    unique_id: signupid.unique_id,
-                }),
-            )
             router.push('/steptwo')
         }
 
@@ -147,7 +142,7 @@ function steptwo() {
             }
 
             fetch(
-                'https://api.cloudinary.com/v1_1/femakin/image/upload',
+                'https://api.cloudinary.com/v1_1/femakin/auto/upload',
                 requestOptions,
             )
                 .then(async (response) => {
@@ -159,22 +154,22 @@ function steptwo() {
                     console.log(loggedinuser, 'loggeddddinuser')
 
                     if (result?.secure_url !== ' ') {
-                        // setUser(
-                        //     ()=>{
-                        //         return{
-                        //             Full_name: `${user.Full_name}`,
-                        //             Email: `${user.Email}`,
-                        //             Role: `${user.Role}`,
-                        //             Phone_number: `${user.Phone_number}`,
-                        //             Address: `${user.Address}`,
-                        //             Profile_Photo_Url: `${user.Profile_Photo_Url}`,
-                        //             Public_id: `${user.Public_id}`,
-                        //             // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
-                        //             // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
-                        //             unique_id: `${user.unique_id}`,
-                        //         }
-                        //     }
-                        // )
+                        setUser(
+                            () => {
+                                return {
+                                    Full_name: `${user.Full_name}`,
+                                    Email: `${user.Email}`,
+                                    Role: `${user.Role}`,
+                                    Phone_number: `${user.Phone_number}`,
+                                    Address: `${user.Address}`,
+                                    Profile_Photo_Url: `${user.Profile_Photo_Url}`,
+                                    Public_id: `${user.Public_id}`,
+                                    // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                                    // unique_id: `${signupid.unique_id === undefined ? JSON.parse(localStorage?.getItem('user_id')).unique_id : signupid.unique_id}`,
+                                    unique_id: `${user.unique_id}`,
+                                }
+                            }
+                        )
 
                         localStorage.setItem(
                             'user_details',

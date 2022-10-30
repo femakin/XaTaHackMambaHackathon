@@ -52,3 +52,35 @@
 .skills_items {
     margin-top: 10px;
 }
+
+
+.title {
+    color: #E12E0D;
+}
+
+
+
+
+
+
+.date {
+    color: #666666;
+    font-family: 9pt;
+}
+
+.sub_title {
+    color: #000000;
+    font-weight: 700;
+    font-size: 11pt;
+    line-height: 1.0;
+}
+
+.inner_sub_title {
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none;
+    vertical-align: baseline;
+    font-size: 11pt;
+    font-family: "Playfair Display";
+    font-style: italic;
+}

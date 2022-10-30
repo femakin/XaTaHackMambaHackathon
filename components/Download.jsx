@@ -25,20 +25,24 @@ const Download = React.forwardRef((props, ref) => {
     },
   })
 
-  const myImage = cld.image(`${alldata?.Public_id}`)
+  // const myImage = cld.image(`${alldata?.Public_id}`)
 
-  cld
-    .image(`${alldata?.Public_id}`)
-    .resize(fill().width(100).height(100).gravity(focusOn(FocusOn.faces())))
+  // cld
+  //   .image(`${alldata?.Public_id}`)
+  //   .resize(fill().width(100).height(100).gravity(focusOn(FocusOn.faces())))
 
-  myImage.resize(
-    fill().width(100).height(100).gravity(focusOn(FocusOn.faces())),
-  )
+  // myImage.resize(
+  //   fill().width(100).height(100).gravity(focusOn(FocusOn.faces())),
+  // )
 
   useEffect(() => {
     const validuser = loggedinuser?.data?.id
 
     let newObjectuser = JSON.parse(localStorage.getItem('user_id'))
+    console.log(newObjectuser.unique_id)
+    console.log(JSON.parse(localStorage.getItem('user_details')))
+    let UserDetails = JSON.parse(localStorage.getItem('user_details'))
+    console.log(UserDetails?.unique_id)
 
     setLoading(false)
 
@@ -53,9 +57,12 @@ const Download = React.forwardRef((props, ref) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        setAlldata(
-          response?.filter((x) => x?.unique_id === newObjectuser.unique_id),
-        )
+        let Available_Id =
+          newObjectuser.unique_id === undefined
+            ? UserDetails.unique_id
+            : newObjectuser.unique_id
+
+        setAlldata(response?.filter((x) => x?.unique_id === Available_Id))
 
         JSON.stringify({
           steponedata: {
@@ -141,6 +148,7 @@ const Download = React.forwardRef((props, ref) => {
                     />
                   </section>
                 </section>
+                {console.log(x)}
 
                 <section className={Previewstyle.skills_section}>
                   <h1>Skills</h1>
@@ -148,6 +156,159 @@ const Download = React.forwardRef((props, ref) => {
                   <ul className={Previewstyle.skills_items}>
                     <li>{x.Skill}</li>
                   </ul>
+                </section>
+
+                <section className={Previewstyle.skills_section}>
+                  <h1 className={Previewstyle.title}>Experience</h1>
+
+                  <div className={Previewstyle.skills_items}>
+                    <h1>
+                      <span className={Previewstyle.sub_title}>
+                        {x.Employer_Ex}, {x.City_town_Ex}
+                      </span>{' '}
+                      <span className={Previewstyle.inner_sub_title}>
+                        {' '}
+                        - {x.Role}
+                      </span>
+                    </h1>
+
+                    <ol className={Previewstyle.skills_items}>
+                      <li>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </li>
+                      <li>Aenean ac interdum nisi. Sed in consequat mi.</li>
+                      <li>
+                        Sed in consequat mi, sed pulvinar lacinia felis eu
+                        finibus.
+                      </li>
+                    </ol>
+                  </div>
+
+                  <div className={Previewstyle.skills_items}>
+                    <h1>
+                      <span className={Previewstyle.sub_title}>
+                        Company Name, Location
+                      </span>{' '}
+                      <span className={Previewstyle.inner_sub_title}>
+                        {' '}
+                        -Job Title
+                      </span>
+                    </h1>
+
+                    <ol className={Previewstyle.skills_items}>
+                      <li>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </li>
+                      <li>Aenean ac interdum nisi. Sed in consequat mi.</li>
+                      <li>
+                        Sed in consequat mi, sed pulvinar lacinia felis eu
+                        finibus.
+                      </li>
+                    </ol>
+                  </div>
+
+                  <div className={Previewstyle.skills_items}>
+                    <h1>
+                      <span className={Previewstyle.sub_title}>
+                        Company Name, Location
+                      </span>{' '}
+                      <span className={Previewstyle.inner_sub_title}>
+                        {' '}
+                        -Job Title
+                      </span>
+                    </h1>
+
+                    <ol className={Previewstyle.skills_items}>
+                      <li>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </li>
+                      <li>Aenean ac interdum nisi. Sed in consequat mi.</li>
+                      <li>
+                        Sed in consequat mi, sed pulvinar lacinia felis eu
+                        finibus.
+                      </li>
+                    </ol>
+                  </div>
+                </section>
+
+                <section className={Previewstyle.skills_section}>
+                  <h1 className={Previewstyle.title}>Education</h1>
+
+                  <div className={Previewstyle.skills_items}>
+                    <h1 className={Previewstyle.date}>
+                      {x?.Start_date_Ed} - {x?.End_date_Ed}
+                    </h1>
+                    <h2>
+                      {x?.School_Ed}, {x?.City_Ed} - {x?.Degree_Ed}
+                    </h2>
+
+                    {/* <ul className={Previewstyle.skills_items}>
+                      <li>{x.Award_one_Ed}</li>
+
+                      <li>{x.Award_two_Ed}</li>
+                      <li>{x.Award_three_Ed}</li>
+                    </ul> */}
+                  </div>
+                </section>
+
+                <section className={Previewstyle.skills_section}>
+                  <h1 className={Previewstyle.title}>Awards</h1>
+
+                  <div className={Previewstyle.skills_items}>
+                    <ul className={Previewstyle.skills_items}>
+                      <li>{x.Award_one_Ed}</li>
+                      <li>{x.Award_two_Ed}</li>
+                      <li>{x.Award_three_Ed}</li>
+                    </ul>
+                  </div>
+                </section>
+                <section className={Previewstyle.skills_section}>
+                  <h1 className={Previewstyle.title}>Interest</h1>
+
+                  <div className={Previewstyle.skills_items}>
+                    <ul className={Previewstyle.skills_items}>
+                      <li>{x.Hobby}</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section className={Previewstyle.skills_section}>
+                  <h1 className={Previewstyle.title}>References</h1>
+
+                  <div className={Previewstyle.skills_items}>
+                    {/* <h2 className={Previewstyle.date}>
+                      Company Name- {x.Company_name_Rfx}
+                    </h2> */}
+                    <h2>Company Name- {x.Company_name_Rfx}</h2>
+                    <h2>Contact Person- {x.Contact_person_Rfx}</h2>
+                    <h2>Phone Number- {x.Phone_number_Rfx}</h2>
+                    <h2>Email Address- {x.Email_Address_Rfx}</h2>
+                  </div>
+                </section>
+
+                <section className={Previewstyle.skills_section}>
+                  <h1 className={Previewstyle.title}>Certificate</h1>
+
+                  <section className={Previewstyle.skills_section}>
+                    <AdvancedImage
+                      cldImg={cld
+                        .image(`${x?.Cert_Public_Id}`)
+                        .resize(
+                          fill()
+                            .width(200)
+                            .height(200)
+                            .gravity(focusOn(FocusOn.faces())),
+                        )}
+                    />
+                  </section>
+                </section>
+
+                <section className={Previewstyle.skills_section}>
+                  <h1 className={Previewstyle.title}>Language(s)</h1>
+
+                  <div className={Previewstyle.skills_items}>
+                    <h2 className={Previewstyle.date}>{x.Language}</h2>
+                  </div>
                 </section>
               </>
             )
