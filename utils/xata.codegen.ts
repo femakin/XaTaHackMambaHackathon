@@ -46,8 +46,15 @@ const DatabaseClient = buildClient();
 
 const defaultOptions = {
   databaseURL:
-    "https://Oluwafemi-Akinyemi-s-workspace-fdbhbv.eu-west-1.xata.sh/db/basic_info",
+    " https://Oluwafemi-Akinyemi-s-workspace-fdbhbv.us-east-1.xata.sh/db/basic_info",
+
+  // databaseURL:
+  //   "https://Oluwafemi-Akinyemi-s-workspace-fdbhbv.eu-west-1.xata.sh/db/basic_info",
 };
+
+// https://Oluwafemi-Akinyemi-s-workspace-fdbhbv.us-east-1.xata.sh/db/basic_info
+
+
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {
   constructor(options?: BaseClientOptions) {
