@@ -1,7 +1,4 @@
 .updateform_main {
-    /* margin: 0 auto;
-    width: 100%;
-    max-width: 50%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,20 +11,10 @@
     margin-bottom: 20px;
 }
 
-
-
-/* .product_body{
-    background: salmon;
-    height: 100vh;
-} */
-
-
 .product_main {
     display: flex;
 
-
 }
-
 
 .left_image {
     flex: 1;

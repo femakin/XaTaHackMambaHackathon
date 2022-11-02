@@ -17,7 +17,6 @@
 }
 
 .product_side_menu {
-    /* background-color: aqua; */
     height: 100vh;
     flex: 1;
     position: sticky !important;
@@ -27,7 +26,6 @@
 .product_form_content {
     background: #fff;
     flex: 2;
-    /* position: absolute; */
 }
 
 
@@ -127,27 +125,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .product_main {
     display: flex;
 
@@ -158,7 +135,6 @@
 .left_image {
     flex: 1;
     background: #fef6f2;
-    /* height: 100vh; */
 }
 
 .right_form {
