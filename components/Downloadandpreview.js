@@ -40,7 +40,10 @@ function Downloadandpreview({ onClick }) {
         <div>
             <div className="flex mt-10 justify-between ">
                 <div onClick={onClick} className={Previewstyle.preview}>
-                    Download
+
+                    <span className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded" >
+                        Download
+                    </span>
                 </div>
 
 
@@ -59,7 +62,9 @@ function Downloadandpreview({ onClick }) {
                     }
                     className={Previewstyle.preview}
                 >
-                    Edit
+                    <span className="bg-[#f64900] hover:bg-[#f64900] text-[#fff] font-semibold hover:text-[#fff] py-2 px-4 border border-[#f64900] hover:border-transparent rounded" >
+                        Edit
+                    </span>
                 </div>
             </div>
         </div>

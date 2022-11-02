@@ -74,7 +74,13 @@ const Download = React.forwardRef((props, ref) => {
   return (
     <div>
       {!loading ? (
-        <h1>loading....</h1>
+        <h1
+          style={{
+            marginTop: '40px',
+          }}
+        >
+          loading....
+        </h1>
       ) : (
         <div ref={ref}>
           {alldata.map((x, i) => {
