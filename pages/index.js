@@ -1,25 +1,21 @@
 // import { GetServerSideProps } from 'next/types'
-import React, { FC, useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Nav from '../components/Nav'
-import { getXataClient } from '../utils/xata.codegen'
 import Home from '../styles/Home.module.css'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import Signup from './signup'
 import Signupstyles from '../styles/SignUp.module.css'
 import { signupContext } from '../context/signupContext'
 
 const Index = ({ items }) => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const { signupid, setsignupid } = useContext(signupContext)
+  const { setsignupid } = useContext(signupContext)
 
   const {
     register,
-    reset,
 
     handleSubmit,
-    formState: { errors },
   } = useForm({
     mode: 'all',
   })
